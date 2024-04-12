@@ -2,6 +2,25 @@ from flask import Blueprint, render_template, request, flash
 
 auth = Blueprint('auth', __name__)
 
+@auth.route('/forums')
+def forums():
+    return "<p>Forums</p>"
+
+@auth.route('/adopt')
+def adopt():
+    return "<p>Adopt</p>"
+
+@auth.route('/minigames')
+def minigames():
+    return "<p>Mini Games</p>"
+
+@auth.route('/store')
+def store():
+    return "<p>Store</p>"
+
+@auth.route('/profile')
+def profile():
+    return "<p>Profile</p>"
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
