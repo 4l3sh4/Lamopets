@@ -47,8 +47,8 @@ body {
 
 .body-1 {
     background: rgb(198, 248, 224);
-    width: 370px;
-    min-height: 253px;
+    width: 55%;
+    min-height: 260px;
     margin-bottom: 10px;
     margin-top: 10px;
     margin-left: 10px;
@@ -59,7 +59,7 @@ body {
 
 .body-2 {
     background: rgb(198, 248, 224);
-    width: 150px;;
+    width: 20%;
     min-height: 80px;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -71,7 +71,7 @@ body {
 
 .body-3 {
     background: rgb(198, 248, 224);
-    width: 150px;;
+    width: 20%;
     min-height: 80px;
     margin-bottom: 10px;
     margin-top: 10px;
