@@ -1,0 +1,82 @@
+body {
+    background-color: aquamarine;
+    text-align: center;
+}
+
+.navbar {
+    background-color: #FFA07A;
+    overflow: hidden;
+    border: 4px solid #F0E68C;
+}
+
+.navbar a {
+    border-right: 4px solid #F0E68C;
+    float: left;
+    color: #F0E68C;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    background-color: #F0E68C;
+    color: #FFA07A;
+}
+
+.navbar a.split {
+    float: right;
+    background-color: #F0E68C;
+    color: #FFA07A;
+}
+
+.main-container {
+    background: #fffffe;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 5%;
+    box-sizing: border-box;
+}
+
+.body-1 {
+    background: rgb(198, 248, 224);
+    width: 370px;
+    min-height: 253px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5%;
+    float: left;
+}
+
+.body-2 {
+    background: rgb(198, 248, 224);
+    width: 150px;;
+    min-height: 80px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5%;
+    float: right;
+}
+
+.body-3 {
+    background: rgb(198, 248, 224);
+    width: 150px;;
+    min-height: 80px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5%;
+    float: right;
+}
