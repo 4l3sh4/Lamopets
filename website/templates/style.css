@@ -3,15 +3,22 @@ body {
     text-align: center;
 }
 
+img {
+    width: 10%;
+    text-align: center;
+}
+
 .navbar {
     background-color: #FFA07A;
     overflow: hidden;
-    border: 4px solid #F0E68C;
+    border: 4px solid #F0E68C; 
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .navbar a {
-    border-right: 4px solid #F0E68C;
-    float: left;
+    border-left: 4px solid #F0E68C;
+    float: right;
     color: #F0E68C;
     text-align: center;
     padding: 14px 16px;
@@ -28,55 +35,37 @@ body {
 }
 
 .navbar a.split {
-    float: right;
+    float: left;
     background-color: #F0E68C;
     color: #FFA07A;
+    border-left: 0px;
 }
 
-.main-container {
+.container {
     background: #fffffe;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    margin-top: 20px;
+    height: 66vh;
+    margin-top: 10px;
     margin-bottom: 20px;
-    padding: 5%;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat (4, 1fr);
+    gap: 30px;
+    padding: 30px;
     box-sizing: border-box;
 }
 
-.body-1 {
+.container div {
     background: rgb(198, 248, 224);
-    width: 55%;
-    min-height: 260px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5%;
-    float: left;
+    padding: 10px;
 }
 
-.body-2 {
+.content-large {
     background: rgb(198, 248, 224);
-    width: 20%;
-    min-height: 80px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5%;
-    float: right;
-}
-
-.body-3 {
-    background: rgb(198, 248, 224);
-    width: 20%;
-    min-height: 80px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5%;
-    float: right;
+    padding: 10px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
