@@ -4,9 +4,20 @@ body {
 }
 
 img {
-    width: 10%;
+    width: 20%;
     text-align: center;
 }
+
+/* .logo img {
+    position: absolute;
+    width: 20%;
+    transition: 0.3s;
+}
+
+.logo #img-1:hover {
+    opacity: 0;
+    cursor: pointer;
+} */
 
 .navbar {
     background-color: #FFA07A;
@@ -43,7 +54,7 @@ img {
 
 .container {
     background: #fffffe;
-    height: 66vh;
+    height: 60vh;
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 50px;
@@ -68,4 +79,17 @@ img {
     grid-row-end: 3;
     grid-column-start: 1;
     grid-column-end: 3;
+}
+
+ul.no-bullets {
+    list-style-type: none;
+    margin-bottom: -60px;
+    padding: 0;
+}
+
+#content-2 {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bold;
 }
