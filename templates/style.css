@@ -8,17 +8,6 @@ img {
     text-align: center;
 }
 
-/* .logo img {
-    position: absolute;
-    width: 20%;
-    transition: 0.3s;
-}
-
-.logo #img-1:hover {
-    opacity: 0;
-    cursor: pointer;
-} */
-
 .navbar {
     background-color: #FFA07A;
     overflow: hidden;
