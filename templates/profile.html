@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+>>>>>>> main
     <title>Profile</title>
 </head>
 <body>
     <nav>
-        <div class="navbar">
+        <span id="navicon" onclick="openNav()">&#9776</span>
+        <div id="mainnav" class="navbar">
+            <a href="{{url_for('home')}}" class="split">Home</a>
+            <a href="{{url_for('forums')}}">Forums</a>
+            <a href="{{url_for('adopt')}}">Adopt</a>
+            <a href="{{url_for('minigames')}}">Mini Games</a>
+            <a href="{{url_for('store')}}">Store</a>
+            <a href="{{url_for('profile')}}">Profile</a>
+        </div>
+        <div id="sidenav" class="sidenav">    
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{{url_for('home')}}" class="split">Home</a>
             <a href="{{url_for('forums')}}">Forums</a>
             <a href="{{url_for('adopt')}}">Adopt</a>
@@ -16,7 +29,7 @@
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
-    <h1>Hello you are logged in.</h1>
+    <h1>This is the profile page.</h1>
     <a href="{{url_for('logout')}}">Press here to logout</a>
 </body>
 </html>
