@@ -176,9 +176,12 @@ img {
     grid-column-end: 3;
 }
 
+.content-small {
+    padding: 10px;
+}
+
 ul.no-bullets {
     list-style-type: none;
-    margin-bottom: -60px;
     padding: 0;
 }
 
@@ -187,4 +190,17 @@ ul.no-bullets {
     font-size: 22px;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
+}
+
+@media (max-width: 800px) {
+    .container {
+        grid-template-columns: 1fr; 
+        grid-template-rows: auto; 
+    }
+    .content-large {
+        grid-column-start: auto;
+        grid-column-end: auto;
+        grid-row-start: auto;
+        grid-row-end: auto;
+    }
 }
