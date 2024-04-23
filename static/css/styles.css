@@ -125,6 +125,7 @@ img {
     display: block;
     transition: 0.3s;
     font-size: 20px;
+    text-transform: uppercase;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
 }
@@ -149,11 +150,11 @@ img {
 
 .container {
     background: #fffffe;
-    height: 60vh;
+    height: 56vh;
     margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-bottom: 10px;
+    margin-left: 36px;
+    margin-right: 36px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat (4, 1fr);
@@ -178,7 +179,7 @@ img {
 
 ul.no-bullets {
     list-style-type: none;
-    margin-bottom: -60px;
+    margin-bottom: -30px;
     padding: 0;
 }
 
