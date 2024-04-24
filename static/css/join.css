@@ -2,7 +2,11 @@ h1 {
     text-transform: uppercase;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
+}
+
+body {
+    margin-top: 60px;
 }
 
 form {
@@ -47,7 +51,7 @@ a {
     display: block;
     text-align: center;
     margin-top: 15px;
-    color: #ffffff;
+    color: #000000;
     text-decoration: none;
 }
 
