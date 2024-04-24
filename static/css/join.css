@@ -1,0 +1,66 @@
+h1 {
+    text-transform: uppercase;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bold;
+    color: #e27e87;
+}
+
+.join {
+    background: #fffffe;
+    height: 56vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 36px;
+    margin-right: 36px;
+    padding: 30px;
+}
+
+form {
+    width: 450px;
+    height: 180px;
+    margin: 0 auto;
+    background-color: #eddba5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 80%;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form input[type="submit"] {
+    width: 20%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form input[type="submit"] {
+    background-color: #e27e87;
+    color: #fff;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #eda5ab;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #e27e87;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
