@@ -2,17 +2,17 @@ h1 {
     text-transform: uppercase;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
-    color: #e27e87;
+    color: #ffffff;
 }
 
+body{
+    background-color: #a9dad5;
+    opacity: 1;
+    background-image: radial-gradient(circle at center center, #ffffff, #a9dad5), repeating-radial-gradient(circle at center center, #ffffff, #ffffff, 31px, transparent 62px, transparent 31px);
+    background-blend-mode: multiply;
+
 .join {
-    background: #fffffe;
-    height: 56vh;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 36px;
-    margin-right: 36px;
-    padding: 30px;
+    background: none;
 }
 
 form {
@@ -57,7 +57,7 @@ a {
     display: block;
     text-align: center;
     margin-top: 15px;
-    color: #e27e87;
+    color: #ffffff;
     text-decoration: none;
 }
 
