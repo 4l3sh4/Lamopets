@@ -91,6 +91,16 @@ h1 {
     #navicon{
         display: block;
     }
+    .store {
+        flex-direction: column;
+    }
+    .item {
+        width: 150px; 
+        margin: 5px; 
+    }
+    .nav-store {
+        margin: 50px;
+    }
 }
 
 @media screen and (min-width: 601px) {
@@ -204,8 +214,14 @@ ul.no-bullets {
     margin-bottom: 3px;
     margin-left: 36px;
     margin-right: 36px;
-    border: 30px solid #fffffe;
+    border: 20px solid #fffffe;
     overflow-y: scroll;
+}
+
+.store{
+    display: flex;          
+    justify-content: center; 
+    align-items: center;
 }
 
 .nav-store a{
@@ -230,4 +246,31 @@ ul.no-bullets {
 .nav-store{
     padding: 5px;
     position: sticky;
+    margin-bottom: 20px;
+}
+
+.item {
+    border: 4px solid #c8980a; 
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    float: left; 
+    text-align: center; 
+}
+
+.item img {
+    width: 100%; 
+    height: auto; 
+}
+
+.item p{
+    font-size: 20px;
+}
+
+.price {
+    margin: 5px 0; 
+}
+
+.item:hover{
+    background-color: #edc95e;
 }
