@@ -5,7 +5,11 @@ body {
 
 img {
     position: relative;
-    width: 20%;
+    width: 15%;
+    text-align: center;
+}
+
+h1 {
     text-align: center;
 }
 
@@ -60,7 +64,7 @@ img {
 }
 
 #navicon {
-    color: #e27e87;
+    color: #000000;
     display: none; 
     position: absolute; 
     top: 0; 
@@ -75,6 +79,9 @@ img {
     .navbar a{
         font-size: 12px;
     }
+    img {
+        width: 23%;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -83,6 +90,16 @@ img {
     }
     #navicon{
         display: block;
+    }
+    .store {
+        flex-direction: column;
+    }
+    .item {
+        width: 150px; 
+        margin: 5px; 
+    }
+    .nav-store {
+        margin: 50px;
     }
 }
 
@@ -188,4 +205,72 @@ ul.no-bullets {
     font-size: 22px;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
+}
+
+.container-store {
+    background: #fbefcb;
+    height: 50vh;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 36px;
+    margin-right: 36px;
+    border: 20px solid #fffffe;
+    overflow-y: scroll;
+}
+
+.store{
+    display: flex;          
+    justify-content: center; 
+    align-items: center;
+}
+
+.nav-store a{
+    color: #fffffe;
+    background-color: #e27e87;
+    border-radius: 15px;
+    text-align: center;
+    padding: 10px 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.nav-store a:hover{
+    color: #e27e87;
+    background-color: #fbefcb;
+    border: 2px solid #e27e87;
+}
+
+.nav-store{
+    padding: 5px;
+    position: sticky;
+    margin-bottom: 20px;
+}
+
+.item {
+    border: 4px solid #c8980a; 
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    float: left; 
+    text-align: center; 
+}
+
+.item img {
+    width: 100%; 
+    height: auto; 
+}
+
+.item p{
+    font-size: 20px;
+}
+
+.price {
+    margin: 5px 0; 
+}
+
+.item:hover{
+    background-color: #edc95e;
 }
