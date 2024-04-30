@@ -277,6 +277,14 @@ ul.no-bullets {
     background-color: #fbefcb;
 }
 
+.nav-store a.active {
+    color: #e27e87;
+    background-color: #fbefcb;
+    border: 2px solid #e27e87;
+    font-size: 120%;
+    font-weight: bold;
+}
+
 .nav-store::-webkit-scrollbar {
     display: none;
 }

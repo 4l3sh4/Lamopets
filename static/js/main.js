@@ -24,3 +24,22 @@ window.addEventListener('resize', function() {
         document.getElementById("navicon").style.display = "block"; 
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll('.store');
+    const navLinks = document.querySelectorAll('.nav-store a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const activeLink = document.querySelector(`.nav-store a[href="#${entry.target.id}"]`);
+                navLinks.forEach(link => link.classList.remove('active'));
+                activeLink.classList.add('active');
+            }
+        });
+    }, { rootMargin: '0px', threshold: 0.5 });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+});
