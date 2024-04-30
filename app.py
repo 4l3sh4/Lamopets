@@ -105,7 +105,7 @@ def forums():
         db.session.add(topic)
         db.session.commit()
     topics = Topic.query.all()
-    return render_template('forums.html', topics=topics)
+    return render_template('forums.html', topics=topics, username=current_user.username)
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
@@ -120,7 +120,7 @@ def topic(id):
         db.session.commit()
 
     comments = Comment.query.filter_by(topicId=id).all()
-    return render_template("topic.html", topic=topic, comments=comments)
+    return render_template("topic.html", topic=topic, comments=comments, username=current_user.username)
 
 @app.route('/logout')
 @login_required
