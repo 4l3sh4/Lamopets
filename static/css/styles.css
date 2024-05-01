@@ -78,19 +78,10 @@ h1 {
 @media screen and (max-width: 800px) {
     .navbar a{
         font-size: 12px;
+        padding: 10px 12px;
     }
     img {
         width: 23%;
-    }
-    .item {
-        width: 48%; 
-        margin: 1%;
-    }
-    .item img {
-        width: 40%; 
-    }
-    .container-store {
-        height: 60vh !important;
     }
 }
 
@@ -100,27 +91,6 @@ h1 {
     }
     #navicon{
         display: block;
-    }
-    .store {
-        flex-direction: column;
-    }
-    .item {
-        width: 100%; 
-        margin: 5px 0; 
-    }
-    .item img {
-        width: 30%; 
-    }
-    .container-store {
-        height: 70vh !important;
-    }
-    .container-store h1{
-        font-size: 22px;
-        margin-bottom: 5px;
-    }
-    .nav-store a{
-        font-size: 12px !important;
-
     }
 }
 
