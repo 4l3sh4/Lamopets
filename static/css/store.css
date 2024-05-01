@@ -1,0 +1,123 @@
+@media screen and (max-width: 800px) {
+    .item {
+        width: 48%; 
+        margin: 1%;
+    }
+    .item img {
+        width: 40%; 
+    }
+    .container-store {
+        height: 60vh !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .store {
+        flex-direction: column;
+    }
+    .item {
+        width: 100%; 
+        margin: 5px 0; 
+    }
+    .item img {
+        width: 30%; 
+    }
+    .container-store {
+        height: 70vh !important;
+    }
+    .container-store h1{
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+    .nav-store a{
+        font-size: 12px !important;
+
+    }
+}
+
+.container-store {
+    background: #fbefcb;
+    height: 50vh;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 36px;
+    margin-right: 36px;
+    border: 20px solid #fffffe;
+    overflow-y: scroll;
+}
+
+.store{
+    display: flex;          
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.nav-store a{
+    color: #fffffe;
+    background-color: #e27e87;
+    border-radius: 15px;
+    padding: 10px 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.nav-store a:hover{
+    color: #e27e87;
+    background-color: #fbefcb;
+    border: 2px solid #e27e87;
+    font-weight: bold;
+}
+
+.nav-store{
+    padding: 20px;
+    position: sticky;
+    margin-bottom: 20px;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    white-space: nowrap;
+    z-index: 1000;
+    top: 0;
+    background-color: #fbefcb;
+}
+
+.nav-store a.active {
+    color: #e27e87;
+    background-color: #fbefcb;
+    border: 2px solid #e27e87;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.nav-store::-webkit-scrollbar {
+    display: none;
+}
+
+.item {
+    border: 4px solid #c8980a; 
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    height: 250px;
+    float: left; 
+}
+
+.item img {
+    width: auto; 
+    height: 140px; 
+}
+
+.item p{
+    font-size: 20px;
+}
+
+.price {
+    margin: 5px 0; 
+}
+
+.item:hover{
+    background-color: #edc95e;
+}

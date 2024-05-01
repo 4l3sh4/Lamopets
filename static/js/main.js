@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeLink.classList.add('active');
             }
         });
-    }, { rootMargin: '0px', threshold: 0.2 });
+    }, { rootMargin: '0px', threshold: 0.05 });
 
     sections.forEach(section => {
         observer.observe(section);
