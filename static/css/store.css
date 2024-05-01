@@ -9,6 +9,9 @@
     .container-store {
         height: 60vh !important;
     }
+    .nav-store a.active {
+        font-size: 115%;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -30,7 +33,9 @@
     }
     .nav-store a{
         font-size: 12px !important;
-
+    }
+    .nav-store a.active {
+        font-size: 105% !important;
     }
 }
 
@@ -65,7 +70,6 @@
     color: #e27e87;
     background-color: #fbefcb;
     border: 2px solid #e27e87;
-    font-weight: bold;
 }
 
 .nav-store{
@@ -85,7 +89,7 @@
     background-color: #fbefcb;
     border: 2px solid #e27e87;
     font-size: 120%;
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 .nav-store::-webkit-scrollbar {
@@ -119,6 +123,18 @@
 
 .price {
     margin: 5px 0; 
+    padding: 8px 12px;
+    background-color: #e27e87;
+    color: #fffffe;
+    border-radius: 5px;
+    border: 0;
+    font-size: 15px;
+}
+
+.price:hover{
+    cursor: pointer;
+    font-size: 110%;
+    font-weight: bold !important;
 }
 
 .item:hover{
