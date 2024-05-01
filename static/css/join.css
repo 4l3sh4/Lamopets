@@ -2,17 +2,17 @@ h1 {
     text-transform: uppercase;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 }
 
-body{
-    background-color: #a9dad5;
-    opacity: 1;
-    background-image: radial-gradient(circle at center center, #ffffff, #a9dad5), repeating-radial-gradient(circle at center center, #ffffff, #ffffff, 31px, transparent 62px, transparent 31px);
-    background-blend-mode: multiply;
-
 .join {
-    background: none;
+    background: #fffffe;
+    height: 56vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 36px;
+    margin-right: 36px;
+    padding: 30px;
 }
 
 form {
@@ -29,16 +29,19 @@ form input[type="text"],
 form input[type="password"] {
     width: 80%;
     padding: 10px;
-    margin-top: 15px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
+form input[type="text"] {
+    margin-top: 20px;
+}
+
 form input[type="submit"] {
     width: 20%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
@@ -57,7 +60,7 @@ a {
     display: block;
     text-align: center;
     margin-top: 15px;
-    color: #ffffff;
+    color: #000000;
     text-decoration: none;
 }
 
