@@ -29,12 +29,14 @@ class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String)
+    username = db.Column(db.String(20), nullable=False)
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String, nullable=False)
     topicId = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
     topic = db.relationship('Topic', backref=db.backref('comments', lazy=True))
+    username = db.Column(db.String(20), nullable=False)
 
 class RegisterForm(FlaskForm): 
     username = StringField(validators=[InputRequired(), Length(
@@ -101,7 +103,7 @@ def forums():
             return render_template('forums.html', error="Topic already exists.")
         
         description = request.form["description"]
-        topic = Topic(title=title, description=description)
+        topic = Topic(title=title, description=description, username=current_user.username)
         db.session.add(topic)
         db.session.commit()
     topics = Topic.query.all()
@@ -110,17 +112,16 @@ def forums():
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
     topic = Topic.query.get(id)
-    if not topic:
-        abort(404)
+    comments = None
 
-    if request.method == "POST":
+    if request.method == "POST" and current_user.is_authenticated:
         text = request.form["comment"]
-        comment = Comment(text=text, topicId=id)
+        comment = Comment(text=text, topicId=id, username=current_user.username)
         db.session.add(comment)
         db.session.commit()
 
     comments = Comment.query.filter_by(topicId=id).all()
-    return render_template("topic.html", topic=topic, comments=comments, username=current_user.username)
+    return render_template("topic.html", topic=topic, comments=comments)
 
 @app.route('/logout')
 @login_required
