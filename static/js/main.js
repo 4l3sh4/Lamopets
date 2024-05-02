@@ -43,3 +43,29 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(section);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const colourButtons = document.querySelectorAll('.colour-options');
+    const item = document.getElementById('head1');
+
+    colourButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const colour = this.getAttribute('data-filter');
+
+            switch(colour) {
+                case 'black':
+                    item.style.filter = 'grayscale(50%) brightness(30%) saturate(400%)';
+                    break;
+                case 'blue':
+                    item.style.filter = 'saturate(150%) sepia(70%) hue-rotate(180deg)';
+                    break;
+                case 'green':
+                    item.style.filter = 'saturate(200%) sepia(50%) hue-rotate(90deg)';
+                    break;
+                default:
+                    item.className = ''; 
+                    break;
+            }
+        });
+    });
+}); 
