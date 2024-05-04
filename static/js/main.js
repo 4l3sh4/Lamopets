@@ -66,3 +66,24 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 }); 
+
+document.addEventListener('DOMContentLoaded', function() {
+    var priceButtons = document.querySelectorAll('.price');
+    var popup = document.getElementById('purchase-popup');
+
+    priceButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            popup.style.display = 'block';
+        });
+    });
+
+    window.onclick = function(event) {
+        if (event.target == popup) {
+            popup.style.display = "none";
+        }
+    }
+
+    document.getElementById('noButton').addEventListener('click', function() {
+        popup.style.display = 'none';
+    });
+});
