@@ -1,2 +1,5 @@
+# images
+*.png
 
-instance/database.db
+# databases
+*.db
