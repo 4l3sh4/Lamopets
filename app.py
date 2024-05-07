@@ -94,6 +94,10 @@ def store():
 def minigames():
     return render_template('minigames.html')
 
+@app.route('/minigames-feeding-time', methods=['GET', 'POST'])
+@login_required
+def minigamesfeedingtime():
+    return render_template('minigames-feeding-time.html')
 
 @app.route('/adopt', methods=['GET', 'POST'])
 @login_required
