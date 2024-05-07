@@ -6,16 +6,12 @@ body {
     text-align: center;
 }
 
-#logout {
-    padding-bottom: 20px;
-    text-align: center;
-    color: #f4606d;
-}
-
 img {
     position: relative;
-    width: 20%;
+    width: 15%;
     text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .logo{
@@ -35,7 +31,7 @@ img {
     opacity: 1;
 }
 
-.navbar {
+.navigation {
     background-color: #e27e87;
     overflow: hidden;
     border: 4px solid #eddba5;
@@ -43,7 +39,7 @@ img {
     margin-right: 50px;
 }
 
-.navbar a {
+.navigation a {
     border-left: 4px solid #eddba5;
     float: right;
     color: #eddba5;
@@ -56,12 +52,12 @@ img {
     font-weight: bold;
 }
 
-.navbar a:hover {
+.navigation a:hover {
     background-color: #eddba5;
     color: #e27e87;
 }
 
-.navbar a.split {
+.navigation a.split {
     float: left;
     background-color: #eddba5;
     color: #e27e87;
@@ -69,7 +65,7 @@ img {
 }
 
 #navicon {
-    color: #e27e87;
+    color: #000000;
     display: none;
     position: absolute;
     top: 0;
@@ -81,13 +77,13 @@ img {
 }
 
 @media screen and (max-width: 800px) {
-    .navbar a {
+    .navigation a {
         font-size: 12px;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .navbar {
+    .navigation {
         display: none;
     }
     #navicon {
@@ -167,7 +163,6 @@ img {
 .topic,
 .browse {
     width: calc(50% - 15px); 
-    margin-bottom: 20px; 
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -175,13 +170,22 @@ img {
     color: #000000;
 }
 
+@font-face {
+    font-family: myFont;
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
 h1 {
     text-align: center;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    padding: 10px;
+    font-family: myFont;
+}
+
+.font {
+    font-family: myFont;
+    font-size: 28px;
 }
 
 .scroll {
     overflow-y:scroll;
-    max-height: 388px;
+    max-height: 290px;
 }
