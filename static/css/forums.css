@@ -1,5 +1,8 @@
 body {
     background-color: #99d1cb;
+}
+
+.center {
     text-align: center;
 }
 
@@ -7,64 +10,8 @@ img {
     position: relative;
     width: 15%;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-bottom: 10px;
-}
-
-@font-face {
-    font-family: "Sugar Cream";
-    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
-}
-
-.currency-position {
-    position: absolute;
-    top: 1px;
-    right: 20px;
-    width: 90px;
-    height: 30px;
-    padding:10px;
-    border-color: #eddba5;
-    border-width: 8px;
-    border-style:double;
-    background-color: #e27e87;
-    border-radius: 50px;
-    font-family: 'Sugar Cream';
-}
-
-.minigame-contents {
-    background: white;
-    height: 56vh;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
-    padding: 30px;
-}
-
-.minigame-contents img {
-    width:50%;
-    height:100%;
-    border-radius: 5%;
-}
-
-.minigame-contents img:hover {
-    border: 5px solid #e27e87;
-}
-
-.minigame-player {
-    background: white;
-    height: 520px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
-    padding: 30px;
-}
-
-#canvas1 {
-    width: 800px;
-    height: 500px;
-    border: 4px solid black;
 }
 
 .logo{
@@ -84,15 +31,15 @@ img {
     opacity: 1;
 }
 
-.navbar {
+.navigation {
     background-color: #e27e87;
     overflow: hidden;
-    border: 4px solid #eddba5; 
+    border: 4px solid #eddba5;
     margin-left: 50px;
     margin-right: 50px;
 }
 
-.navbar a {
+.navigation a {
     border-left: 4px solid #eddba5;
     float: right;
     color: #eddba5;
@@ -105,12 +52,12 @@ img {
     font-weight: bold;
 }
 
-.navbar a:hover {
+.navigation a:hover {
     background-color: #eddba5;
     color: #e27e87;
 }
 
-.navbar a.split {
+.navigation a.split {
     float: left;
     background-color: #eddba5;
     color: #e27e87;
@@ -119,14 +66,14 @@ img {
 
 #navicon {
     color: #000000;
-    display: none; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    padding: 10px; 
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
     cursor: pointer;
-    font-size: 30px; 
-    z-index: 1000; 
+    font-size: 30px;
+    z-index: 1000;
 }
 
 @media screen and (max-width: 800px) {
@@ -156,13 +103,13 @@ img {
 }
 
 @media screen and (min-width: 601px) {
-    #navicon{
+    #navicon {
         display: none;
     }
-    .sidenav{
+    .sidenav {
         display: none;
     }
-    .content{
+    .content {
         transform: "translateX(0)"
     }
 }
@@ -171,7 +118,6 @@ img {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
-
 
 .sidenav {
     height: 100%;
@@ -184,7 +130,7 @@ img {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-  }
+}
 
 .sidenav a {
     font: 15px;
@@ -212,49 +158,72 @@ img {
     margin-left: 50px;
 }
 
-#content {
-    transition: transform 0.5s ease;
-    padding: 16px;
-}
-
 .container {
-    background: #fffffe;
-    height: 58.5vh;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 36px;
-    margin-right: 36px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat (4, 1fr);
-    gap: 30px;
-    padding: 30px;
-    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    flex-wrap: wrap; 
+    padding: 20px;
 }
 
-.container div {
-    background: #fbefcb;
-    padding: 10px;
+.topic,
+.browse {
+    width: calc(50% - 15px); 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fbefcb;
+    color: #000000;
 }
 
-.content-large {
-    background: #fbefcb;
-    padding: 10px;
-    grid-row-start: 1;
-    grid-row-end: 3;
-    grid-column-start: 1;
-    grid-column-end: 3;
+@font-face {
+    font-family: myFont;
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
 }
 
-ul.no-bullets {
-    list-style-type: none;
-    margin-bottom: -30px;
-    padding: 0;
+h1 {
+    text-align: center;
+    font-family: myFont;
 }
 
-#content-2 {
-    text-transform: uppercase;
-    font-size: 22px;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-weight: bold;
+.font {
+    font-family: myFont;
+    font-size: 28px;
+}
+
+.scroll {
+    overflow-y:scroll;
+    max-height: 290px;
+}
+
+.currency-position {
+    position: absolute;
+    top: 1px;
+    right: 20px;
+    width: 90px;
+    height: 30px;
+    padding:10px;
+    border-color: #eddba5;
+    border-width: 8px;
+    border-style:double;
+    background-color: #e27e87;
+    border-radius: 50px;
+    font-family: 'Sugar Cream';
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#delete {
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.info {
+    flex-grow: 1;
+    overflow-y: auto;
+    word-wrap: break-word;
 }
