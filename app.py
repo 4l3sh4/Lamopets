@@ -37,9 +37,10 @@ class Topic(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String, nullable=False)
-    topicId = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
-    topic = db.relationship('Topic', backref=db.backref('comments', lazy=True))
+    topicId = db.Column(db.Integer, db.ForeignKey('topic.id', ondelete='CASCADE'), nullable=False)
+    topic = db.relationship('Topic', backref=db.backref('comments', lazy=True, cascade='all, delete-orphan'))
     username = db.Column(db.String(20), nullable=False)
+
 
 class RegisterForm(FlaskForm): 
     username = StringField(validators=[InputRequired(), Length(
@@ -130,6 +131,34 @@ def topic(id):
 
     comments = Comment.query.filter_by(topicId=id).all()
     return render_template("topic.html", topic=topic, comments=comments)
+
+@app.route('/delete/topic/<int:id>', methods=['POST'])
+@login_required
+def delete_topic(id):
+    topic = Topic.query.get(id)
+    if topic:
+        if topic.username == current_user.username:  # Check if the current user is the author of the topic
+            db.session.delete(topic)
+            db.session.commit()
+            return redirect(url_for('forums'))
+        else:
+            abort(403)  # User is not authorized to delete this topic
+    else:
+        abort(404)  # Topic not found
+
+@app.route('/delete/comment/<int:id>', methods=['POST'])
+@login_required
+def delete_comment(id):
+    comment = Comment.query.get(id)
+    if comment:
+        if comment.username == current_user.username:  # Check if the current user is the author of the comment
+            db.session.delete(comment)
+            db.session.commit()
+            return redirect(url_for('topic', id=comment.topicId))
+        else:
+            abort(403)  # User is not authorized to delete this comment
+    else:
+        abort(404)  # Comment not found
 
 @app.route('/logout')
 @login_required

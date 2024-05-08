@@ -71,5 +71,29 @@ button {
 
 .font {
     font-family: myFont;
-    font-size: 26px;
+    font-size: 28px;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+#delete {
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.info {
+    flex-grow: 5;
+    overflow-y: hidden; 
+    word-wrap: break-word;
+}
+
+.small {
+    white-space: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
