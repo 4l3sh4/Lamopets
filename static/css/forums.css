@@ -198,17 +198,30 @@ h1 {
 
 .currency-position {
     position: absolute;
-    top: 1px;
+    top: 10px; /* Adjust the top position as needed */
     right: 20px;
-    width: 50px;
-    height: 30px;
-    padding:10px;
+    width: auto;
+    height: auto; /* Remove fixed height */
+    padding: 5px 10px; /* Adjust padding as needed */
     border-color: #eddba5;
-    border-width: 8px;
-    border-style:double;
+    border-width: 6px; /* Decrease border width for a cleaner look */
+    border-style: double;
     background-color: #e27e87;
-    border-radius: 50px;
+    border-radius: 30px; /* Decrease border radius for a cleaner look */
     font-family: 'Sugar Cream';
+    font-size: 20px; /* Decrease font size for a cleaner look */
+    display: flex;
+    align-items: center;
+}
+
+#coin {
+    width: 30px; /* Decrease coin size for a cleaner look */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px;
+}
+
+.logo.center {
+    text-align: center;
 }
 
 .d-flex {
