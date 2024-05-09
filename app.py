@@ -31,7 +31,17 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer, default=1000)
+    inventory_id = db.Column(db.String(120), nullable=True)  # Adding inventory_id column
 
+    __table_args__ = (
+        db.CheckConstraint('currency_balance >= 0 AND currency_balance <= 9999', name='ck_balance_range'),
+    )
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if not self.inventory_id:
+            self.inventory_id = f"{self.username}_inventory"
+        self.currency_balance = 1000
 
 class RegisterForm(FlaskForm): 
     username = StringField(validators=[InputRequired(), Length(
