@@ -13,12 +13,15 @@
         <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-    <h2 class="currency-position"><img src="{{ url_for('static', filename='assets/Lamocoins.png') }}">1000</h2>
+    <h2 class="currency-position">
+        <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}">
+        {{ current_user.currency_balance }}
+    </h2>
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
             <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Forums</a>
+            <a href="{{url_for('forums')}}">Chats</a>
             <a href="{{url_for('adopt')}}">Adopt</a>
             <a href="{{url_for('minigames')}}">Mini Games</a>
             <a href="{{url_for('store')}}">Store</a>
@@ -27,7 +30,7 @@
         <div id="sidenav" class="sidenav">    
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Forums</a>
+            <a href="{{url_for('forums')}}">Chats</a>
             <a href="{{url_for('adopt')}}">Adopt</a>
             <a href="{{url_for('minigames')}}">Mini Games</a>
             <a href="{{url_for('store')}}">Store</a>
@@ -44,6 +47,7 @@
             </div>
 
             <div class="adopt" id="adopt-aquana">
+
                 <div class="item" id="A1">
                     <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Blue.png') }}">
                     <p class="item_name">Aquana Blue</p>
