@@ -44,6 +44,11 @@ class User(db.Model, UserMixin):
         self.currency_balance = 1000
 
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if not self.inventory_id:
+            self.inventory_id = f"{self.username}_inventory"
+        self.currency_balance = 1000
 
 class RegisterForm(FlaskForm): 
     username = StringField(validators=[InputRequired(), Length(
