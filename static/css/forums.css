@@ -177,7 +177,7 @@ img {
 }
 
 @font-face {
-    font-family: myFont;
+    font-family: 'myFont';
     src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
 }
 
@@ -198,25 +198,26 @@ h1 {
 
 .currency-position {
     position: absolute;
-    top: 10px; /* Adjust the top position as needed */
+    top: 20px; 
     right: 20px;
     width: auto;
-    height: auto; /* Remove fixed height */
-    padding: 5px 10px; /* Adjust padding as needed */
+    height: auto; 
+    padding: 3px 10px; 
     border-color: #eddba5;
-    border-width: 6px; /* Decrease border width for a cleaner look */
+    border-width: 8px;
     border-style: double;
     background-color: #e27e87;
-    border-radius: 30px; /* Decrease border radius for a cleaner look */
-    font-family: 'Sugar Cream';
-    font-size: 20px; /* Decrease font size for a cleaner look */
+    border-radius: 50px; 
+    font-family: myFont;
+    font-weight: bold;
+    font-size: 25px; 
     display: flex;
     align-items: center;
 }
 
 #coin {
-    width: 30px; /* Decrease coin size for a cleaner look */
-    height: auto; /* Maintain aspect ratio */
+    width: 30px; 
+    height: auto; 
     margin-right: 5px;
 }
 
