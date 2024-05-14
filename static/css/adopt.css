@@ -48,10 +48,7 @@
 }
 
 .adopt{
-    display: flex;          
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: flex-start;
+    display: inline-block;          
 }
 
 .nav-adopt a{
@@ -175,6 +172,7 @@
     border: 5px solid #c8980a;
     border-radius: 60px;
     width: 30%; 
+    font-size: 25px;
 }
 
 button {

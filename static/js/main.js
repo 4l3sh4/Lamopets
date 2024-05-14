@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     var priceButtons = document.querySelectorAll('.price');
-    var popup = document.getElementById('purchase-popup');
+    var popup = document.getElementById('purchase-adopt');
 
     priceButtons.forEach(function(button) {
         button.addEventListener('click', function() {

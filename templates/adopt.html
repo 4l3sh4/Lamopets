@@ -46,368 +46,57 @@
                 <a href="#adopt-trotter">Trotter</a>
             </div>
 
+            {% for pet in pets %}
+            {% if pet.id.startswith("A") %}
             <div class="adopt" id="adopt-aquana">
-
-                <div class="item" id="A1">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Blue.png') }}">
-                    <p class="item_name">Aquana Blue</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
+                
+                <div class="item" id="{{ pet.id }}">
+                    <img src="{{ pet.egg_image_url }}">
+                    <p class="item_name">{{ pet.name }}</p>
+                    <button class="price">${{ pet.price }}</button>
                 </div>
-
-                <div class="item" id="A2">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Yellow.png') }}">
-                    <p class="item_name">Aquana Yellow</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="A3">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Pink.png') }}">
-                    <p class="item_name">Aquana Pink</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="A4">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Albino.png') }}">
-                    <p class="item_name">Aquana Albino</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="A5">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Leucistic.png') }}">
-                    <p class="item_name">Aquana Leucistic</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="A6">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Melanistic.png') }}">
-                    <p class="item_name">Aquana Melanistic</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="A7">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Dragon_Red.png') }}">
-                    <p class="item_name">Aquana Dragon Red</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="A8">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Dragon_Green.png') }}">
-                    <p class="item_name">Aquana Dragon Green</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="A9">
-                    <img src="{{ url_for('static', filename='assets/eggs/aquana/Egg_Aquana_Dragon_Black.png') }}">
-                    <p class="item_name">Aquana Dragon Black</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
+                
             </div>
+            {% endif %}
 
+            {% if pet.id.startswith("J") %}
             <div class="adopt" id="adopt-jackaloaf">
-                <div class="item" id="J1">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Brocket.png') }}">
-                    <p class="item_name">Jackaloaf Brocket</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J2">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Chinese.png') }}">
-                    <p class="item_name">Jackaloaf Chinese</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J3">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Pudu.png') }}">
-                    <p class="item_name">Jackaloaf Pudu</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J4">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Roe.png') }}">
-                    <p class="item_name">Jackaloaf Roe</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J5">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Taruca.png') }}">
-                    <p class="item_name">Jackaloaf Taruca</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J6">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Eld.png') }}">
-                    <p class="item_name">Jackaloaf Eld</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J7">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Sika.png') }}">
-                    <p class="item_name">Jackaloaf Sika</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J8">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Reindeer.png') }}">
-                    <p class="item_name">Jackaloaf Reindeer</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="J9">
-                    <img src="{{ url_for('static', filename='assets/eggs/jackaloaf/Egg_Jackaloaf_Elk.png') }}">
-                    <p class="item_name">Jackaloaf Elk</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
+                
+                <div class="item" id="{{ pet.id }}">
+                    <img src="{{ pet.egg_image_url }}">
+                    <p class="item_name">{{ pet.name }}</p>
+                    <button class="price">${{ pet.price }}</button>
                 </div>
                 
             </div>
+            {% endif %}
 
+            {% if pet.id.startswith("T") %}
             <div class="adopt" id="adopt-trotter">
-                <div class="item" id="T1">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Red.png') }}">
-                    <p class="item_name">Trotter Red</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
+                
+                <div class="item" id="{{ pet.id }}">
+                    <img src="{{ pet.egg_image_url }}">
+                    <p class="item_name">{{ pet.name }}</p>
+                    <button class="price">${{ pet.price }}</button>
                 </div>
                 
-                <div class="item" id="T2">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Brown.png') }}">
-                    <p class="item_name">Trotter Brown</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="item" id="T3">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Pink.png') }}">
-                    <p class="item_name">Trotter Pink</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="T4">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Albino.png') }}">
-                    <p class="item_name">Trotter Albino</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="T5">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Leucistic.png') }}">
-                    <p class="item_name">Trotter Leucistic</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="T6">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Silver.png') }}">
-                    <p class="item_name">Trotter Silver</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="item" id="T7">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Kitsune_Red.png') }}">
-                    <p class="item_name">Trotter Kitsune Red</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="T8">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Kitsune_White.png') }}">
-                    <p class="item_name">Trotter Kitsune White</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item" id="T9">
-                    <img src="{{ url_for('static', filename='assets/eggs/trotter/Egg_Trotter_Kitsune_Black.png') }}">
-                    <p class="item_name">Trotter Kitsune Black</p>
-                    <button class="price">$100</button>
-                    <div id="purchase-popup" class="popup">
-                        <div class="purchase-confirm">
-                            <p>Would you like to buy this for $100?</p>
-                            <button id="yesButton" class="yes-no">Yes</button>
-                            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
-                        </div>
-                    </div>
-                </div>  
             </div>
+            {% endif %}
 
+            {% endfor %}
         </div>
     </div>
+
+    {% for pet in pets %}
+    <div id="purchase-adopt" class="popup">
+        <div class="purchase-confirm">
+            <p>Would you like to buy {{ pet.name }} for {{ pet.price }}?</p>
+            <button id="yesButton" class="yes-no">Yes</button>
+            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
+        </div>
+    </div>
+    {% endfor %}
+
     <a href="{{url_for('logout')}}">Press here to logout</a>
 </body>
 </html>

@@ -56,6 +56,13 @@ class Comment(db.Model):
     topic = db.relationship('Topic', backref=db.backref('comments', lazy=True, cascade='all, delete-orphan'))
     username = db.Column(db.String(20), nullable=False)
 
+class Pet(db.Model):
+    id = db.Column(db.String(2), primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    egg_image_url = db.Column(db.String(200), nullable=False)
+    pet_image_url = db.Column(db.String(200), nullable=False)
+
 class RegisterForm(FlaskForm): 
     username = StringField(validators=[InputRequired(), Length(
         min=4, max=20)], render_kw={"placeholder": "Username"})
@@ -82,7 +89,6 @@ class LoginForm(FlaskForm):
         min=4, max=20)], render_kw={"placeholder": "Password"})
     
     submit = SubmitField("Login")
-
 
 @app.route('/')
 def home():
@@ -121,7 +127,8 @@ def minigamesfeedingtime():
 @app.route('/adopt', methods=['GET', 'POST'])
 @login_required
 def adopt():
-    return render_template('adopt.html')
+    pets = Pet.query.all()
+    return render_template('adopt.html', pets=pets)
 
 @app.route('/forums', methods=['GET', 'POST'])
 @login_required
