@@ -47,55 +47,42 @@
             </div>
 
             {% for pet in pets %}
-            {% if pet.id.startswith("A") %}
-            <div class="adopt" id="adopt-aquana">
-                
-                <div class="item" id="{{ pet.id }}">
-                    <img src="{{ pet.egg_image_url }}">
-                    <p class="item_name">{{ pet.name }}</p>
-                    <button class="price">${{ pet.price }}</button>
-                </div>
-                
-            </div>
-            {% endif %}
-
-            {% if pet.id.startswith("J") %}
-            <div class="adopt" id="adopt-jackaloaf">
-                
-                <div class="item" id="{{ pet.id }}">
-                    <img src="{{ pet.egg_image_url }}">
-                    <p class="item_name">{{ pet.name }}</p>
-                    <button class="price">${{ pet.price }}</button>
-                </div>
-                
-            </div>
-            {% endif %}
-
-            {% if pet.id.startswith("T") %}
-            <div class="adopt" id="adopt-trotter">
-                
-                <div class="item" id="{{ pet.id }}">
-                    <img src="{{ pet.egg_image_url }}">
-                    <p class="item_name">{{ pet.name }}</p>
-                    <button class="price">${{ pet.price }}</button>
-                </div>
-                
-            </div>
-            {% endif %}
-
+                {% if pet.id.startswith("A") %}
+                    <div class="adopt" id="adopt-aquana">
+                        <div class="item" id="{{ pet.id }}">
+                            <img src="{{pet.egg_image_url}}">
+                            <p class="item_name">{{ pet.name }}</p>
+                            <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                        </div>
+                    </div>
+                {% elif pet.id.startswith("J") %}
+                    <div class="adopt" id="adopt-jackaloaf">
+                        <div class="item" id="{{ pet.id }}">
+                            <img src="{{pet.egg_image_url}}">
+                            <p class="item_name">{{ pet.name }}</p>
+                            <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                        </div>
+                    </div>
+                {% elif pet.id.startswith("T") %}
+                    <div class="adopt" id="adopt-trotter">
+                        <div class="item" id="{{ pet.id }}">
+                            <img src="{{pet.egg_image_url}}">
+                            <p class="item_name">{{ pet.name }}</p>
+                            <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
 
-    {% for pet in pets %}
     <div id="purchase-adopt" class="popup">
         <div class="purchase-confirm">
-            <p>Would you like to buy {{ pet.name }} for {{ pet.price }}?</p>
+            <p id="confirm-text">Would you like to buy this pet?</p>
             <button id="yesButton" class="yes-no">Yes</button>
-            <button id="noButton"  class="yes-no" onclick="closeModal()">No</button>
+            <button id="noButton" class="yes-no" onclick="closeModal()">No</button>
         </div>
     </div>
-    {% endfor %}
 
     <a href="{{url_for('logout')}}">Press here to logout</a>
 </body>

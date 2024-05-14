@@ -84,23 +84,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 }); 
 
-document.addEventListener('DOMContentLoaded', function() {
-    var priceButtons = document.querySelectorAll('.price');
-    var popup = document.getElementById('purchase-adopt');
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.price');
+    const popup = document.getElementById('purchase-adopt');
+    const confirmText = document.getElementById('confirm-text');
 
-    priceButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const petName = button.getAttribute('data-name');
+            const petPrice = button.getAttribute('data-price');
+            confirmText.textContent = `Would you like to buy ${petName} for $${petPrice}?`;
             popup.style.display = 'block';
         });
     });
-
-    window.onclick = function(event) {
-        if (event.target == popup) {
-            popup.style.display = "none";
-        }
-    }
-
-    document.getElementById('noButton').addEventListener('click', function() {
-        popup.style.display = 'none';
-    });
 });
+
+function closeModal() {
+    document.getElementById('purchase-adopt').style.display = 'none';
+}
