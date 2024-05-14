@@ -143,8 +143,10 @@ def forums():
         topic = Topic(title=title, description=description, username=current_user.username)
         db.session.add(topic)
         db.session.commit()
-    topics = Topic.query.all()
+    
+    topics = Topic.query.order_by(Topic.id.desc()).all()
     return render_template('forums.html', topics=topics, username=current_user.username)
+
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
