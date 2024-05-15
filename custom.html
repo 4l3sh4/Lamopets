@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Customization</title>
+    <link rel="stylesheet" href="custom.css">
+</head>
+<body>
+    <div class="container">
+        <div class="avatar">
+            <div id="gender" class="avatar-part"></div>
+            <div id="eyes" class="avatar-part"></div>
+            <div id="mouth" class="avatar-part"></div>
+            <div id="misc" class="avatar-part"></div>
+            <div id="pants" class="avatar-part"></div>
+            <div id="shirt" class="avatar-part"></div>
+            <div id="hair" class="avatar-part"></div>
+            <div id="shoes" class="avatar-part"></div>
+        </div>
+        <div class="items-container">
+            <div class="category">
+                <label for="genderType">Gender:</label>
+                <div id="genderType" class="options">
+                    <div class="option" data-gender="male" onclick="changeGender('male')">
+                        <img src="cropped _assets/gender/male.png" alt="Male">
+                    </div>
+                    <div class="option" data-gender="female" onclick="changeGender('female')">
+                        <img src="cropped _assets/gender/female.png" alt="Female">
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <label for="eyesType">Eyes:</label>
+                <div id="eyesType" class="options">
+                    <div class="option" data-part="eyes" data-gender="male" data-image="customization_assets/eyes/m-eyes1.png">
+                        <img src="cropped _assets/eyes/eyes.png" alt="Male Eyes">
+                    </div>
+                    <div class="option" data-part="eyes" data-gender="female" data-image="customization_assets/eyes/f-eyes1.png">
+                        <img src="cropped _assets/eyes/eyes.png" alt="Female Eyes">
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <label for="mouthType">Mouth:</label>
+                <div id="mouthType" class="options">
+                    <div class="option" data-part="mouth" data-gender="male" data-image="customization_assets/mouth/m-mouth1.png">
+                        <img src="cropped _assets/mouth/mouth.png" alt="Male Mouth">
+                    </div>
+                    <div class="option" data-part="mouth" data-gender="female" data-image="customization_assets/mouth/f-mouth1.png">
+                        <img src="cropped _assets/mouth/mouth.png" alt="Female Mouth">
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <label for="hairType">Hair:</label>
+                <div id="hairType" class="options">
+                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair1.png">
+                        <img src="cropped _assets/hair/m-hair1.png" alt="Male Hair 1">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair2.png">
+                        <img src="cropped _assets/hair/m-hair2.png" alt="Male Hair 2">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair3.png">
+                        <img src="cropped _assets/hair/m-hair3.png" alt="Male Hair 3">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair4.png">
+                        <img src="cropped _assets/hair/m-hair4.png" alt="Male Hair 4">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair1.png">
+                        <img src="cropped _assets/hair/f-hair1.png" alt="Female Hair 1">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair2.png">
+                        <img src="cropped _assets/hair/f-hair2.png" alt="Female Hair 2">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair3.png">
+                        <img src="cropped _assets/hair/f-hair3.png" alt="Female Hair 3">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair4.png">
+                        <img src="cropped _assets/hair/f-hair4.png" alt="Female Hair 4">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair5.png">
+                        <img src="cropped _assets/hair/f-hair5.png" alt="Female Hair 5">
+                    </div>
+                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair6.png">
+                        <img src="cropped _assets/hair/f-hair6.png" alt="Hijab">
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <label for="shirtType">Shirt:</label>
+                <div id="shirtType" class="options">
+                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt1.png">
+                        <img src="cropped _assets/shirt/m-shirt1.png" alt="Male Shirt 1">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt2.png">
+                        <img src="cropped _assets/shirt/m-shirt2.png" alt="Male Shirt 2">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt3.png">
+                        <img src="cropped _assets/shirt/m-shirt3.png" alt="Male Shirt 3">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt4.png">
+                        <img src="cropped _assets/shirt/m-shirt4.png" alt="Male Shirt 4">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt5.png">
+                        <img src="cropped _assets/shirt/m-shirt5.png" alt="Male Shirt 5">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt6.png">
+                        <img src="cropped _assets/shirt/m-shirt6.png" alt="Male Shirt 6">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt1.png">
+                        <img src="cropped _assets/shirt/f-shirt1.png" alt="Female Shirt 1">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt2.png">
+                        <img src="cropped _assets/shirt/f-shirt2.png" alt="Female Shirt 2">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt3.png">
+                        <img src="cropped _assets/shirt/f-shirt3.png" alt="Female Shirt 3">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt4.png">
+                        <img src="cropped _assets/shirt/f-shirt4.png" alt="Female Shirt 4">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt5.png">
+                        <img src="cropped _assets/shirt/f-shirt5.png" alt="Female Shirt 5">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt6.png">
+                        <img src="cropped _assets/shirt/f-shirt6.png" alt="Female Shirt 6">
+                    </div>
+                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt7.png">
+                        <img src="cropped _assets/shirt/f-shirt7.png" alt="Female Shirt 7">
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <label for="pantsType">Pants:</label>
+                <div id="pantsType" class="options">
+                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants1.png">
+                        <img src="cropped _assets/pants/m-pants1.png" alt="Male Pants 1">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants2.png">
+                        <img src="cropped _assets/pants/m-pants2.png" alt="Male Pants 2">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants3.png">
+                        <img src="cropped _assets/pants/m-pants3.png" alt="Male Pants 3">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants4.png">
+                        <img src="cropped _assets/pants/m-pants4.png" alt="Male Pants 4">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants5.png">
+                        <img src="cropped _assets/pants/m-pants5.png" alt="Male Pants 5">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants1.png">
+                        <img src="cropped _assets/pants/f-pants1.png" alt="Female Pants 1">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants2.png">
+                        <img src="cropped _assets/pants/f-pants2.png" alt="Female Pants 2">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants3.png">
+                        <img src="cropped _assets/pants/f-pants3.png" alt="Female Pants 3">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants4.png">
+                        <img src="cropped _assets/pants/f-pants4.png" alt="Female Pants 4">
+                    </div>
+                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants5.png">
+                        <img src="cropped _assets/pants/f-pants5.png" alt="Female Pants 5">
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <label for="miscType">Accessories:</label>
+                <div id="miscType" class="options">
+                    <div class="option" data-part="misc" data-gender="male" data-image="customization_assets/misc/m-misc1.png">
+                        <img src="cropped _assets/misc/m-misc1.png" alt="Male Accessories 1">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="male" data-image="customization_assets/misc/m-misc2.png">
+                        <img src="cropped _assets/misc/m-misc2.png" alt="Male Accessories 2">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="male" data-image="customization_assets/misc/m-misc3.png">
+                        <img src="cropped _assets/misc/m-misc3.png" alt="Male Accessories 3">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="male" data-image="customization_assets/misc/m-misc0.png">None</div>
+                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc1.png">
+                        <img src="cropped _assets/misc/f-misc1.png" alt="Female Accessories 1">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc2.png">
+                        <img src="cropped _assets/misc/f-misc2.png" alt="Female Accessories 2">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc3.png">
+                        <img src="cropped _assets/misc/f-misc3.png" alt="Female Accessories 3">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc4.png">
+                        <img src="cropped _assets/misc/f-misc4.png" alt="Female Accessories 4">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc5.png">
+                        <img src="cropped _assets/misc/f-misc5.png" alt="Female Accessories 5">
+                    </div>
+                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc0.png">None</div>
+                </div>
+            </div>
+            <div class="category">
+                <label for="shoesType">Shoes:</label>
+                <div id="shoesType" class="options">
+                    <div class="option" data-part="shoes" data-gender="male" data-image="customization_assets/shoes/m-shoes1.png">
+                        <img src="cropped _assets/shoes/m-shoes1.png" alt="Male Shoes">
+                    </div>
+                    <div class="option" data-part="shoes" data-gender="female" data-image="customization_assets/shoes/f-shoes1.png">
+                        <img src="cropped _assets/shoes/f-shoes1.png" alt="Female Shoes 1">
+                    </div>
+                    <div class="option" data-part="shoes" data-gender="female" data-image="customization_assets/shoes/f-shoes2.png">
+                        <img src="cropped _assets/shoes/f-shoes2.png" alt="Female Shoes 2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="custom.js"></script>
+</body>
+</html>
