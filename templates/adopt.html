@@ -13,7 +13,7 @@
         <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-    <h2 class="currency-position">
+    <h2 class="currency-position" data-currency="{{ current_user.currency_balance }}">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
     </h2>
@@ -47,25 +47,25 @@
             </div>
 
             {% for pet in pets %}
-                {% if pet.id.startswith("A") %}
+                {% if pet.species.startswith("A") %}
                     <div class="adopt" id="adopt-aquana">
-                        <div class="item" id="{{ pet.id }}">
+                        <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name">{{ pet.name }}</p>
                             <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
-                {% elif pet.id.startswith("J") %}
+                {% elif pet.species.startswith("J") %}
                     <div class="adopt" id="adopt-jackaloaf">
-                        <div class="item" id="{{ pet.id }}">
+                        <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name">{{ pet.name }}</p>
                             <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
-                {% elif pet.id.startswith("T") %}
+                {% elif pet.species.startswith("T") %}
                     <div class="adopt" id="adopt-trotter">
-                        <div class="item" id="{{ pet.id }}">
+                        <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name">{{ pet.name }}</p>
                             <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>

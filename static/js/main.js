@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.price');
     const popup = document.getElementById('purchase-adopt');
     const confirmText = document.getElementById('confirm-text');
+    const yesButton = document.getElementById('yesButton');
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
@@ -95,10 +96,50 @@ document.addEventListener('DOMContentLoaded', () => {
             const petPrice = button.getAttribute('data-price');
             confirmText.textContent = `Would you like to buy ${petName} for $${petPrice}?`;
             popup.style.display = 'block';
+
+            const petElement = button.closest('.item');
+            document.querySelectorAll('.item.active').forEach(item => item.classList.remove('active'));
+            petElement.classList.add('active');
+
+            document.querySelector('#pet-id').value = petElement.id;
         });
     });
+
+    const initialPetElement = document.querySelector('.item.active');
+    if (initialPetElement) {
+        initialPetElement.classList.add('active');
+    }
+
+    yesButton.addEventListener('click', function() {
+        const petSpecies = document.querySelector('.item.active').id;
+
+        fetch('/adopt_pet/' + petSpecies, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                closeModal();
+
+                const currencyPosition = document.querySelector('.currency-position');
+                const currentBalance = parseInt(currencyPosition.dataset.currency);
+                const newBalance = currentBalance - selectedPetPrice;
+                currencyPosition.dataset.currency = newBalance;
+                currencyPosition.textContent = newBalance;
+            } else {
+                alert('Failed to adopt pet');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    });
+
 });
 
 function closeModal() {
     document.getElementById('purchase-adopt').style.display = 'none';
+    document.querySelector('.item.active').classList.remove('active');
 }

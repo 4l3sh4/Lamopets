@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
-
+from flask import jsonify
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -136,6 +136,18 @@ def minigamesfeedingtime():
 def adopt():
     pets = Pet.query.all()
     return render_template('adopt.html', pets=pets)
+
+@app.route('/adopt_pet/<string:pet_species>', methods=['POST'])
+@login_required
+def adopt_pet(pet_species):
+    pet = Pet.query.filter_by(species=pet_species).first()
+    if pet:
+        adopted_pet = AdoptedPet(species=pet_species, username=current_user.username)
+        db.session.add(adopted_pet)
+        db.session.commit()
+        return jsonify({'success': True})
+    else:
+        abort(404) 
 
 @app.route('/forums', methods=['GET', 'POST'])
 @login_required
