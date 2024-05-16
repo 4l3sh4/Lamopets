@@ -36,11 +36,23 @@ class AdoptedPet(db.Model):
     adopt_id = db.Column(db.Integer, primary_key=True)
     species = db.Column(db.String(2), db.ForeignKey('pet.species'), nullable=False)
     username = db.Column(db.String(20), nullable=False)
+    pet_name = db.Column(db.String(100), nullable=False)  # New column
+    pet_image_url = db.Column(db.String(200), nullable=False)  # New column
     pet = db.relationship('Pet', backref='adopted_by')
 
     @property
     def user(self):
         return User.query.filter_by(username=self.username).first()
+
+    def __init__(self, species, username):
+        self.species = species
+        self.username = username
+        pet_data = Pet.query.filter_by(species=species).first()
+        if pet_data:
+            self.pet_name = pet_data.name
+            self.pet_image_url = pet_data.pet_image_url
+        else:
+            raise ValueError("Pet species not found in Pet table")
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
