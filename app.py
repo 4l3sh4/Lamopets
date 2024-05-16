@@ -146,10 +146,14 @@ def adopt():
 def adopt_pet(pet_species):
     pet = Pet.query.filter_by(species=pet_species).first()
     if pet:
-        adopted_pet = AdoptedPet(species=pet_species, username=current_user.username)
-        db.session.add(adopted_pet)
-        db.session.commit()
-        return jsonify({'success': True})
+        if current_user.currency_balance >= pet.price:
+            current_user.currency_balance -= pet.price
+            db.session.commit()
+            
+            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username)
+            db.session.add(adopted_pet)
+            db.session.commit()
+            return jsonify({'success': True})
     else:
         abort(404) 
 
