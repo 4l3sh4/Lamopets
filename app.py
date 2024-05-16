@@ -24,10 +24,10 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
-    currency_balance = db.Column(db.Integer() , default=1000)
+    currency_balance = db.Column(db.Integer, default=1000)
 
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -97,6 +97,11 @@ def minigames():
 @login_required
 def minigamesfeedingtime():
     return render_template('minigames-feeding-time.html')
+
+@app.route('/minigames-jump-jump-jackaloaf', methods=['GET', 'POST'])
+@login_required
+def minigamesjumpjumpjackaloaf():
+    return render_template('minigames-jump-jump-jackaloaf.html')
 
 @app.route('/adopt', methods=['GET', 'POST'])
 @login_required
@@ -182,5 +187,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-    
