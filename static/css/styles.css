@@ -7,10 +7,73 @@ img {
     position: relative;
     width: 15%;
     text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-h1 {
-    text-align: center;
+@font-face {
+    font-family: "Sugar Cream";
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
+.currency-position {
+    position: absolute;
+    top: 1px;
+    right: 20px;
+    width: auto;
+    height: 30px;
+    padding: 10px;
+    border-color: #eddba5;
+    border-width: 8px;
+    border-style: double;
+    background-color: #e27e87;
+    border-radius: 50px;
+    font-family: 'Sugar Cream';
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#coin {
+    width: 30px;
+    height: auto;
+    margin-right: 5px;
+}
+
+
+.minigame-contents {
+    background: white;
+    height: 56vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 30px;
+}
+
+.minigame-contents img {
+    width:50%;
+    height:96%;
+    border-radius: 5%;
+}
+
+.minigame-contents img:hover {
+    border: 5px solid #e27e87;
+}
+
+.minigame-player {
+    background: rgba(255, 255, 255, 0);
+    height: 520px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 30px;
+}
+
+#canvas1 {
+    width: 800px;
+    height: 500px;
+    border: 4px solid black;
 }
 
 .logo{
@@ -78,10 +141,12 @@ h1 {
 @media screen and (max-width: 800px) {
     .navbar a{
         font-size: 12px;
-        padding: 10px 12px;
     }
-    img {
-        width: 23%;
+    .currency-position {
+        font-size: 20px;
+        width: 60px;
+        height: 20px;
+        border-width: 6px;
     }
 }
 
@@ -91,6 +156,11 @@ h1 {
     }
     #navicon{
         display: block;
+    }
+    .currency-position {
+        font-size: 15px;
+        width: 40px;
+        height: 15px;
     }
 }
 
@@ -158,7 +228,7 @@ h1 {
 
 .container {
     background: #fffffe;
-    height: 56vh;
+    height: 58.5vh;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 36px;
@@ -197,5 +267,3 @@ ul.no-bullets {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
 }
-
-
