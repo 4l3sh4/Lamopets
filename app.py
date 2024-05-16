@@ -38,6 +38,10 @@ class AdoptedPet(db.Model):
     username = db.Column(db.String(20), nullable=False)
     pet = db.relationship('Pet', backref='adopted_by')
 
+    @property
+    def user(self):
+        return User.query.filter_by(username=self.username).first()
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
