@@ -37,53 +37,87 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeLink.classList.add('active');
             }
         });
-    }, { rootMargin: '0px', threshold: 0.05 });
+    }, { rootMargin: '0px', threshold: 0.1 });
 
     sections.forEach(section => {
         observer.observe(section);
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    const colourButtons = document.querySelectorAll('.colour-options');
-    const item = document.getElementById('head1');
+document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll('.adopt');
+    const navLinks = document.querySelectorAll('.nav-adopt a');
 
-    colourButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const colour = this.getAttribute('data-filter');
-
-            switch(colour) {
-                case 'black':
-                    item.style.filter = 'grayscale(50%) brightness(40%) saturate(400%)';
-                    break;
-                case 'blue':
-                    item.style.filter = 'saturate(150%) sepia(70%) hue-rotate(180deg)';
-                    break;
-                case 'green':
-                    item.style.filter = 'saturate(200%) sepia(50%) hue-rotate(90deg)';
-                    break;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const activeLink = document.querySelector(`.nav-adopt a[href="#${entry.target.id}"]`);
+                navLinks.forEach(link => link.classList.remove('active'));
+                activeLink.classList.add('active');
             }
         });
+    }, { rootMargin: '0px', threshold: 0.5 });
+
+    sections.forEach(section => {
+        observer.observe(section);
     });
-}); 
+});
 
-document.addEventListener('DOMContentLoaded', function() {
-    var priceButtons = document.querySelectorAll('.price');
-    var popup = document.getElementById('purchase-popup');
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.price');
+    const popup = document.getElementById('purchase-adopt');
+    const confirmText = document.getElementById('confirm-text');
+    const yesButton = document.getElementById('yesButton');
 
-    priceButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const petName = button.getAttribute('data-name');
+            const petPrice = button.getAttribute('data-price');
+            confirmText.textContent = `Would you like to buy ${petName} for $${petPrice}?`;
             popup.style.display = 'block';
+
+            const petElement = button.closest('.item');
+            document.querySelectorAll('.item.active').forEach(item => item.classList.remove('active'));
+            petElement.classList.add('active');
+
+            document.querySelector('#pet-id').value = petElement.id;
         });
     });
 
-    window.onclick = function(event) {
-        if (event.target == popup) {
-            popup.style.display = "none";
-        }
+    const initialPetElement = document.querySelector('.item.active');
+    if (initialPetElement) {
+        initialPetElement.classList.add('active');
     }
 
-    document.getElementById('noButton').addEventListener('click', function() {
-        popup.style.display = 'none';
+    yesButton.addEventListener('click', function() {
+        const petSpecies = document.querySelector('.item.active').id;
+
+        fetch('/adopt_pet/' + petSpecies, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                closeModal();
+
+                setTimeout(() => {
+                    location.reload();
+                }, 700);
+
+            } else {
+                alert('Adoption Unsuccessful');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
     });
+
 });
+
+function closeModal() {
+    document.getElementById('purchase-adopt').style.display = 'none';
+    document.querySelector('.item.active').classList.remove('active');
+}
