@@ -24,7 +24,6 @@ window.addEventListener('resize', function() {
         document.getElementById("navicon").style.display = "block"; 
     }
 });
-
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll('.store');
     const navLinks = document.querySelectorAll('.nav-store a');

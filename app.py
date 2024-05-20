@@ -159,6 +159,11 @@ def minigames():
 def minigamesfeedingtime():
     return render_template('minigames-feeding-time.html')
 
+@app.route('/minigames-jump-jump-jackaloaf', methods=['GET', 'POST'])
+@login_required
+def minigamesjumpjumpjackaloaf():
+    return render_template('minigames-jump-jump-jackaloaf.html')
+
 @app.route('/adopt', methods=['GET', 'POST'])
 @login_required
 def adopt():
@@ -311,6 +316,13 @@ def add_pets_data():
         if not pet:
             new_pet = Pet(**pet_data)
             db.session.add(new_pet)
+    db.session.commit()
+
+@app.route('/gain_currency', methods=['POST'])
+@login_required
+def gain_currency():
+    score = request.get_json()
+    current_user.currency_balance += score
     db.session.commit()
 
 if __name__ == '__main__':

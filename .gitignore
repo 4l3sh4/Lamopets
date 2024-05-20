@@ -3,3 +3,4 @@
 
 # databases
 *.db
+instance/database.db
