@@ -6,11 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
-        <script src="{{url_for('static', filename='js/main.js')}}"></script> 
+        <script src="{{url_for('static', filename='js/main.js')}}"></script>
     </head>
-
     <body>
-
+        <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
         <div class="logo">
             <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
             <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -47,12 +46,26 @@
             <div class="container">
                 <div class="content-large" id="content-1">
                     <h1 style="font-family: 'Sugar Cream'; font-size: 50px;">Welcome to the world of Lamopets!</h1>
-
                     <h3>Lamopets is a virtual pet-collecting website where you can do all sorts of things, such as...</h2>
                     <h3>Play minigames to buy items, or even pets!</h3>
+                    <a href="{{url_for('minigamesfeedingtime')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}" id="minigame-thumbnails"></a>
+                    <a href="{{url_for('minigamesjumpjumpjackaloaf')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}" id="minigame-thumbnails"></a>
                     <h3>Customize your virtual self!</h3>
+                    <div class="slideshow-container" id="slideshow-container-3">
+                        <div class="mySlidesFour">
+                            <img src="{{ url_for('static', filename='assets/homepage/customize-yourself-1.png') }}" style="width:50%">
+                        </div>
+
+                        <div class="mySlidesFour">
+                            <img src="{{ url_for('static', filename='assets/homepage/customize-yourself-2.png') }}" style="width:50%">
+                        </div>
+
+                        <div class="mySlidesFour">
+                            <img src="{{ url_for('static', filename='assets/homepage/customize-yourself-3.png') }}" style="width:50%">
+                        </div>
+                    </div>
                     <h3>Converse with other players by posting on the forums!</h3>
-                    <img src="{{ url_for('static', filename='assets/conversing.png') }}" style="width:70%">
+                    <img src="{{ url_for('static', filename='assets/homepage/conversing.png') }}" style="width:50%">
 
                     <h2>What are you waiting for?</h2>
                     <h2><a href="{{url_for('login')}}">Make an account now</a> and enjoy the fun!</h2>
@@ -159,6 +172,21 @@
               if (slideThreeIndex > slidesThree.length) {slideThreeIndex = 1}
               slidesThree[slideThreeIndex-1].style.display = "block";  
               setTimeout(showSlidesThree, 3000); // Change image every 2 seconds
+            }
+
+            let slideFourIndex = 0;
+            showSlidesFour();
+            
+            function showSlidesFour() {
+              let i;
+              let slidesFour = document.getElementsByClassName("mySlidesFour");
+              for (i = 0; i < slidesFour.length; i++) {
+                slidesFour[i].style.display = "none";  
+              }
+              slideFourIndex++;
+              if (slideFourIndex > slidesFour.length) {slideFourIndex = 1}
+              slidesFour[slideFourIndex-1].style.display = "block";  
+              setTimeout(showSlidesFour, 500); // Change image every 2 seconds
             }
         </script>
     </body>

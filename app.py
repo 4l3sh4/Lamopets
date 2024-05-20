@@ -183,6 +183,13 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
+@app.route('/gain_currency', methods=['POST'])
+@login_required
+def gain_currency():
+    score = request.get_json()
+    current_user.currency_balance += score
+    db.session.commit()
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

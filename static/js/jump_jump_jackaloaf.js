@@ -124,6 +124,21 @@ function update(){
         context.fillText("You've gained " + Math.trunc(score/20) + " Lamocoins!", 125, 400);
         context.font = "31px Trebuchet MS";
         context.fillText("Press 'Space' to Restart!", 190, 450);
+        fetch('/gain_currency', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Math.trunc(score/20)),
+        })
+        .then(response => {
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+        })
+        .catch(error => {
+            console.error(error);
+        });
     }
 }
 

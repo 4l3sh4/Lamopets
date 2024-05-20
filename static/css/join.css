@@ -1,8 +1,10 @@
 h1 {
     text-transform: uppercase;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: 'Sugar Cream';
+    font-size: 30px;
     font-weight: bold;
     color: #000000;
+    margin-top: 5px;
 }
 
 body {
@@ -21,6 +23,8 @@ form {
 
 form input[type="text"],
 form input[type="password"] {
+    font-family: 'Sugar Cream';
+    font-size: 20px;
     width: 80%;
     padding: 10px;
     margin-bottom: 15px;
@@ -30,9 +34,13 @@ form input[type="password"] {
 
 form input[type="text"] {
     margin-top: 20px;
+    font-family: 'Sugar Cream';
+    font-size: 20px;
 }
 
 form input[type="submit"] {
+    font-family: 'Sugar Cream';
+    font-size: 20px;
     width: 20%;
     padding: 10px;
     margin-bottom: 10px;
@@ -56,6 +64,7 @@ a {
     margin-top: 15px;
     color: #000000;
     text-decoration: none;
+    font-size: 20px;
 }
 
 a:hover {

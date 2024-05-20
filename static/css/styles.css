@@ -3,6 +3,12 @@ body {
     text-align: center;
 }
 
+.login {
+    background-image: linear-gradient(#c1eae6, #ffffff);
+    margin-top: 10px;
+    font-family: 'Sugar Cream';
+}
+
 img {
     position: relative;
     width: 15%;
@@ -24,6 +30,14 @@ img {
     transform: rotate(-2deg);
 }
 
+/* balls */
+.ball {
+    position: absolute;
+    border-radius: 100%;
+    opacity: 0.7;
+    z-index: -1;
+}
+
 /* slideshow */
 .mySlides {
     display: none;
@@ -32,17 +46,22 @@ img {
 .slideshow-container {
     max-width: 1000px;
     position: relative;
-    border-style: double;
-    border-width: 5px;
-    transform: rotate(-2deg);
     margin: 10px;
 }
 
 #slideshow-container-1 {
+    border-style: double;
+    border-width: 5px;
     transform: rotate(-2deg);
 }
 
 #slideshow-container-2 {
+    border-style: double;
+    border-width: 5px;
+    transform: rotate(2deg);
+}
+
+#slideshow-container-3 {
     transform: rotate(2deg);
 }
 
@@ -62,21 +81,21 @@ img {
   
     /* When the animation is finished, start again */
     animation-iteration-count: infinite;
-  }
+}
   
-  @keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    30% { transform: translate(3px, 2px) rotate(0deg); }
-    40% { transform: translate(1px, -1px) rotate(1deg); }
-    50% { transform: translate(-1px, 2px) rotate(-1deg); }
-    60% { transform: translate(-3px, 1px) rotate(0deg); }
-    70% { transform: translate(3px, 1px) rotate(-1deg); }
-    80% { transform: translate(-1px, -1px) rotate(1deg); }
-    90% { transform: translate(1px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
-  }
+@keyframes shake {
+0% { transform: translate(1px, 1px) rotate(0deg); }
+10% { transform: translate(-1px, -2px) rotate(-1deg); }
+20% { transform: translate(-3px, 0px) rotate(1deg); }
+30% { transform: translate(3px, 2px) rotate(0deg); }
+40% { transform: translate(1px, -1px) rotate(1deg); }
+50% { transform: translate(-1px, 2px) rotate(-1deg); }
+60% { transform: translate(-3px, 1px) rotate(0deg); }
+70% { transform: translate(3px, 1px) rotate(-1deg); }
+80% { transform: translate(-1px, -1px) rotate(1deg); }
+90% { transform: translate(1px, 2px) rotate(0deg); }
+100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
   
 
 /* buttons */
@@ -151,6 +170,18 @@ img {
     font-family: 'Sugar Cream';
 }
 
+#minigame-thumbnails {
+    width: 40%;
+    border-radius: 5%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#minigame-thumbnails:hover {
+    border: 5px solid #e27e87;
+    animation: shake 1.5s;
+}
+
 .minigame-contents {
     background: white;
     margin-top: 10px;
@@ -158,13 +189,13 @@ img {
     margin-left: 50px;
     margin-right: 50px;
     padding: 30px;
-    border-radius: 15%;
+    border-radius: 5%;
 }
 
 .minigame-contents img {
     width:50%;
     height:100%;
-    border-radius: 5%;
+    border-radius: 8%;
 }
 
 .minigame-contents img:hover {
@@ -383,7 +414,71 @@ ul.no-bullets {
     background-color: #ffffff00;
 }
 
-#content-2 h3 {
+#content-2 a {
     text-transform: uppercase;
-    font-size: 22px;
+    font-size: 25px;
 }
+
+/* wave animation */
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(#c1eae6, #76a7a2);
+    overflow: hidden;
+    padding-bottom: 50px;
+  }
+  section .air{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
+    background-size: 1000px 100px
+  }
+  section .air.air1{
+    animation: wave 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
+  }
+  section .air.air2{
+    animation: wave2 15s linear infinite;
+    z-index: 999;
+    opacity: 0.5;
+    animation-delay: -5s;
+    bottom: 10px;
+  }
+  section .air.air3{
+    animation: wave 30s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15px;
+  }
+  section .air.air4{
+    animation: wave2 5s linear infinite;
+    z-index: 997;
+    opacity: 0.7;
+    animation-delay: -5s;
+    bottom: 20px;
+  }
+  @keyframes wave{
+    0%{
+      background-position-x: 0px; 
+    }
+    100%{
+      background-position-x: 1000px; 
+    }
+  }
+  @keyframes wave2{
+    0%{
+      background-position-x: 0px; 
+    }
+    100%{
+      background-position-x: -1000px; 
+    }
+  }

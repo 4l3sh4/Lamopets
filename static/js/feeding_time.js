@@ -267,10 +267,26 @@ function handlePiranhas(){
 // game over
 function handleGameOver(){
     ctx.fillStyle = 'black';
-    ctx.fillText('GAME OVER', 260, 200);
-    ctx.fillText('You reached a score of ' + score + '!', 100, 270);
+    ctx.fillText('GAME OVER', 270, 230);
+    ctx.fillText('You have gained ' + score*2 + ' Lamocoins!', 70, 300);
     gameOver = true;
+    fetch('/gain_currency', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(score*2),
+    })
+    .then(response => {
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+    })
+    .catch(error => {
+        console.error(error);
+    });
 }
+
 
 // background
 var backgroundImages = [];
