@@ -5,10 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/join.css') }}">
-        <script src="{{url_for('static', filename='js/main.js')}}"></script>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
         <title>Login</title>
     </head>
-    <body>
+    <section>
+<body class="login">
         <div class="logo">
             <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
             <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -24,5 +26,10 @@
             </form>
             <a href="{{url_for('register')}}">Don't have an account? Sign Up</a>
         </div>
-    </body>
+        <div class='air air1'></div>
+    <div class='air air2'></div>
+    <div class='air air3'></div>
+    <div class='air air4'></div>
+</body>
+</section>
 </html>
