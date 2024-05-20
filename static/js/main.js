@@ -43,6 +43,29 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(section);
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const colorButtons = document.querySelectorAll('.colour-options');
+
+    colorButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const filter = button.getAttribute('data-filter') || 'none';  // Default to 'none' if filter is not set
+            const price = button.getAttribute('data-price');
+            const img = button.closest('.item').querySelector('img');
+            const activePriceButton = button.closest('.item').querySelector('#active-price');
+
+            console.log(`Applying filter: ${filter}`);  // Debug statement
+            console.log(`Updating price: ${price}`);  // Debug statement
+
+            // Apply filter to image
+            img.style.filter = filter;
+
+            // Update price button
+            activePriceButton.setAttribute('data-price', price);
+            activePriceButton.textContent = `$${price}`;
+        });
+    });
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll('.adopt');

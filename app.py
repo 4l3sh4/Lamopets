@@ -28,9 +28,10 @@ def load_user(user_id):
 
 class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    inventory_id = db.Column(db.String(120), unique=True, nullable=False)
-    user_name = db.Column(db.Integer, db.ForeignKey('user.username'), unique=True)
+    user_name = db.Column(db.String(20), db.ForeignKey('user.username'), unique=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'), unique=True)
     user = db.relationship('User', back_populates='inventory')
+    item = db.relationship('Item', back_populates='inventory')
 
 class AdoptedPet(db.Model):
     adopt_id = db.Column(db.Integer, primary_key=True)
@@ -48,7 +49,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer, default=1000)
 
-    inventory = db.relationship('Inventory', back_populates='user', uselist=False)
+    inventory = db.relationship('Inventory', back_populates='user')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -73,6 +74,28 @@ class Pet(db.Model):
     price = db.Column(db.Integer, nullable=False)
     egg_image_url = db.Column(db.String(200), nullable=False)
     pet_image_url = db.Column(db.String(200), nullable=False)
+
+class Item(db.Model): 
+    id = db.Column(db.String(2), primary_key=True, nullable=False)
+    base_id = db.Column(db.String(10), nullable=False)
+    gender = db.Column(db.String(1), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    colour = db.Column(db.String(200), nullable=False)
+    filter_colour = db.Column(db.String(500), nullable=False)
+    thumbnail_url = db.Column(db.String(200), nullable=False)
+    image_url = db.Column(db.String(200), nullable=False)
+
+    inventory = db.relationship('Inventory', back_populates='item')
+
+    @staticmethod
+    def get_items_grouped_by_base_id():
+        items = db.session.query(Item).all()
+        grouped_items = {}
+        for item in items:
+            if item.base_id not in grouped_items:
+                grouped_items[item.base_id] = []
+            grouped_items[item.base_id].append(item)
+        return grouped_items
 
 class RegisterForm(FlaskForm): 
     username = StringField(validators=[InputRequired(), Length(
@@ -123,7 +146,8 @@ def profile():
 @app.route('/store')
 @login_required
 def store():
-    return render_template('store.html')
+    grouped_items = Item.get_items_grouped_by_base_id()
+    return render_template('store.html', grouped_items=grouped_items)
 
 @app.route('/minigames')
 @login_required
@@ -229,13 +253,28 @@ def register():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         new_user = User(username=form.username.data, password=hashed_password)
-        new_inventory = Inventory(inventory_id=f"{form.username.data}_inventory", user=new_user)
 
         db.session.add(new_user)
-        db.session.add(new_inventory)
         db.session.commit()
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
+
+def add_items_data():
+    items_data = [
+        {"id": "H01BLACK", "base_id": "H01", "gender": "F", "price": 150, "colour": "#000000", "filter_colour": "grayscale(50%) brightness(40%) saturate(400%)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair1.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair1.png'},
+        {"id": "H01BROWN", "base_id": "H01", "gender": "F", "price": 250, "colour": "#744700", "filter_colour": "sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair1.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair1.png'},
+        {"id": "H01BLONDE", "base_id": "H01", "gender": "F", "price": 350, "colour": "#D9B380", "filter_colour": "sepia(100%) brightness(1.3)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair1.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair1.png'},
+        {"id": "H02BLUE", "base_id": "H02", "gender": "F", "price": 150, "colour": "#59CFB5", "filter_colour": "", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair2.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair2.png'},
+        {"id": "H02GREEN", "base_id": "H02", "gender": "F", "price": 250, "colour": "#744700", "filter_colour": "hue-rotate(300deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair2.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair2.png'},
+        {"id": "H02PINK", "base_id": "H02", "gender": "F", "price": 350, "colour": "#D9B380", "filter_colour": "hue-rotate(190deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair2.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair2.png'},
+    ]
+    
+    for item_data in items_data:
+        item = Item.query.filter_by(id=item_data["id"]).first()
+        if not item:
+            new_item = Item(**item_data)
+            db.session.add(new_item)
+    db.session.commit()
 
 def add_pets_data():
     pets_data = [
@@ -277,5 +316,6 @@ def add_pets_data():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        add_items_data()
         add_pets_data()
     app.run(debug=True)
