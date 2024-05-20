@@ -1,0 +1,212 @@
+@media screen and (max-width: 800px) {
+    .item {
+        width: 48%; 
+        margin: 1%;
+    }
+    .item img {
+        width: 40%; 
+    }
+    .container-adopt {
+        height: 60vh !important;
+    }
+    .nav-adopt a.active {
+        font-size: 115%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .adopt {
+        flex-direction: column;
+        align-items: center;
+    }
+    .item {
+        width: 50px;
+        margin: 5px auto !important;
+    }
+    .container-adopt {
+        height: 70vh !important;
+        margin: 3px 10px;
+    }
+    .container-adopt h1{
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+    .nav-adopt a{
+        font-size: 12px !important;
+    }
+    .nav-adopt a.active {
+        font-size: 105% !important;
+    }
+}
+
+.container-adopt {
+    background: #fbefcb;
+    height: 55vh;
+    margin: 3px 86px;
+    border: 20px solid #fffffe;
+    overflow-y: scroll;
+}
+
+.adopt{
+    display: inline-block;          
+}
+
+.nav-adopt a{
+    color: #fffffe;
+    background-color: #e27e87;
+    border-radius: 15px;
+    padding: 10px 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.nav-adopt a:hover{
+    color: #e27e87;
+    background-color: #fbefcb;
+    border: 2px solid #e27e87;
+}
+
+.nav-adopt{
+    padding: 20px;
+    position: sticky;
+    margin-bottom: 20px;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    white-space: nowrap;
+    z-index: 1000;
+    top: 0;
+    background-color: #fbefcb;
+}
+
+.nav-adopt a.active {
+    color: #e27e87;
+    background-color: #fbefcb;
+    border: 2px solid #e27e87;
+    font-size: 120%;
+    font-weight: bold !important;
+}
+
+.nav-adopt::-webkit-scrollbar {
+    display: none;
+}
+
+.item {
+    border: 4px solid #c8980a; 
+    padding: 10px;
+    margin: 30px;
+    width: 200px;
+    height: 270px;
+    float: left; 
+    text-align: center;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;
+}
+
+.item img {
+    width: auto; 
+    height: 140px;  
+    display: block;
+}
+
+.item p{
+    font-size: 20px;
+    margin: 10px;
+}
+
+.price {
+    margin: 5px 0; 
+    padding: 8px 12px;
+    background-color: #e27e87;
+    color: #fffffe;
+    border-radius: 5px;
+    border: 0;
+    font-size: 15px;
+}
+
+.price:hover{
+    cursor: pointer;
+    font-size: 110%;
+    font-weight: bold !important;
+}
+
+.item:hover{
+    background-color: #ffe493;
+}
+
+.colour-options{
+    border-radius: 100%;
+    border: none;
+    height: 22px;
+    width: 22px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.colour-options:hover{
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+}
+
+.popup {
+    display: none; 
+    position: fixed; 
+    z-index: 1001; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.purchase-confirm {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 70px;
+    border: 5px solid #c8980a;
+    border-radius: 60px;
+    width: 30%; 
+    font-size: 25px;
+}
+
+button {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+button p{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.yes-no{
+    margin: 10px 20px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    border-radius: 10px;
+    padding: 10px;
+    width: 70px;
+    color: #fffffe;
+    border: none;
+}
+
+#yesButton {
+    background-color: #7ee27e;
+}
+
+#yesButton:hover {
+    background-color: #336b33;
+}
+
+#noButton {
+    background-color: #e27e87;
+}
+
+#noButton:hover {
+    background-color: #a14c53;
+}

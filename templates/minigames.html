@@ -14,12 +14,10 @@
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-
     <h2 class="currency-position">
-        <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}">
+        <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
     </h2>
-
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
