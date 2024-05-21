@@ -5,13 +5,13 @@ body {
 .container {
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
-    flex-direction: row; 
+    align-items: flex-start;
+    flex-direction: row;
     margin-top: 50px;
 }
 
 .items-container {
-    height: 560px; 
+    height: 560px;
     overflow-y: auto;
     margin-left: 80px;
 }
@@ -21,7 +21,7 @@ body {
     width: 450px;
     height: 560px;
     border: 5px solid #ff919a;
-    margin-right: 10px; 
+    margin-right: 10px;
     background-color: #ffffff;
 }
 
@@ -33,6 +33,7 @@ body {
     height: 100%;
     background-size: contain;
     background-position: center;
+    filter: var(--part-filter, none);
 }
 
 .options {
@@ -60,8 +61,8 @@ body {
 
 .option {
     cursor: pointer;
-    width: 80px; 
-    height: 80px; 
+    width: 80px;
+    height: 80px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -71,8 +72,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     margin-bottom: 5px;
+    position: relative; /* Added for positioning the color buttons */
 }
 
 .option img {
@@ -85,4 +87,28 @@ body {
 
 .option:hover {
     background-color: #e0e0e0;
+}
+
+.color-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    position: absolute; /* Added for positioning */
+    bottom: -20px; /* Adjust this value as needed to position below the image */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.color-btn {
+    width: 10px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 2px 2px 2px #a9a9a9;
+}
+
+.color-btn:hover {
+    transform: scale(1.5);
 }
