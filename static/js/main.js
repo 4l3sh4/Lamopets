@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.price');
     const popup = document.getElementById('purchase-adopt');
-    const confirmText = document.getElementById('confirm-text');
+    const confirmText = document.getElementById('confirm-text-adopt');
     const yesButton = document.getElementById('yesButton');
 
     buttons.forEach(button => {
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => {
             if (response.ok) {
-                closeModal();
+                closeModalAdopt();
 
                 setTimeout(() => {
                     location.reload();
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-function closeModal() {
+function closeModalAdopt() {
     document.getElementById('purchase-adopt').style.display = 'none';
     document.querySelector('.item.active').classList.remove('active');
 }
