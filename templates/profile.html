@@ -49,6 +49,14 @@
             </div>
             <div class="column-2">
                 <h1>{{ current_user.username }}'s Sanctuary</h1>
+
+                {% for adopted_pet, pet in adopted_pets %}
+                <div class="item" id="{{ adopted_pet.species }}">
+                    <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}">
+                    <p class="item_name">{{ pet.name }}</p>
+                </div>
+                {% endfor %}
+
             </div>
         </div>
     </div>
