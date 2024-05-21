@@ -149,6 +149,22 @@ def store():
     grouped_items = Item.get_items_grouped_by_base_id()
     return render_template('store.html', grouped_items=grouped_items)
 
+@app.route('/purchase_item/<string:item_id>', methods=['POST'])
+@login_required
+def purchase_item(item_id):
+    item = Item.query.filter_by(id=item_id).first()
+    if item:
+        if current_user.currency_balance >= item.price:
+            current_user.currency_balance -= item.price
+            db.session.commit()
+            
+            inventory = Inventory(id=item_id, username=current_user.username)
+            db.session.add(inventory)
+            db.session.commit()
+            return jsonify({'success': True})
+    else:
+        abort(404) 
+
 @app.route('/minigames')
 @login_required
 def minigames():
