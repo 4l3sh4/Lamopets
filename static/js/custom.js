@@ -1,10 +1,25 @@
 document.getElementById('saveButton').addEventListener('click', function() {
     html2canvas(document.getElementById('avatar'), {
         onrendered: function(canvas) {
-            var link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'avatar.png';
-            link.click();
+            var imgData = canvas.toDataURL('image/png');
+            fetch('/save-avatar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: imgData }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Avatar saved successfully!');
+                } else {
+                    alert('Failed to save avatar: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error saving avatar:', error);
+            });
         }
     });
 });

@@ -1,16 +1,22 @@
-from flask import Flask, render_template, url_for, redirect, request, abort
+from flask import Flask, render_template, url_for, redirect, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
-
+import base64
+from datetime import datetime
 import os
+
 basedir = os.path.abspath(os.path.dirname(__file__))
+instance_dir = os.path.join(basedir, 'instance')
+
+if not os.path.exists(instance_dir):
+    os.makedirs(instance_dir)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'instance', 'database.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(instance_dir, 'database.db')
 app.config['SECRET_KEY'] = 'Battery-AAA'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -27,7 +33,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
-    currency_balance = db.Column(db.Integer() , default=1000)
+    currency_balance = db.Column(db.Integer(), default=1000)
+    avatar = db.Column(db.String(120), nullable=True)
 
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,26 +49,19 @@ class Comment(db.Model):
     topic = db.relationship('Topic', backref=db.backref('comments', lazy=True, cascade='all, delete-orphan'))
     username = db.Column(db.String(20), nullable=False)
 
-
 class RegisterForm(FlaskForm): 
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Username"})
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Password"})
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Register")
 
     def validate_username(self, username):
-        existing_user_username = User.query.filter_by(
-            username=username.data).first()
+        existing_user_username = User.query.filter_by(username=username.data).first()
         if existing_user_username:
-            raise ValidationError(
-                "That username already exists. Please choose a different one.")
+            raise ValidationError("That username already exists. Please choose a different one.")
 
 class LoginForm(FlaskForm): 
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Username"})
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Password"})
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
 
 @app.route('/')
@@ -86,6 +86,22 @@ def profile():
 @app.route('/custom')
 def custom():
     return render_template('custom.html')
+
+@app.route('/save-avatar', methods=['POST'])
+def save_avatar():
+    data = request.json
+    if 'image' not in data:
+        return jsonify({'success': False, 'error': 'No image data provided'}), 400
+    
+    image_data = data['image']
+    header, encoded = image_data.split(",", 1)
+    image = base64.b64decode(encoded)
+    
+    file_path = os.path.join('static/avatars', 'avatar.png')  # Change as needed
+    with open(file_path, 'wb') as f:
+        f.write(image)
+    
+    return jsonify({'success': True})
 
 @app.route('/store')
 @login_required
@@ -123,7 +139,6 @@ def forums():
     
     topics = Topic.query.order_by(Topic.id.desc()).all()
     return render_template('forums.html', topics=topics, username=current_user.username)
-
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
@@ -188,5 +203,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-    
