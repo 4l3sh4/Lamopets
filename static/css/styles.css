@@ -131,7 +131,7 @@ img {
 .button-53:after {
   content: '';
   position: absolute;
-  border: 1px solid #000000;
+  border: 2px solid #8E4F55;
   bottom: 4px;
   left: 4px;
   width: calc(100% - 1px);
@@ -374,6 +374,41 @@ img {
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+}
+
+.row {
+    display: flex;
+  }
+  
+.column-1 {
+    flex: 33.33%;
+    padding: 20px;
+  }
+
+.column-2 {
+    flex: 66.67%;
+    margin-top: 25px;
+    margin-right: 40px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border-color: #e27e8681;
+    border-width: 10px;
+    border-style: double solid solid double;
+}
+
+.column-2 h1 {
+    text-transform: uppercase;
+    font-family: 'Sugar Cream';
+    padding: 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+    background-color: #e27e87;
+    border-radius: 50px;
+}
+
+#character-profile {
+    width:270px;
+    border: 10px outset #e27e87;
 }
 
 #content {

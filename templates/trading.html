@@ -6,19 +6,18 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
-    <title>Profile</title>
+    <title>Mini Games</title>
 </head>
 <body>
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-
     <h2 class="currency-position">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
     </h2>
-
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
@@ -39,18 +38,10 @@
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
-    <div id="content">
-        <div class="row">
-            <div class="column-1">
-                <img src="{{ url_for('static', filename='assets/character_customization/default_character_female.png') }}" id="character-profile" style="background-color: #ffffff;">
-                <br><br>
-                <center><button class="button-53">CUSTOMISE</button></center>
-                <br><br>
-            </div>
-            <div class="column-2">
-                <h1>{{ current_user.username }}'s Sanctuary</h1>
-            </div>
-        </div>
+    <br>
+    <div class="minigame-contents">
+        <a href="{{url_for('minigamesfeedingtime')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}"></a>
+        <a href="{{url_for('minigamesjumpjumpjackaloaf')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}"></a>
     </div>
 </body>
 </html>
