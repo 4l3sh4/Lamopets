@@ -83,6 +83,10 @@ def login():
 def profile():
     return render_template('profile.html')
 
+@app.route('/custom')
+def custom():
+    return render_template('custom.html')
+
 @app.route('/store')
 @login_required
 def store():

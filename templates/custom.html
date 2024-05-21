@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avatar Customization</title>
-    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 <body>
     <div class="container">
@@ -18,21 +18,21 @@
             <div id="hair" class="avatar-part"></div>
             <div id="shoes" class="avatar-part"></div>
         </div>
-        <button id="saveButton">Save Avatar</button>
+        <button id="saveButton">Save</button>
         <div class="items-container">
             <div class="category">
                 <label for="genderType">Gender:</label>
                 <div id="genderType" class="options">
-                    <div class="option" data-gender="male" onclick="changeGender('male')">
-                        <img src="thumbnails/gender/male.png" alt="Male">
+                    <div class="option" data-part="gender" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/gender/male.png') }}" onclick="changeGender('male')">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/gender/male.png') }}" alt="Male">
                         <div class="color-options">
                             <button class="color-btn" data-part="gender" style="background-color: #F1E8D2;"></button>
                             <button class="color-btn" data-part="gender" data-filter="sepia(65%) hue-rotate(300deg) brightness(0.62) contrast(300%)" style="background-color: #DBC6B8;"></button>
                             <button class="color-btn" data-part="gender" data-filter="sepia(65%) hue-rotate(300deg) brightness(0.50) contrast(400%)" style="background-color: #806959;"></button>
                         </div>
                     </div>
-                    <div class="option" data-gender="female" onclick="changeGender('female')">
-                        <img src="thumbnails/gender/female.png" alt="Female">
+                    <div class="option" data-part="gender" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/gender/female.png') }}" onclick="changeGender('female')">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/gender/female.png') }}" alt="Female">
                         <div class="color-options">
                             <button class="color-btn" data-part="gender" style="background-color: #F1E8D2;"></button>
                             <button class="color-btn" data-part="gender" data-filter="sepia(65%) hue-rotate(300deg) brightness(0.62) contrast(300%)" style="background-color: #DBC6B8;"></button>
@@ -44,16 +44,16 @@
             <div class="category">
                 <label for="eyesType">Eyes:</label>
                 <div id="eyesType" class="options">
-                    <div class="option" data-part="eyes" data-gender="male" data-image="customization_assets/eyes/m-eyes1.png">
-                        <img src="thumbnails/eyes/eyes.png" alt="Male Eyes">
+                    <div class="option" data-part="eyes" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/eyes/m-eyes1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/eyes/eyes.png') }}" alt="Male Eyes">
                         <div class="color-options">
                             <button class="color-btn" data-part="eyes" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="eyes" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="eyes" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="eyes" data-gender="female" data-image="customization_assets/eyes/f-eyes1.png">
-                        <img src="thumbnails/eyes/eyes.png" alt="Female Eyes">
+                    <div class="option" data-part="eyes" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/eyes/f-eyes1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/eyes/eyes.png') }}" alt="Female Eyes">
                         <div class="color-options">
                             <button class="color-btn" data-part="eyes" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="eyes" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
@@ -65,91 +65,91 @@
             <div class="category">
                 <label for="mouthType">Mouth:</label>
                 <div id="mouthType" class="options">
-                    <div class="option" data-part="mouth" data-gender="male" data-image="customization_assets/mouth/m-mouth1.png">
-                        <img src="thumbnails/mouth/mouth.png" alt="Male Mouth">
+                    <div class="option" data-part="mouth" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/mouth/m-mouth1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/mouth/mouth.png') }}" alt="Male Mouth">
                     </div>
-                    <div class="option" data-part="mouth" data-gender="female" data-image="customization_assets/mouth/f-mouth1.png">
-                        <img src="thumbnails/mouth/mouth.png" alt="Female Mouth">
+                    <div class="option" data-part="mouth" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/mouth/f-mouth1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/mouth/mouth.png') }}" alt="Female Mouth">
                     </div>
                 </div>
             </div>
             <div class="category">
                 <label for="hairType">Hair:</label>
                 <div id="hairType" class="options">
-                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair1.png">
-                        <img src="thumbnails/hair/m-hair1.png" alt="Male Hair 1">
+                    <div class="option" data-part="hair" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/hair/m-hair1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/m-hair1.png') }}" alt="Male Hair 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="grayscale(50%) brightness(40%) saturate(400%)" style="background-color: #353535;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)" style="background-color: #332414;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(100%) brightness(1.3)" style="background-color: #E8CEA1;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair2.png">
-                        <img src="thumbnails/hair/m-hair2.png" alt="Male Hair 2">
+                    <div class="option" data-part="hair" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/hair/m-hair2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/m-hair2.png') }}" alt="Male Hair 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="grayscale(50%) brightness(40%) saturate(400%)" style="background-color: #353535;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)" style="background-color: #332414;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(100%) brightness(1.3)" style="background-color: #E8CEA1;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair3.png">
-                        <img src="thumbnails/hair/m-hair3.png" alt="Male Hair 3">
+                    <div class="option" data-part="hair" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/hair/m-hair3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/m-hair3.png') }}" alt="Male Hair 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="grayscale(50%) brightness(40%) saturate(400%)" style="background-color: #353535;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)" style="background-color: #332414;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(100%) brightness(1.3)" style="background-color: #E8CEA1;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="male" data-image="customization_assets/hair/m-hair4.png">
-                        <img src="thumbnails/hair/m-hair4.png" alt="Male Hair 4">
+                    <div class="option" data-part="hair" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/hair/m-hair4.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/m-hair4.png') }}" alt="Male Hair 4">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="grayscale(50%) brightness(40%) saturate(400%)" style="background-color: #353535;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)" style="background-color: #332414;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(100%) brightness(1.3)" style="background-color: #E8CEA1;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair1.png">
-                        <img src="thumbnails/hair/f-hair1.png" alt="Female Hair 1">
+                    <div class="option" data-part="hair" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/hair/f-hair1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/f-hair1.png') }}" alt="Female Hair 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="grayscale(50%) brightness(40%) saturate(400%)" style="background-color: #353535;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)" style="background-color: #332414;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(100%) brightness(1.3)" style="background-color: #E8CEA1;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair2.png">
-                        <img src="thumbnails/hair/f-hair2.png" alt="Female Hair 2">
+                    <div class="option" data-part="hair" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/hair/f-hair2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/f-hair2.png') }}" alt="Female Hair 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" style="background-color: #59CFB5;"></button>
                             <button class="color-btn" data-part="hair" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="hair" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair3.png">
-                        <img src="thumbnails/hair/f-hair3.png" alt="Female Hair 3">
+                    <div class="option" data-part="hair" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/hair/f-hair3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/f-hair3.png') }}" alt="Female Hair 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="grayscale(50%) brightness(40%) saturate(400%)" style="background-color: #353535;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)" style="background-color: #332414;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(100%) brightness(1.3)" style="background-color: #E8CEA1;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair4.png">
-                        <img src="thumbnails/hair/f-hair4.png" alt="Female Hair 4">
+                    <div class="option" data-part="hair" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/hair/f-hair4.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/f-hair4.png') }}" alt="Female Hair 4">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="grayscale(50%) brightness(40%) saturate(400%)" style="background-color: #353535;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)" style="background-color: #332414;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(100%) brightness(1.3)" style="background-color: #E8CEA1;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair5.png">
-                        <img src="thumbnails/hair/f-hair5.png" alt="Female Hair 5">
+                    <div class="option" data-part="hair" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/hair/f-hair5.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/f-hair5.png') }}" alt="Female Hair 5">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" style="background-color: #3F5494;"></button>
                             <button class="color-btn" data-part="hair" data-filter="grayscale(100%)" style="background-color: #545454;"></button>
                             <button class="color-btn" data-part="hair" data-filter="sepia(95%) hue-rotate(300deg) brightness(1.3)" style="background-color: #E4A7BA;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="hair" data-gender="female" data-image="customization_assets/hair/f-hair6.png">
-                        <img src="thumbnails/hair/f-hair6.png" alt="Hijab">
+                    <div class="option" data-part="hair" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/hair/f-hair6.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/hair/f-hair6.png') }}" alt="Female Hair 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="hair" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="hair" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
@@ -161,104 +161,104 @@
             <div class="category">
                 <label for="shirtType">Shirt:</label>
                 <div id="shirtType" class="options">
-                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt1.png">
-                        <img src="thumbnails/shirt/m-shirt1.png" alt="Male Shirt 1">
+                    <div class="option" data-part="shirt" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/m-shirt1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/m-shirt1.png') }}" alt="Male Shirt 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt2.png">
-                        <img src="thumbnails/shirt/m-shirt2.png" alt="Male Shirt 2">
+                    <div class="option" data-part="shirt" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/m-shirt2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/m-shirt2.png') }}" alt="Male Shirt 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" style="background-color: #3D5591;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="hue-rotate(300deg)" style="background-color: #14665F;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="hue-rotate(190deg)" style="background-color: #605714;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt3.png">
-                        <img src="thumbnails/shirt/m-shirt3.png" alt="Male Shirt 3">
+                    <div class="option" data-part="shirt" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/m-shirt3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/m-shirt3.png') }}" alt="Male Shirt 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt4.png">
-                        <img src="thumbnails/shirt/m-shirt4.png" alt="Male Shirt 4">
+                    <div class="option" data-part="shirt" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/m-shirt4.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/m-shirt4.png') }}" alt="Male Shirt 4">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt5.png">
-                        <img src="thumbnails/shirt/m-shirt5.png" alt="Male Shirt 5">
+                    <div class="option" data-part="shirt" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/m-shirt5.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/m-shirt5.png') }}" alt="Male Shirt 5">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="male" data-image="customization_assets/shirt/m-shirt6.png">
-                        <img src="thumbnails/shirt/m-shirt6.png" alt="Male Shirt 6">
+                    <div class="option" data-part="shirt" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/m-shirt6.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/m-shirt6.png') }}" alt="Male Shirt 6">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt1.png">
-                        <img src="thumbnails/shirt/f-shirt1.png" alt="Female Shirt 1">
+                    <div class="option" data-part="shirt" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/f-shirt1.png') }}" alt="Female Shirt 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt2.png">
-                        <img src="thumbnails/shirt/f-shirt2.png" alt="Female Shirt 2">
+                    <div class="option" data-part="shirt" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/f-shirt2.png') }}" alt="Female Shirt 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" style="background-color: #59CFB5;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt3.png">
-                        <img src="thumbnails/shirt/f-shirt3.png" alt="Female Shirt 3">
+                    <div class="option" data-part="shirt" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/f-shirt3.png') }}" alt="Female Shirt 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt4.png">
-                        <img src="thumbnails/shirt/f-shirt4.png" alt="Female Shirt 4">
+                    <div class="option" data-part="shirt" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt4.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/f-shirt4.png') }}" alt="Female Shirt 4">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt5.png">
-                        <img src="thumbnails/shirt/f-shirt5.png" alt="Female Shirt 5">
+                    <div class="option" data-part="shirt" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt5.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/f-shirt5.png') }}" alt="Female Shirt 5">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt6.png">
-                        <img src="thumbnails/shirt/f-shirt6.png" alt="Female Shirt 6">
+                    <div class="option" data-part="shirt" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt6.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/f-shirt6.png') }}" alt="Female Shirt 6">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" style="background-color: #98547F;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="grayscale(100%)" style="background-color: #545454;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="sepia(95%) hue-rotate(300deg) brightness(1.3)" style="background-color: #E4A7BA;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shirt" data-gender="female" data-image="customization_assets/shirt/f-shirt7.png">
-                        <img src="thumbnails/shirt/f-shirt7.png" alt="Female Shirt 7">
+                    <div class="option" data-part="shirt" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt7.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shirt/f-shirt7.png') }}" alt="Female Shirt 7">
                         <div class="color-options">
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(240deg)" style="background-color: #c77fde;"></button>
                             <button class="color-btn" data-part="shirt" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
@@ -270,80 +270,80 @@
             <div class="category">
                 <label for="pantsType">Pants:</label>
                 <div id="pantsType" class="options">
-                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants1.png">
-                        <img src="thumbnails/pants/m-pants1.png" alt="Male Pants 1">
+                    <div class="option" data-part="pants" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/pants/m-pants1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/m-pants1.png') }}" alt="Male Pants 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants2.png">
-                        <img src="thumbnails/pants/m-pants2.png" alt="Male Pants 2">
+                    <div class="option" data-part="pants" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/pants/m-pants2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/m-pants2.png') }}" alt="Male Pants 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants3.png">
-                        <img src="thumbnails/pants/m-pants3.png" alt="Male Pants 3">
+                    <div class="option" data-part="pants" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/pants/m-pants3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/m-pants3.png') }}" alt="Male Pants 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #3D5591;"></button>
                             <button class="color-btn" data-part="pants" data-filter="hue-rotate(300deg)" style="background-color: #14665F;"></button>
                             <button class="color-btn" data-part="pants" data-filter="hue-rotate(190deg)" style="background-color: #605714;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants4.png">
-                        <img src="thumbnails/pants/m-pants4.png" alt="Male Pants 4">
+                    <div class="option" data-part="pants" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/pants/m-pants4.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/m-pants4.png') }}" alt="Male Pants 4">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="male" data-image="customization_assets/pants/m-pants5.png">
-                        <img src="thumbnails/pants/m-pants5.png" alt="Male Pants 5">
+                    <div class="option" data-part="pants" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/pants/m-pants5.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/m-pants5.png') }}" alt="Male Pants 5">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants1.png">
-                        <img src="thumbnails/pants/f-pants1.png" alt="Female Pants 1">
+                    <div class="option" data-part="pants" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/pants/f-pants1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/f-pants1.png') }}" alt="Female Pants 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #59CFB5;"></button>
                             <button class="color-btn" data-part="pants" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="pants" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants2.png">
-                        <img src="thumbnails/pants/f-pants2.png" alt="Female Pants 2">
+                    <div class="option" data-part="pants" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/pants/f-pants2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/f-pants2.png') }}" alt="Female Pants 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants3.png">
-                        <img src="thumbnails/pants/f-pants3.png" alt="Female Pants 3">
+                    <div class="option" data-part="pants" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/pants/f-pants3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/f-pants3.png') }}" alt="Female Pants 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants4.png">
-                        <img src="thumbnails/pants/f-pants4.png" alt="Female Pants 4">
+                    <div class="option" data-part="pants" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/pants/f-pants4.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/f-pants4.png') }}" alt="Female Pants 4">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #98547F;"></button>
                             <button class="color-btn" data-part="pants" data-filter="grayscale(100%)" style="background-color: #545454;"></button>
                             <button class="color-btn" data-part="pants" data-filter="sepia(95%) hue-rotate(300deg) brightness(1.3)" style="background-color: #E4A7BA;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="pants" data-gender="female" data-image="customization_assets/pants/f-pants5.png">
-                        <img src="thumbnails/pants/f-pants5.png" alt="Female Pants 5">
+                    <div class="option" data-part="pants" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/pants/f-pants5.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/pants/f-pants5.png') }}" alt="Female Pants 5">
                         <div class="color-options">
                             <button class="color-btn" data-part="pants" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="pants" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
@@ -355,24 +355,24 @@
             <div class="category">
                 <label for="miscType">Accessories:</label>
                 <div id="miscType" class="options">
-                    <div class="option" data-part="misc" data-gender="male" data-image="customization_assets/misc/m-misc1.png">
-                        <img src="thumbnails/misc/m-misc1.png" alt="Male Accessories 1">
+                    <div class="option" data-part="misc" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/misc/m-misc1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/m-misc1.png') }}" alt="Male Accessories 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="misc" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="misc" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="misc" data-gender="male" data-image="customization_assets/misc/m-misc2.png">
-                        <img src="thumbnails/misc/m-misc2.png" alt="Male Accessories 2">
+                    <div class="option" data-part="misc" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/misc/m-misc2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/m-misc2.png') }}" alt="Male Accessories 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="misc" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
                             <button class="color-btn" data-part="misc" data-filter="saturate(100%) sepia(100%) hue-rotate(60deg)" style="background-color: #7de877;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="misc" data-gender="male" data-image="customization_assets/misc/m-misc3.png">
-                        <img src="thumbnails/misc/m-misc3.png" alt="Male Accessories 3">
+                    <div class="option" data-part="misc" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/misc/m-misc3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/m-misc3.png') }}" alt="Male Accessories 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="misc" data-filter="saturate(100%) sepia(100%) hue-rotate(150deg)" style="background-color: #79c7d9;"></button>
@@ -380,42 +380,42 @@
                         </div>
                     </div>
                     <div class="option" data-part="misc" data-gender="male">
-                        <img src="thumbnails/none/none.png" alt="None">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/none/none.png') }}" alt="None">
                     </div>
-                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc1.png">
-                        <img src="thumbnails/misc/f-misc1.png" alt="Female Accessories 1">
+                    <div class="option" data-part="misc" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/misc/f-misc1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/f-misc1.png') }}" alt="Female Accessories 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #59CFB5;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc2.png">
-                        <img src="thumbnails/misc/f-misc2.png" alt="Female Accessories 2">
+                    <div class="option" data-part="misc" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/misc/f-misc2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/f-misc2.png') }}" alt="Female Accessories 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc3.png">
-                        <img src="thumbnails/misc/f-misc3.png" alt="Female Accessories 3">
+                    <div class="option" data-part="misc" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/misc/f-misc3.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/f-misc3.png') }}" alt="Female Accessories 3">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc4.png">
-                        <img src="thumbnails/misc/f-misc4.png" alt="Female Accessories 4">
+                    <div class="option" data-part="misc" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/misc/f-misc4.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/f-misc4.png') }}" alt="Female Accessories 4">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #848484;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="misc" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="misc" data-gender="female" data-image="customization_assets/misc/f-misc5.png">
-                        <img src="thumbnails/misc/f-misc5.png" alt="Female Accessories 5">
+                    <div class="option" data-part="misc" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/misc/f-misc5.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/misc/f-misc5.png') }}" alt="Female Accessories 5">
                         <div class="color-options">
                             <button class="color-btn" data-part="misc" style="background-color: #3F5494;"></button>
                             <button class="color-btn" data-part="misc" data-filter="grayscale(100%)" style="background-color: #545454;"></button>
@@ -423,31 +423,31 @@
                         </div>
                     </div>
                     <div class="option" data-part="misc" data-gender="female">
-                        <img src="thumbnails/none/none.png" alt="None">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/none/none.png') }}" alt="None">
                     </div>
                 </div>
             </div>
             <div class="category">
                 <label for="shoesType">Shoes:</label>
                 <div id="shoesType" class="options">
-                    <div class="option" data-part="shoes" data-gender="male" data-image="customization_assets/shoes/m-shoes1.png">
-                        <img src="thumbnails/shoes/m-shoes1.png" alt="Male Shoes">
+                    <div class="option" data-part="shoes" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/shoes/m-shoes1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shoes/m-shoes1.png') }}" alt="Male Shoes">
                         <div class="color-options">
                             <button class="color-btn" data-part="shoes" style="background-color: #494A4C;"></button>
                             <button class="color-btn" data-part="shoes" data-filter="sepia(105%)" style="background-color: #645945;"></button>
                             <button class="color-btn" data-part="shoes" data-filter="sepia(95%) hue-rotate(340deg) brightness(1.1) contrast(140%)" style="background-color: #6E513F;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shoes" data-gender="female" data-image="customization_assets/shoes/f-shoes1.png">
-                        <img src="thumbnails/shoes/f-shoes1.png" alt="Female Shoes 1">
+                    <div class="option" data-part="shoes" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shoes/f-shoes1.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shoes/f-shoes1.png') }}" alt="Female Shoes 1">
                         <div class="color-options">
                             <button class="color-btn" data-part="shoes" style="background-color: #59CFB5;"></button>
                             <button class="color-btn" data-part="shoes" data-filter="hue-rotate(300deg)" style="background-color: #86CA66;"></button>
                             <button class="color-btn" data-part="shoes" data-filter="hue-rotate(190deg)" style="background-color: #FF9BA3;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="shoes" data-gender="female" data-image="customization_assets/shoes/f-shoes2.png">
-                        <img src="thumbnails/shoes/f-shoes2.png" alt="Female Shoes 2">
+                    <div class="option" data-part="shoes" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/shoes/f-shoes2.png') }}">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/shoes/f-shoes2.png') }}" alt="Female Shoes 2">
                         <div class="color-options">
                             <button class="color-btn" data-part="shoes" style="background-color: #3F5494;"></button>
                             <button class="color-btn" data-part="shoes" data-filter="grayscale(100%)" style="background-color: #545454;"></button>
@@ -459,7 +459,14 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        var defaultMaleShirtUrl = "{{ url_for('static', filename='assets/customization_assets/shirt/m-shirt6.png') }}";
+        var defaultMalePantsUrl = "{{ url_for('static', filename='assets/customization_assets/pants/m-pants5.png') }}";
+        var defaultFemaleShirtUrl = "{{ url_for('static', filename='assets/customization_assets/shirt/f-shirt7.png') }}";
+        var defaultFemalePantsUrl = "{{ url_for('static', filename='assets/customization_assets/pants/f-pants5.png') }}";
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script src="custom.js"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 </body>
 </html>
