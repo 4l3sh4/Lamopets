@@ -6,7 +6,6 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 import base64
-from datetime import datetime
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -35,7 +34,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer(), default=1000)
-    avatar = db.Column(db.String(120), nullable=True)
+    avatar = db.Column(db.Text, nullable=True)
 
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,7 +49,7 @@ class Comment(db.Model):
     topic = db.relationship('Topic', backref=db.backref('comments', lazy=True, cascade='all, delete-orphan'))
     username = db.Column(db.String(20), nullable=False)
 
-class RegisterForm(FlaskForm): 
+class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Register")
@@ -60,7 +59,7 @@ class RegisterForm(FlaskForm):
         if existing_user_username:
             raise ValidationError("That username already exists. Please choose a different one.")
 
-class LoginForm(FlaskForm): 
+class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
@@ -82,29 +81,31 @@ def login():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', avatar_url=current_user.avatar)
+    avatar_data = current_user.avatar
+    if avatar_data:
+        avatar_url = f"data:image/png;base64,{avatar_data}"
+    else:
+        avatar_url = None  # Or provide a default image URL
+    return render_template('profile.html', avatar_url=avatar_url)
 
 @app.route('/custom')
 def custom():
     return render_template('custom.html')
 
 @app.route('/save-avatar', methods=['POST'])
+@login_required
 def save_avatar():
     data = request.get_json()
     image_data = data['image']
 
-    # Extract base64 data
+    # Remove the data URL prefix
     image_data = image_data.split(',')[1]
-    image_data = base64.b64decode(image_data)
 
-    # Save the image to a file
-    image_path = os.path.join('static', 'avatars', 'avatar.png')
-    with open(image_path, 'wb') as f:
-        f.write(image_data)
+    # Update the user's avatar in the database
+    current_user.avatar = image_data
+    db.session.commit()
 
-    # In a real application, you'd save the path to the user's profile in the database here.
-
-    return jsonify({'success': True, 'avatar_url': image_path})
+    return jsonify({'success': True, 'avatar_url': url_for('static', filename='avatars/avatar.png')})
 
 @app.route('/store')
 @login_required
@@ -167,9 +168,9 @@ def delete_topic(id):
             db.session.commit()
             return redirect(url_for('forums'))
         else:
-            abort(403)  
+            abort(403)
     else:
-        abort(404)  
+        abort(404)
 
 @app.route('/delete/comment/<int:id>', methods=['POST'])
 @login_required
@@ -181,9 +182,9 @@ def delete_comment(id):
             db.session.commit()
             return redirect(url_for('topic', id=comment.topicId))
         else:
-            abort(403)  
+            abort(403)
     else:
-        abort(404)  
+        abort(404)
 
 @app.route('/logout')
 @login_required
