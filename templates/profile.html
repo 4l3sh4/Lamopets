@@ -39,7 +39,8 @@
         </div>
     </nav>
     <h1>This is the profile page.</h1>
-    <a href="{{url_for('custom')}}">Customise</a><br>
+    <img src="{{ current_user.avatar_url }}" alt="User Avatar" id="user-avatar">
+    <a href="{{url_for('custom')}}">Customize</a><br>
     <a href="{{url_for('logout')}}">Press here to logout</a>
 </body>
 </html>

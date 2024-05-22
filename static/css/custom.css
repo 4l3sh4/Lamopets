@@ -10,18 +10,24 @@ body {
     margin-top: 50px;
 }
 
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .items-container {
-    height: 560px;
+    height: 568px;
     overflow-y: auto;
     margin-left: 80px;
 }
 
 .avatar {
     position: relative;
-    width: 450px;
-    height: 560px;
+    width: 410px;
+    height: 500px;
     border: 5px solid #ff919a;
-    margin-right: 10px;
+    margin-top: -1px; 
     background-color: #ffffff;
 }
 
@@ -47,6 +53,7 @@ body {
 .category {
     width: 300px;
     padding: 10px;
+    border-radius: 2px;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     box-sizing: border-box;
@@ -74,7 +81,7 @@ body {
     justify-content: center;
     box-sizing: border-box;
     margin-bottom: 5px;
-    position: relative; /* Added for positioning the color buttons */
+    position: relative; 
 }
 
 .option img {
@@ -93,8 +100,8 @@ body {
     display: flex;
     gap: 10px;
     margin-top: 10px;
-    position: absolute; /* Added for positioning */
-    bottom: -20px; /* Adjust this value as needed to position below the image */
+    position: absolute; 
+    bottom: -20px; 
     left: 50%;
     transform: translateX(-50%);
 }
@@ -111,4 +118,35 @@ body {
 
 .color-btn:hover {
     transform: scale(1.5);
+}
+
+@font-face {
+    font-family: 'myFont';
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
+label {
+    text-align: center;
+    font-family: myFont;
+    font-size: 28px;
+}
+
+#saveButton {
+    background-color: #e27e87;
+    border: 4px solid #eddba5;
+    width: 135px;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-family: myFont;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#saveButton:hover {
+    background-color: #eddba5;
+    color: #e27e87;
 }

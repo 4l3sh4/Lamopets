@@ -17,6 +17,7 @@ if not os.path.exists(instance_dir):
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(instance_dir, 'database.db')
+app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static/avatars')
 app.config['SECRET_KEY'] = 'Battery-AAA'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -81,7 +82,7 @@ def login():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html', avatar_url=current_user.avatar)
 
 @app.route('/custom')
 def custom():
@@ -89,19 +90,21 @@ def custom():
 
 @app.route('/save-avatar', methods=['POST'])
 def save_avatar():
-    data = request.json
-    if 'image' not in data:
-        return jsonify({'success': False, 'error': 'No image data provided'}), 400
-    
+    data = request.get_json()
     image_data = data['image']
-    header, encoded = image_data.split(",", 1)
-    image = base64.b64decode(encoded)
-    
-    file_path = os.path.join('static/avatars', 'avatar.png')  # Change as needed
-    with open(file_path, 'wb') as f:
-        f.write(image)
-    
-    return jsonify({'success': True})
+
+    # Extract base64 data
+    image_data = image_data.split(',')[1]
+    image_data = base64.b64decode(image_data)
+
+    # Save the image to a file
+    image_path = os.path.join('static', 'avatars', 'avatar.png')
+    with open(image_path, 'wb') as f:
+        f.write(image_data)
+
+    # In a real application, you'd save the path to the user's profile in the database here.
+
+    return jsonify({'success': True, 'avatar_url': image_path})
 
 @app.route('/store')
 @login_required
@@ -164,9 +167,9 @@ def delete_topic(id):
             db.session.commit()
             return redirect(url_for('forums'))
         else:
-            abort(403)  # User is not authorized to delete this topic
+            abort(403)  
     else:
-        abort(404)  # Topic not found
+        abort(404)  
 
 @app.route('/delete/comment/<int:id>', methods=['POST'])
 @login_required
@@ -178,9 +181,9 @@ def delete_comment(id):
             db.session.commit()
             return redirect(url_for('topic', id=comment.topicId))
         else:
-            abort(403)  # User is not authorized to delete this comment
+            abort(403)  
     else:
-        abort(404)  # Comment not found
+        abort(404)  
 
 @app.route('/logout')
 @login_required

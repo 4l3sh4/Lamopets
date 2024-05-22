@@ -1,26 +1,25 @@
 document.getElementById('saveButton').addEventListener('click', function() {
-    html2canvas(document.getElementById('avatar'), {
-        onrendered: function(canvas) {
-            var imgData = canvas.toDataURL('image/png');
-            fetch('/save-avatar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image: imgData }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Avatar saved successfully!');
-                } else {
-                    alert('Failed to save avatar: ' + data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error saving avatar:', error);
-            });
-        }
+    html2canvas(document.getElementById('avatar')).then(function(canvas) {
+        var imgData = canvas.toDataURL('image/png');
+        fetch('/save-avatar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ image: imgData }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Avatar saved successfully!');
+            } else {
+                alert('Failed to save avatar: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error saving avatar:', error);
+            alert('Error saving avatar: ' + error);
+        });
     });
 });
 
@@ -55,14 +54,18 @@ function resetFilter(partId) {
     partElement.style.filter = '';
 }
 
+function changeGender(gender) {
+    selectedGender = gender;
+    console.log('Selected gender:', gender);
+    var genderImageUrl = "{{ url_for('static', filename='assets/customization_assets/gender/') }}" + gender + ".png";
+    updateAvatarPart('gender', genderImageUrl);
+    setDefaultClothing();
+    filterOptions();
+}
+
 document.querySelectorAll('#genderType .option').forEach(button => {
     button.addEventListener('click', function() {
-        selectedGender = button.getAttribute('data-gender');
-        console.log('Selected gender:', selectedGender);
-        var genderImageUrl = "{{ url_for('static', filename='assets/customization_assets/gender/') }}" + selectedGender + ".png";
-        updateAvatarPart('gender', genderImageUrl);
-        setDefaultClothing();
-        filterOptions();
+        changeGender(button.getAttribute('data-gender'));
     });
 });
 
