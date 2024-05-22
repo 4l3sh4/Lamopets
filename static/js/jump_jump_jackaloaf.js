@@ -121,7 +121,7 @@ function update(){
     // game over
     if (gameOver){
         context.font = "35px Trebuchet MS";
-        context.fillText("You've gained " + Math.trunc(score/20) + " Lamocoins!", 125, 400);
+        context.fillText("You've gained " + Math.trunc(score/250) + " Lamocoins!", 125, 400);
         context.font = "31px Trebuchet MS";
         context.fillText("Press 'Space' to Restart!", 190, 450);
         fetch('/gain_currency', {
@@ -129,7 +129,7 @@ function update(){
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(Math.trunc(score/20)),
+            body: JSON.stringify(Math.trunc(score/250)),
         })
         .then(response => {
                 setTimeout(() => {

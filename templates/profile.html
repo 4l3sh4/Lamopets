@@ -9,6 +9,7 @@
     <title>Profile</title>
 </head>
 <body>
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -27,6 +28,14 @@
             <a href="{{url_for('adopt')}}">Adopt</a>
             <a href="{{url_for('minigames')}}">Mini Games</a>
             <a href="{{url_for('store')}}">Store</a>
+            <div class="dropdown">
+                <button class="dropbtn">Knicks & Knacks
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{{url_for('gifting')}}">Gifting</a>
+                </div>
+            </div>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">    
@@ -36,6 +45,7 @@
             <a href="{{url_for('adopt')}}">Adopt</a>
             <a href="{{url_for('minigames')}}">Mini Games</a>
             <a href="{{url_for('store')}}">Store</a>
+            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
@@ -49,13 +59,17 @@
             </div>
             <div class="column-2">
                 <h1>{{ current_user.username }}'s Sanctuary</h1>
-
+                
+                <div class="profile">
                 {% for adopted_pet, pet in adopted_pets %}
-                <div class="item" id="{{ adopted_pet.species }}">
-                    <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}">
-                    <p class="item_name">{{ pet.name }}</p>
-                </div>
+                    <div>
+                        <div class="item" id="{{ adopted_pet.species }}">
+                            <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
+                            <p class="item_name">{{ pet.name }}</p>
+                        </div>
+                    </div>
                 {% endfor %}
+                </div>
 
             </div>
         </div>
