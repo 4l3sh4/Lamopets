@@ -43,13 +43,20 @@
             <a href="{{url_for('adopt')}}">Adopt</a>
             <a href="{{url_for('minigames')}}">Mini Games</a>
             <a href="{{url_for('store')}}">Store</a>
+            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
     <br>
-    <div class="minigame-contents">
-        <a href="{{url_for('minigamesfeedingtime')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}"></a>
-        <a href="{{url_for('minigamesjumpjumpjackaloaf')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}"></a>
+    <div class="gifting-contents">
+        <h1>Feeling generous?</h1>
+        <h2>Well, feel free to gift some of your wares to your friends!</h2>
+        <img src="{{ url_for('static', filename='assets/gifted-trotter.png') }}">
+        <div class="row">
+            <div class="column-gift-1">
+                <h3>w.i.p</h3>
+            </div>
+        </div>
     </div>
 </body>
 </html>
