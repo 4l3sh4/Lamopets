@@ -1,27 +1,72 @@
 document.getElementById('saveButton').addEventListener('click', function() {
-    html2canvas(document.getElementById('avatar')).then(function(canvas) {
-        var imgData = canvas.toDataURL('image/png');
-        fetch('/save-avatar', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ image: imgData }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Avatar saved successfully!');
+    var avatarParts = ['gender', 'eyes', 'mouth', 'misc', 'pants', 'shirt', 'hair', 'shoes'];
+    var avatarContainer = document.getElementById('avatar');
+
+    // Create a main canvas
+    var mainCanvas = document.createElement('canvas');
+    mainCanvas.width = avatarContainer.offsetWidth;
+    mainCanvas.height = avatarContainer.offsetHeight;
+    var mainContext = mainCanvas.getContext('2d');
+
+    var promises = avatarParts.map(part => {
+        return new Promise((resolve, reject) => {
+            var partElement = document.getElementById(part);
+            if (partElement.style.backgroundImage) {
+                var img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.src = partElement.style.backgroundImage.slice(5, -2); // Extract URL from backgroundImage style
+                img.onload = function() {
+                    // Create a canvas for each part
+                    var partCanvas = document.createElement('canvas');
+                    partCanvas.width = partElement.offsetWidth;
+                    partCanvas.height = partElement.offsetHeight;
+                    var partContext = partCanvas.getContext('2d');
+
+                    // Apply the filter and draw the image
+                    partContext.filter = window.getComputedStyle(partElement).getPropertyValue('filter');
+                    partContext.drawImage(img, 0, 0, partElement.offsetWidth, partElement.offsetHeight);
+
+                    // Draw the part canvas onto the main canvas
+                    mainContext.drawImage(partCanvas, partElement.offsetLeft, partElement.offsetTop);
+                    resolve();
+                };
+                img.onerror = reject;
             } else {
-                alert('Failed to save avatar: ' + data.error);
+                resolve();
             }
-        })
-        .catch(error => {
-            console.error('Error saving avatar:', error);
-            alert('Error saving avatar: ' + error);
         });
     });
+
+    Promise.all(promises).then(() => {
+        var imgData = mainCanvas.toDataURL('image/png');
+        saveAvatar(imgData);
+    }).catch(error => {
+        console.error('Error capturing avatar:', error);
+        alert('Error capturing avatar: ' + error);
+    });
 });
+
+function saveAvatar(imgData) {
+    fetch('/save-avatar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: imgData }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Avatar saved successfully!');
+        } else {
+            alert('Failed to save avatar: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error saving avatar:', error);
+        alert('Error saving avatar: ' + error);
+    });
+}
 
 var selectedGender = '';
 
