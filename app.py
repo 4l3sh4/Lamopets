@@ -25,19 +25,25 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(20), db.ForeignKey('user.username'), unique=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'), unique=True)
-    user = db.relationship('User', back_populates='inventory')
+    user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
+    user_name = db.Column(db.String(20), nullable=False) 
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    user_obj = db.relationship('User', back_populates='inventory')
     item = db.relationship('Item', back_populates='inventory')
+
+    @property
+    def user(self):
+        return User.query.filter_by(username=self.username).first()
 
 class AdoptedPet(db.Model):
     adopt_id = db.Column(db.Integer, primary_key=True)
     species = db.Column(db.String(2), db.ForeignKey('pet.species'), nullable=False)
+    user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
     username = db.Column(db.String(20), nullable=False) 
     pet = db.relationship('Pet', backref='adopted_by')
+    user_obj = db.relationship('User', back_populates='adoptedpet')
 
     @property
     def user(self):
@@ -49,7 +55,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer, default=1000)
 
-    inventory = db.relationship('Inventory', back_populates='user')
+    inventory = db.relationship('Inventory', back_populates='user_obj')
+    adoptedpet = db.relationship('AdoptedPet', back_populates='user_obj')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -158,18 +165,30 @@ def store():
 @app.route('/purchase_item/<string:item_id>', methods=['POST'])
 @login_required
 def purchase_item(item_id):
-    item = Item.query.filter_by(id=item_id).first()
-    if item:
-        if current_user.currency_balance >= item.price:
-            current_user.currency_balance -= item.price
-            db.session.commit()
-            
-            inventory = Inventory(id=item_id, username=current_user.username)
-            db.session.add(inventory)
-            db.session.commit()
-            return jsonify({'success': True})
-    else:
-        abort(404) 
+    try:
+        # Fetch the item from the database
+        item = Item.query.filter_by(id=item_id).first()
+        if not item:
+            return jsonify({'error': 'Item not found'}), 404
+
+        # Check if the user has sufficient balance
+        if current_user.currency_balance < item.price:
+            return jsonify({'error': 'Insufficient balance'}), 400
+
+        # Deduct the item price from the user's balance
+        current_user.currency_balance -= item.price
+        db.session.commit()
+
+        # Add the item to the user's inventory
+        inventory = Inventory(user_name=current_user.username, item_id=item.id)
+        db.session.add(inventory)
+        db.session.commit()
+
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        # Log the exception details
+        print(f'Error purchasing item: {e}')
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 @app.route('/minigames')
 @login_required

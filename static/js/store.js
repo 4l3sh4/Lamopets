@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function closeModalStore() {
+    document.getElementById('purchase-store').style.display = 'none';
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const colorButtons = document.querySelectorAll('.colour-options');
 
@@ -41,8 +45,62 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function closeModalStore() {
-    document.getElementById('purchase-store').style.display = 'none';
-    document.querySelector('.item.active').classList.remove('active');
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.price');
+    const popup = document.getElementById('purchase-store');
+    const confirmText = document.getElementById('confirm-text-store');
+    const yesButton = document.getElementById('yesButton');
+    let activePriceButton;  // Declare a variable to store the active price button
 
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const itemPrice = button.getAttribute('data-price');
+            confirmText.textContent = `Would you like to buy this item for $${itemPrice}?`;
+            popup.style.display = 'block';
+            activePriceButton = button;  // Store the clicked button in the variable
+        });
+    });
+
+    yesButton.addEventListener('click', function() {
+        if (!activePriceButton) return;
+
+        // Retrieve itemId from the stored activePriceButton
+        const itemId = activePriceButton.getAttribute('data-item-id');
+        console.log("Active Price Button:", activePriceButton);
+        console.log("Item ID:", itemId);
+    
+        fetch('/purchase_item/' + itemId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json().then(data => ({
+            status: response.status,
+            body: data
+        })))
+        .then(({status, body}) => {
+            if (status === 200 && body.success) {
+                closeModalStore();
+                setTimeout(() => {
+                    location.reload();
+                }, 700);
+            } else {
+                console.error('Error:', body);
+                alert(`Purchase Unsuccessful: ${body.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('An error occurred while making the purchase. Please try again.');
+        });
+    });
+
+    function closeModalStore() {
+        document.getElementById('purchase-store').style.display = 'none';
+        if (activePriceButton) {
+            activePriceButton.closest('.item').classList.remove('active');
+        }
+        activePriceButton = null;  // Reset the activePriceButton variable
+    }
+});
