@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/store.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/store.js')}}"></script>
     <title>Store</title>
 </head>
 <body>
@@ -58,11 +59,11 @@
                         <img src="{{ group[0].thumbnail_url }}" id="{{ group[0].base_id }}" style="filter: {{ group[0].filter_colour }};">
                         <div>
                             {% for item_in_group in group %}
-                                <button class="colour-options" style="background-color: {{ item_in_group.colour }}" id="{{ item_in_group.id }}" data-filter="{{ item_in_group.filter_colour }}" data-price="{{ item_in_group.price }}"></button>
+                                <button class="colour-options" style="background-color: {{ item_in_group.colour }}" id="{{ item_in_group.id }}" data-filter="{{ item_in_group.filter_colour }}" data-price="{{ item_in_group.price }}" data-item-id="{{ item_in_group.id }}"></button>
                             {% endfor %}
                         </div>
                         {% for item_in_group in group %}
-                            <button class="price" id="price-{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
+                            <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
                         <button class="price" id="active-price" data-price="{{ group[0].price }}"> ${{ group[0].price }} </button>
                     </div>
@@ -71,6 +72,18 @@
 
                 {% if group[0].base_id.startswith("U") %}
                 <div class="store" id="store-upperb">
+                    <div class="item">
+                        <img src="{{ group[0].thumbnail_url }}" id="{{ group[0].base_id }}" style="filter: {{ group[0].filter_colour }};">
+                        <div>
+                            {% for item_in_group in group %}
+                                <button class="colour-options" style="background-color: {{ item_in_group.colour }}" data-filter="{{ item_in_group.filter_colour }}" data-price="{{ item_in_group.price }}"></button>
+                            {% endfor %}
+                        </div>
+                        {% for item_in_group in group %}
+                            <button class="price" id="{{ item_in_group.id }}" data-price="{{ item_in_group.price }}" data-item-id="{{ item_in_group.id }}" style="display: none;">${{ item_in_group.price }}</button>
+                        {% endfor %}
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                    </div>
                 </div>
                 {% endif %}
 
@@ -94,9 +107,9 @@
 
     <div id="purchase-store" class="popup">
         <div class="purchase-confirm">
-            <p id="confirm-text">Would you like to buy this item?</p>
+            <p id="confirm-text-store">Would you like to buy this item?</p>
             <button id="yesButton" class="yes-no">Yes</button>
-            <button id="noButton" class="yes-no" onclick="closeModal()">No</button>
+            <button id="noButton" class="yes-no" onclick="closeModalStore()">No</button>
         </div>
     </div>
 
