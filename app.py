@@ -141,7 +141,13 @@ def login():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.username == current_user.username).all()
+    return render_template('profile.html', adopted_pets=adopted_pets)
+
+@app.route('/gifting')
+@login_required
+def gifting():
+    return render_template('gifting.html')
 
 @app.route('/store')
 @login_required

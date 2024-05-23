@@ -30,6 +30,11 @@ img {
     transform: rotate(-2deg);
 }
 
+.pets_img {
+    width: 200px;
+    height: 200px;
+}
+
 /* balls */
 .ball {
     position: absolute;
@@ -103,7 +108,7 @@ img {
   background-color: #e27e87;
   border: 0 solid #E5E7EB;
   width: 200px;
-  height: 30px;
+  height: 55px;
   color: #000000;
   display: flex;
   font-family: "Sugar Cream";
@@ -131,7 +136,7 @@ img {
 .button-53:after {
   content: '';
   position: absolute;
-  border: 1px solid #000000;
+  border: 2px solid #8E4F55;
   bottom: 4px;
   left: 4px;
   width: calc(100% - 1px);
@@ -180,6 +185,23 @@ img {
     margin-right: 5px;
 }
 
+.gifting-contents {
+    background: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 10px;
+    border-radius: 5%;
+    font-family: 'Sugar Cream';
+    font-size: 30px;
+}
+
+.gifting-contents img {
+    width:25%;
+    height:100%;
+    border-radius: 8%;
+}
 
 #minigame-thumbnails {
     width: 40%;
@@ -269,7 +291,7 @@ img {
     font-weight: bold;
 }
 
-.navbar a:hover {
+.navbar a:hover, .dropdown:hover .dropbtn{
     background-color: #eddba5;
     color: #e27e87;
 }
@@ -376,6 +398,66 @@ img {
     margin-left: 50px;
 }
 
+.profile {
+    font-family: 'Sugar Cream';
+    font-size: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.row {
+    display: flex;
+}
+  
+.column-1 {
+    flex: 33.33%;
+    padding: 20px;
+  }
+
+.column-2 {
+    flex: 66.67%;
+    margin-top: 25px;
+    margin-right: 40px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border-color: #e27e8681;
+    border-width: 10px;
+    border-style: double solid solid double;
+}
+
+.column-2 h1 {
+    text-transform: uppercase;
+    font-family: 'Sugar Cream';
+    padding: 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+    background-color: #e27e87;
+    border-radius: 50px;
+}
+
+/* for gifting */
+.column-gift-1 {
+    flex:50%;
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-bottom: 30px;
+    background-color: #e27e87;
+    border-radius: 20px;
+}
+
+.column-gift-2 {
+    flex: 50%;
+    margin:20px;
+    background-color: #e27e87;
+    border-radius: 20px;
+}
+
+#character-profile {
+    width:270px;
+    border: 10px outset #e27e87;
+}
+
 #content {
     transition: transform 0.5s ease;
     padding: 16px;
@@ -426,8 +508,12 @@ ul.no-bullets {
 }
 
 #content-2 a {
-    text-transform: uppercase;
     font-size: 25px;
+    text-decoration: none;
+}
+
+#content-2 button {
+    text-transform: uppercase;
 }
 
 /* wave animation */
@@ -492,4 +578,49 @@ section {
     100%{
       background-position-x: -1000px; 
     }
+  }
+
+  /* dropdown */
+  .dropdown {
+    float: right;
+    overflow: hidden;
+  }
+  
+  .dropdown .dropbtn {
+    color: #eddba5;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 14px 14px;
+    background-color: inherit;
+    font-family: 'Sugar Cream';
+    border-left: 4px #eddba5 solid;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    float: none;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
   }
