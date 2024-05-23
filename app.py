@@ -28,7 +28,7 @@ def load_user(user_id):
 class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
-    user_name = db.Column(db.String(20), nullable=False) 
+    username = db.Column(db.String(20), nullable=False) 
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
     user_obj = db.relationship('User', back_populates='inventory')
     item = db.relationship('Item', back_populates='inventory')
@@ -176,7 +176,7 @@ def purchase_item(item_id):
         current_user.currency_balance -= item.price
         db.session.commit()
 
-        inventory = Inventory(user_id=current_user.id, user_name=current_user.username, item_id=item.id)
+        inventory = Inventory(user_id=current_user.id, username=current_user.username, item_id=item.id)
         db.session.add(inventory)
         db.session.commit()
 
@@ -216,7 +216,7 @@ def adopt_pet(pet_species):
             current_user.currency_balance -= pet.price
             db.session.commit()
             
-            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username)
+            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username, user_id=current_user.id)
             db.session.add(adopted_pet)
             db.session.commit()
             return jsonify({'success': True})
