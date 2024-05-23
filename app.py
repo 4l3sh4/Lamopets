@@ -166,21 +166,17 @@ def store():
 @login_required
 def purchase_item(item_id):
     try:
-        # Fetch the item from the database
         item = Item.query.filter_by(id=item_id).first()
         if not item:
             return jsonify({'error': 'Item not found'}), 404
 
-        # Check if the user has sufficient balance
         if current_user.currency_balance < item.price:
             return jsonify({'error': 'Insufficient balance'}), 400
 
-        # Deduct the item price from the user's balance
         current_user.currency_balance -= item.price
         db.session.commit()
 
-        # Add the item to the user's inventory
-        inventory = Inventory(user_name=current_user.username, item_id=item.id)
+        inventory = Inventory(user_id=current_user.id, user_name=current_user.username, item_id=item.id)
         db.session.add(inventory)
         db.session.commit()
 
