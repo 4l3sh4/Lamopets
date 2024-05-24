@@ -267,3 +267,8 @@ ul.no-bullets {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-weight: bold;
 }
+
+.avatar {
+    width: 240px;
+    height: 365px;
+}

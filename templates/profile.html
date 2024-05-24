@@ -38,13 +38,13 @@
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
-    <h1>This is the profile page.</h1>
+
     {% if avatar_url %}
-        <img src="{{ avatar_url }}" alt="User Avatar" id="user-avatar">
+        <img class=avatar src="{{ avatar_url }}" alt="User Avatar" id="user-avatar">
     {% else %}
         <img src="{{ url_for('static', filename='assets/default_avatar.png') }}" alt="User Avatar" id="user-avatar">
     {% endif %}
+    <br>
     <a href="{{url_for('custom')}}">Customize</a><br>
-    <a href="{{url_for('logout')}}">Press here to logout</a>
 </body>
 </html>

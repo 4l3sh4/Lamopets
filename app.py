@@ -85,7 +85,7 @@ def profile():
     if avatar_data:
         avatar_url = f"data:image/png;base64,{avatar_data}"
     else:
-        avatar_url = None  # Or provide a default image URL
+        avatar_url = None
     return render_template('profile.html', avatar_url=avatar_url)
 
 @app.route('/custom')
@@ -163,7 +163,7 @@ def topic(id):
 def delete_topic(id):
     topic = Topic.query.get(id)
     if topic:
-        if topic.username == current_user.username:  # Check if the current user is the author of the topic
+        if topic.username == current_user.username:  
             db.session.delete(topic)
             db.session.commit()
             return redirect(url_for('forums'))
@@ -177,7 +177,7 @@ def delete_topic(id):
 def delete_comment(id):
     comment = Comment.query.get(id)
     if comment:
-        if comment.username == current_user.username:  # Check if the current user is the author of the comment
+        if comment.username == current_user.username:  
             db.session.delete(comment)
             db.session.commit()
             return redirect(url_for('topic', id=comment.topicId))

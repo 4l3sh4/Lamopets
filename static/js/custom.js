@@ -8,36 +8,51 @@ document.getElementById('saveButton').addEventListener('click', function() {
     mainCanvas.height = avatarContainer.offsetHeight;
     var mainContext = mainCanvas.getContext('2d');
 
-    var promises = avatarParts.map(part => {
+    // Function to load image
+    function loadImage(partElement) {
         return new Promise((resolve, reject) => {
-            var partElement = document.getElementById(part);
-            if (partElement.style.backgroundImage) {
-                var img = new Image();
-                img.crossOrigin = "Anonymous";
-                img.src = partElement.style.backgroundImage.slice(5, -2); // Extract URL from backgroundImage style
-                img.onload = function() {
-                    // Create a canvas for each part
-                    var partCanvas = document.createElement('canvas');
-                    partCanvas.width = partElement.offsetWidth;
-                    partCanvas.height = partElement.offsetHeight;
-                    var partContext = partCanvas.getContext('2d');
-
-                    // Apply the filter and draw the image
-                    partContext.filter = window.getComputedStyle(partElement).getPropertyValue('filter');
-                    partContext.drawImage(img, 0, 0, partElement.offsetWidth, partElement.offsetHeight);
-
-                    // Draw the part canvas onto the main canvas
-                    mainContext.drawImage(partCanvas, partElement.offsetLeft, partElement.offsetTop);
-                    resolve();
-                };
-                img.onerror = reject;
-            } else {
-                resolve();
-            }
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = partElement.style.backgroundImage.slice(5, -2); // Extract URL from backgroundImage style
+            img.onload = function() {
+                resolve(img);
+            };
+            img.onerror = reject;
         });
+    }
+
+    // Function to draw image
+    function drawImage(partElement, img) {
+        var partCanvas = document.createElement('canvas');
+        partCanvas.width = partElement.offsetWidth;
+        partCanvas.height = partElement.offsetHeight;
+        var partContext = partCanvas.getContext('2d');
+
+        // Apply the filter and draw the image
+        partContext.filter = window.getComputedStyle(partElement).getPropertyValue('filter');
+        partContext.drawImage(img, 0, 0, partElement.offsetWidth, partElement.offsetHeight);
+
+        // Draw the part canvas onto the main canvas
+        mainContext.drawImage(partCanvas, partElement.offsetLeft, partElement.offsetTop);
+    }
+
+    // Load all images
+    var promises = avatarParts.map(part => {
+        var partElement = document.getElementById(part);
+        if (partElement.style.backgroundImage) {
+            return loadImage(partElement).then(img => ({ partElement, img }));
+        } else {
+            return Promise.resolve(null);
+        }
     });
 
-    Promise.all(promises).then(() => {
+    // Draw all images in order
+    Promise.all(promises).then(results => {
+        results.forEach(result => {
+            if (result) {
+                drawImage(result.partElement, result.img);
+            }
+        });
         var imgData = mainCanvas.toDataURL('image/png');
         saveAvatar(imgData);
     }).catch(error => {
