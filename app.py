@@ -7,6 +7,7 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 import base64
 import os
+import logging
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 instance_dir = os.path.join(basedir, 'instance')
@@ -16,10 +17,18 @@ if not os.path.exists(instance_dir):
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(instance_dir, 'database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static/avatars')
 app.config['SECRET_KEY'] = 'Battery-AAA'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+
+# Logging configuration
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
+# SQLAlchemy session management
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -95,17 +104,23 @@ def custom():
 @app.route('/save-avatar', methods=['POST'])
 @login_required
 def save_avatar():
-    data = request.get_json()
-    image_data = data['image']
-
-    # Remove the data URL prefix
-    image_data = image_data.split(',')[1]
-
-    # Update the user's avatar in the database
-    current_user.avatar = image_data
-    db.session.commit()
-
-    return jsonify({'success': True, 'avatar_url': url_for('static', filename='avatars/avatar.png')})
+    with app.app_context():
+        engine = db.engine
+        Session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
+        session = Session()
+        try:
+            data = request.get_json()
+            image_data = data['image']
+            image_data = image_data.split(',')[1]
+            user = session.query(User).get(current_user.id)
+            user.avatar = image_data
+            session.commit()
+            return jsonify({'success': True, 'avatar_url': url_for('static', filename='avatars/avatar.png')})
+        except Exception as e:
+            session.rollback()
+            return str(e), 500
+        finally:
+            session.close()
 
 @app.route('/store')
 @login_required
@@ -130,61 +145,93 @@ def adopt():
 @app.route('/forums', methods=['GET', 'POST'])
 @login_required
 def forums():
-    if request.method == "POST":
-        title = request.form["title"]
-        existing_topic = Topic.query.filter_by(title=title).first()
-        if existing_topic:
-            return render_template('forums.html', error="Topic already exists.")
-        
-        description = request.form["description"]
-        topic = Topic(title=title, description=description, username=current_user.username)
-        db.session.add(topic)
-        db.session.commit()
-    
-    topics = Topic.query.order_by(Topic.id.desc()).all()
-    return render_template('forums.html', topics=topics, username=current_user.username)
+    with app.app_context():
+        engine = db.engine
+        Session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
+        session = Session()
+        try:
+            if request.method == "POST":
+                title = request.form["title"]
+                existing_topic = session.query(Topic).filter_by(title=title).first()
+                if existing_topic:
+                    return render_template('forums.html', error="Topic already exists.")
+                
+                description = request.form["description"]
+                topic = Topic(title=title, description=description, username=current_user.username)
+                session.add(topic)
+                session.commit()
+            
+            topics = session.query(Topic).order_by(Topic.id.desc()).all()
+            return render_template('forums.html', topics=topics, username=current_user.username)
+        except Exception as e:
+            session.rollback()
+            return str(e), 500
+        finally:
+            session.close()
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
-    topic = Topic.query.get(id)
-    comments = None
-
-    if request.method == "POST" and current_user.is_authenticated:
-        text = request.form["comment"]
-        comment = Comment(text=text, topicId=id, username=current_user.username)
-        db.session.add(comment)
-        db.session.commit()
-
-    comments = Comment.query.filter_by(topicId=id).all()
-    return render_template("topic.html", topic=topic, comments=comments)
+    with app.app_context():
+        engine = db.engine
+        Session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
+        session = Session()
+        try:
+            topic = session.query(Topic).get(id)
+            if request.method == "POST" and current_user.is_authenticated:
+                text = request.form["comment"]
+                comment = Comment(text=text, topicId=id, username=current_user.username)
+                session.add(comment)
+                session.commit()
+            
+            comments = session.query(Comment).filter_by(topicId=id).all()
+            return render_template("topic.html", topic=topic, comments=comments)
+        except Exception as e:
+            session.rollback()
+            return str(e), 500
+        finally:
+            session.close()
 
 @app.route('/delete/topic/<int:id>', methods=['POST'])
 @login_required
 def delete_topic(id):
-    topic = Topic.query.get(id)
-    if topic:
-        if topic.username == current_user.username:  
-            db.session.delete(topic)
-            db.session.commit()
-            return redirect(url_for('forums'))
-        else:
-            abort(403)
-    else:
-        abort(404)
+    with app.app_context():
+        engine = db.engine
+        Session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
+        session = Session()
+        try:
+            topic = session.query(Topic).get(id)
+            if topic:
+                if topic.username == current_user.username:  
+                    session.delete(topic)
+                    session.commit()
+                    return redirect(url_for('forums'))
+                else:
+                    abort(403)
+            else:
+                abort(404)
+        finally:
+            session.close()
 
 @app.route('/delete/comment/<int:id>', methods=['POST'])
 @login_required
 def delete_comment(id):
-    comment = Comment.query.get(id)
-    if comment:
-        if comment.username == current_user.username:  
-            db.session.delete(comment)
-            db.session.commit()
-            return redirect(url_for('topic', id=comment.topicId))
-        else:
-            abort(403)
-    else:
-        abort(404)
+    with app.app_context():
+        engine = db.engine
+        Session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
+        session = Session()
+        try:
+            comment = session.query(Comment).get(id)
+            if comment:
+                if comment.username == current_user.username:  
+                    session.delete(comment)
+                    session.commit()
+                    return redirect(url_for('topic', id=comment.topicId))
+                else:
+                    abort(403)
+            else:
+                abort(404)
+        finally:
+            session.close()
 
 @app.route('/logout')
 @login_required
@@ -197,10 +244,20 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = User(username=form.username.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
+        new_user = User(username=form.username.data, password=hashed_password, avatar="static/assets/default_avatar.png")
+        with app.app_context():
+            engine = db.engine
+            Session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
+            session = Session()
+            try:
+                session.add(new_user)
+                session.commit()
+                return redirect(url_for('login'))
+            except Exception as e:
+                session.rollback()
+                return str(e), 500
+            finally:
+                session.close()
     return render_template('register.html', form=form)
 
 if __name__ == '__main__':
