@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
-    <title>Mini Games</title>
+    <title>Gifting</title>
 </head>
-<body onkeydown="getKeyAndMove(event)">
+<body>
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-
     <h2 class="currency-position">
-        <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}">
+        <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
     </h2>
-
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
@@ -49,9 +48,15 @@
         </div>
     </nav>
     <br>
-    <div class="minigame-player">
-        <canvas id="canvas1"></canvas>
-        <script src="{{url_for('static', filename='js/feeding_time.js')}}"></script>
+    <div class="gifting-contents">
+        <h1>Feeling generous?</h1>
+        <h2>Well, feel free to gift some of your wares to your friends!</h2>
+        <img src="{{ url_for('static', filename='assets/gifted-trotter.png') }}">
+        <div class="row">
+            <div class="column-gift-1">
+                <h3>w.i.p</h3>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <title>Profile</title>
 </head>
 <body>
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -22,29 +24,59 @@
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
             <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chats</a>
-            <a href="{{url_for('adopt')}}">Adopt</a>
-            <a href="{{url_for('minigames')}}">Mini Games</a>
-            <a href="{{url_for('store')}}">Store</a>
+            <a href="{{url_for('forums')}}">Chat</a>
+            <a href="{{url_for('adopt')}}">Adopt Pets</a>
+            <a href="{{url_for('minigames')}}">Earn Coins</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <div class="dropdown">
+                <button class="dropbtn">Knicks & Knacks
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{{url_for('gifting')}}">Gifting</a>
+                </div>
+            </div>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">    
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chats</a>
-            <a href="{{url_for('adopt')}}">Adopt</a>
-            <a href="{{url_for('minigames')}}">Mini Games</a>
-            <a href="{{url_for('store')}}">Store</a>
+            <a href="{{url_for('forums')}}">Chat</a>
+            <a href="{{url_for('adopt')}}">Adopt Pets</a>
+            <a href="{{url_for('minigames')}}">Earn Coins</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
+    <div id="content">
+        <div class="row">
+            <div class="column-1">
+                {% if avatar_url %}
+                    <img class=avatar src="{{ avatar_url }}" alt="User Avatar" id="user-avatar" style="background-color: #ffffff;">
+                {% else %}
+                    <img src="{{ url_for('static', filename='assets/default_avatar.png') }}" alt="User Avatar" id="user-avatar">
+                {% endif %}
+                <br><br>
+                <center><a class="button-53 button-a" href="{{url_for('custom')}}">CUSTOMIZE</a><br></center>
+                <br><br>
+            </div>
+            <div class="column-2">
+                <h1>{{ current_user.username }}'s Sanctuary</h1>
+                
+                <div class="profile">
+                    {% for adopted_pet, pet in adopted_pets %}
+                        <div>
+                            <div class="item" id="{{ adopted_pet.species }}">
+                                <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
+                                <p class="item_name">{{ pet.name }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>                
 
-    {% if avatar_url %}
-        <img class=avatar src="{{ avatar_url }}" alt="User Avatar" id="user-avatar">
-    {% else %}
-        <img src="{{ url_for('static', filename='assets/default_avatar.png') }}" alt="User Avatar" id="user-avatar">
-    {% endif %}
-    <br>
-    <a href="{{url_for('custom')}}">Customize</a><br>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
