@@ -69,7 +69,12 @@ function saveAvatar(imgData) {
         },
         body: JSON.stringify({ image: imgData }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.error || 'Failed to save avatar'); });
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             alert('Avatar saved successfully!');

@@ -168,8 +168,14 @@ def profile():
     return render_template('profile.html', avatar_url=avatar_url, adopted_pets=adopted_pets)
 
 @app.route('/custom')
+@login_required
 def custom():
-    return render_template('custom.html')
+    user_inventory = [item.item_id for item in Inventory.query.filter_by(user_id=current_user.id).all()]
+    grouped_items = Item.get_items_grouped_by_base_id()
+    user_grouped_items = {base_id: [item for item in items if item.id in user_inventory] 
+                          for base_id, items in grouped_items.items() if any(item.id in user_inventory for item in items)}
+    
+    return render_template('custom.html', grouped_items=user_grouped_items)
 
 @app.route('/save-avatar', methods=['POST'])
 @login_required
@@ -319,6 +325,16 @@ def register():
         db.session.add(new_user)
         try:
             commit_with_retry(db.session)
+
+            default_items = ["H01BLACK-F", "U01PURPLE-F", "L02GREY-F"]  
+            for item_id in default_items:
+                item = Item.query.filter_by(id=item_id).first()
+                if item:
+                    inventory = Inventory(user_id=new_user.id, username=new_user.username, item_id=item.id)
+                    db.session.add(inventory)
+            
+            commit_with_retry(db.session)
+
             return redirect(url_for('login'))
         except Exception as e:
             db.session.rollback()
@@ -344,18 +360,37 @@ def commit_with_retry(session, retries=5, delay=1):
 
 def add_items_data():
     items_data = [
-        {"id": "H01BLACK-F", "base_id": "H01-F", "gender": "F", "price": 150, "colour": "#000000", "filter_colour": "grayscale(50%) brightness(40%) saturate(400%)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair1.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair1.png'},
-        {"id": "H01BROWN-F", "base_id": "H01-F", "gender": "F", "price": 250, "colour": "#744700", "filter_colour": "sepia(95%) hue-rotate(350deg) brightness(0.4) contrast(140%)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair1.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair1.png'},
-        {"id": "H01BLONDE-F", "base_id": "H01-F", "gender": "F", "price": 350, "colour": "#D9B380", "filter_colour": "sepia(100%) brightness(1.3)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair1.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair1.png'},
-        {"id": "H02BLUE-F", "base_id": "H02-F", "gender": "F", "price": 150, "colour": "#59CFB5", "filter_colour": "", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair2.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair2.png'},
-        {"id": "H02GREEN-F", "base_id": "H02-F", "gender": "F", "price": 250, "colour": "#86CA66", "filter_colour": "hue-rotate(300deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair2.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair2.png'},
-        {"id": "H02PINK-F", "base_id": "H02-F", "gender": "F", "price": 350, "colour": "#FF9BA3", "filter_colour": "hue-rotate(190deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/hair/f-hair2.png", "image_url": '/static/assets/character_customization/customization_assets/hair/f-hair2.png'},
-        {"id": "U01PURPLE-F", "base_id": "U01-F", "gender": "F", "price": 150, "colour": "#c77fde", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(240deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/shirt/f-shirt1.png", "image_url": '/static/assets/character_customization/customization_assets/shirt/f-shirt1.png'},
-        {"id": "U01BLUE-F", "base_id": "U01-F", "gender": "F", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/shirt/f-shirt1.png", "image_url": '/static/assets/character_customization/customization_assets/shirt/f-shirt1.png'},
-        {"id": "U01GREEN-F", "base_id": "U01-F", "gender": "F", "price": 350, "colour": "#7de877", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/shirt/f-shirt1.png", "image_url": '/static/assets/character_customization/customization_assets/shirt/f-shirt1.png'},
-        {"id": "U01PURPLE-M", "base_id": "U01-M", "gender": "M", "price": 150, "colour": "#c77fde", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(240deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/shirt/m-shirt1.png", "image_url": '/static/assets/character_customization/customization_assets/shirt/m-shirt1.png'},
-        {"id": "U01BLUE-M", "base_id": "U01-M", "gender": "M", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/shirt/m-shirt1.png", "image_url": '/static/assets/character_customization/customization_assets/shirt/m-shirt1.png'},
-        {"id": "U01GREEN-M", "base_id": "U01-M", "gender": "M", "price": 350, "colour": "#7de877", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/character_customization/thumbnails/shirt/m-shirt1.png", "image_url": '/static/assets/character_customization/customization_assets/shirt/m-shirt1.png'},
+        {"id": "H01BLACK-M", "base_id": "H01-M", "gender": "male", "price": 150, "colour": "#353535", "filter_colour": "grayscale(50%) brightness(40%) saturate(400%)", "thumbnail_url": "/static/assets/thumbnails/hair/m-hair1.png", "image_url": 'assets/customization_assets/hair/m-hair1.png'},
+        {"id": "H01BROWN-M", "base_id": "H01-M", "gender": "male", "price": 250, "colour": "#7F654A", "filter_colour": "sepia(95%) hue-rotate(350deg) brightness(0.7) contrast(140%)", "thumbnail_url": "/static/assets/thumbnails/hair/m-hair1.png", "image_url": 'assets/customization_assets/hair/m-hair1.png'},
+        {"id": "H01BLONDE-M", "base_id": "H01-M", "gender": "male", "price": 350, "colour": "#D9B380", "filter_colour": "sepia(100%) brightness(1.3)", "thumbnail_url": "/static/assets/thumbnails/hair/m-hair1.png", "image_url": 'assets/customization_assets/hair/m-hair1.png'},
+        
+        {"id": "H01BLACK-F", "base_id": "H01-F", "gender": "female", "price": 150, "colour": "#353535", "filter_colour": "grayscale(50%) brightness(40%) saturate(400%)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair1.png", "image_url": 'assets/customization_assets/hair/f-hair1.png'},
+        {"id": "H01BROWN-F", "base_id": "H01-F", "gender": "female", "price": 250, "colour": "#7F654A", "filter_colour": "sepia(95%) hue-rotate(350deg) brightness(0.7) contrast(140%)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair1.png", "image_url": 'assets/customization_assets/hair/f-hair1.png'},
+        {"id": "H01BLONDE-F", "base_id": "H01-F", "gender": "female", "price": 350, "colour": "#D9B380", "filter_colour": "sepia(100%) brightness(1.3)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair1.png", "image_url": 'assets/customization_assets/hair/f-hair1.png'},
+        
+        {"id": "H02BLUE-F", "base_id": "H02-F", "gender": "female", "price": 150, "colour": "#59CFB5", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair2.png", "image_url": 'assets/customization_assets/hair/f-hair2.png'},
+        {"id": "H02GREEN-F", "base_id": "H02-F", "gender": "female", "price": 250, "colour": "#86CA66", "filter_colour": "hue-rotate(300deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair2.png", "image_url": 'assets/customization_assets/hair/f-hair2.png'},
+        {"id": "H02PINK-F", "base_id": "H02-F", "gender": "female", "price": 350, "colour": "#FF9BA3", "filter_colour": "hue-rotate(190deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair2.png", "image_url": 'assets/customization_assets/hair/f-hair2.png'},
+        
+        {"id": "H03BLACK-F", "base_id": "H03-F", "gender": "female", "price": 150, "colour": "#353535", "filter_colour": "grayscale(50%) brightness(40%) saturate(400%)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair3.png", "image_url": 'assets/customization_assets/hair/f-hair3.png'},
+        {"id": "H03BROWN-F", "base_id": "H03-F", "gender": "female", "price": 250, "colour": "#7F654A", "filter_colour": "sepia(95%) hue-rotate(350deg) brightness(0.7) contrast(140%)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair3.png", "image_url": 'assets/customization_assets/hair/f-hair3.png'},
+        {"id": "H03BLONDE-F", "base_id": "H03-F", "gender": "female", "price": 350, "colour": "#D9B380", "filter_colour": "sepia(100%) brightness(1.3)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair3.png", "image_url": 'assets/customization_assets/hair/f-hair3.png'},
+        
+        {"id": "U01PURPLE-F", "base_id": "U01-F", "gender": "female", "price": 150, "colour": "#c77fde", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(240deg)", "thumbnail_url": "/static/assets/thumbnails/shirt/f-shirt1.png", "image_url": 'assets/customization_assets/shirt/f-shirt1.png'},
+        {"id": "U01BLUE-F", "base_id": "U01-F", "gender": "female", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/shirt/f-shirt1.png", "image_url": 'assets/customization_assets/shirt/f-shirt1.png'},
+        {"id": "U01GREEN-F", "base_id": "U01-F", "gender": "female", "price": 350, "colour": "#7de877", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/shirt/f-shirt1.png", "image_url": 'assets/customization_assets/shirt/f-shirt1.png'},
+        
+        {"id": "U01PURPLE-M", "base_id": "U01-M", "gender": "male", "price": 150, "colour": "#c77fde", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(240deg)", "thumbnail_url": "/static/assets/thumbnails/shirt/m-shirt1.png", "image_url": 'assets/customization_assets/shirt/m-shirt1.png'},
+        {"id": "U01BLUE-M", "base_id": "U01-M", "gender": "male", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/shirt/m-shirt1.png", "image_url": 'assets/customization_assets/shirt/m-shirt1.png'},
+        {"id": "U01GREEN-M", "base_id": "U01-M", "gender": "male", "price": 350, "colour": "#7de877", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/shirt/m-shirt1.png", "image_url": 'assets/customization_assets/shirt/m-shirt1.png'},
+    
+        {"id": "L02GREY-F", "base_id": "L02-F", "gender": "female", "price": 150, "colour": "#848484", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/pants/f-pants2.png", "image_url": 'assets/customization_assets/pants/f-pants2.png'},
+        {"id": "L02BLUE-F", "base_id": "L02-F", "gender": "female", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/pants/f-pants2.png", "image_url": 'assets/customization_assets/pants/f-pants2.png'},
+        {"id": "L02GREEN-F", "base_id": "L02-F", "gender": "female", "price": 350, "colour": "#7de877", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/pants/f-pants2.png", "image_url": 'assets/customization_assets/pants/f-pants2.png'},
+    
+        {"id": "F02GREY-F", "base_id": "F02-F", "gender": "female", "price": 150, "colour": "#848484", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
+        {"id": "F02BLUE-F", "base_id": "F02-F", "gender": "female", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
+        {"id": "F02GREEN-F", "base_id": "F02-F", "gender": "female", "price": 350, "colour": "#7de877", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
     ]   
     
     for item_data in items_data:

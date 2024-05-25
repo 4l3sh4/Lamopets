@@ -98,16 +98,52 @@
 
                 {% if group[0].base_id.startswith("L") %}
                 <div class="store" id="store-lowerb">
+                    <div class="item">
+                        <img src="{{ group[0].thumbnail_url }}" id="{{ group[0].base_id }}" style="filter: {{ group[0].filter_colour }};">
+                        <div>
+                            {% for item_in_group in group %}
+                                <button class="colour-options" style="background-color: {{ item_in_group.colour }}" id="{{ item_in_group.id }}" data-filter="{{ item_in_group.filter_colour }}" data-price="{{ item_in_group.price }}" data-item-id="{{ item_in_group.id }}"></button>
+                            {% endfor %}
+                        </div>
+                        {% for item_in_group in group %}
+                            <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
+                        {% endfor %}
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                    </div>
                 </div>
                 {% endif %}
 
                 {% if group[0].base_id.startswith("F") %}
                 <div class="store" id="store-feet">
+                    <div class="item">
+                        <img src="{{ group[0].thumbnail_url }}" id="{{ group[0].base_id }}" style="filter: {{ group[0].filter_colour }};">
+                        <div>
+                            {% for item_in_group in group %}
+                                <button class="colour-options" style="background-color: {{ item_in_group.colour }}" id="{{ item_in_group.id }}" data-filter="{{ item_in_group.filter_colour }}" data-price="{{ item_in_group.price }}" data-item-id="{{ item_in_group.id }}"></button>
+                            {% endfor %}
+                        </div>
+                        {% for item_in_group in group %}
+                            <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
+                        {% endfor %}
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                    </div>
                 </div>
                 {% endif %}
 
                 {% if group[0].base_id.startswith("M") %}
                 <div class="store" id="store-misc">
+                    <div class="item">
+                        <img src="{{ group[0].thumbnail_url }}" id="{{ group[0].base_id }}" style="filter: {{ group[0].filter_colour }};">
+                        <div>
+                            {% for item_in_group in group %}
+                                <button class="colour-options" style="background-color: {{ item_in_group.colour }}" id="{{ item_in_group.id }}" data-filter="{{ item_in_group.filter_colour }}" data-price="{{ item_in_group.price }}" data-item-id="{{ item_in_group.id }}"></button>
+                            {% endfor %}
+                        </div>
+                        {% for item_in_group in group %}
+                            <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
+                        {% endfor %}
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                    </div>
                 </div>
                 {% endif %}
             {% endfor %}
