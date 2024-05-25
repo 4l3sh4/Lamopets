@@ -98,3 +98,7 @@ button {
     text-overflow: ellipsis;
     max-width: 100%;
 }
+
+.topic {
+    text-align: center;
+}
