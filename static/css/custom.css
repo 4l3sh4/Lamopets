@@ -1,0 +1,177 @@
+body {
+    background-color: #99d1cb;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-top: 50px;
+}
+
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.items-container {
+    height: 568px;
+    overflow-y: auto;
+    margin-left: 80px;
+}
+
+.avatar {
+    position: relative;
+    width: 410px;
+    height: 500px;
+    border: 5px solid #ff919a;
+    margin-top: -1px; 
+    background-color: #ffffff;
+}
+
+.avatar-part {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    filter: var(--part-filter, none);
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.category {
+    width: 300px;
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    background-color: #f9eecd;
+}
+
+.category label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.option {
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    position: relative; 
+}
+
+.option img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+}
+
+.option:hover {
+    background-color: #e0e0e0;
+}
+
+.color-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    position: absolute; 
+    bottom: -20px; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.color-btn {
+    width: 10px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 2px 2px 2px #a9a9a9;
+}
+
+.color-btn:hover {
+    transform: scale(1.5);
+}
+
+@font-face {
+    font-family: 'myFont';
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
+label {
+    text-align: center;
+    font-family: myFont;
+    font-size: 28px;
+}
+
+#saveButton {
+    background-color: #e27e87;
+    border: 4px solid #eddba5;
+    width: 135px;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-family: myFont;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#saveButton:hover {
+    background-color: #eddba5;
+    color: #e27e87;
+}
+
+#back {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+}
+
+#back a {
+    background-color: #e27e87;
+    overflow: hidden;
+    border: 4px solid #eddba5;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-family: myFont;
+    font-weight: bold;
+}
+
+#back a:hover {
+    background-color: #eddba5;
+    color: #e27e87;
+}
