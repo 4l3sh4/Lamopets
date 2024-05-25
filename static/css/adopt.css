@@ -210,3 +210,13 @@ button p{
 #noButton:hover {
     background-color: #a14c53;
 }
+
+@font-face {
+    font-family: 'myFont';
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
+.font {
+    font-family: myFont;
+    font-size: 32px;
+}

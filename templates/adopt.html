@@ -60,7 +60,7 @@
                     <div class="adopt" id="adopt-aquana">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
+                            <p class="item_name font" style="font-size: 27px;">{{ pet.name }}</p>
                             <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     <div class="adopt" id="adopt-jackaloaf">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
+                            <p class="item_name font" style="font-size: 27px;">{{ pet.name }}</p>
                             <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                     <div class="adopt" id="adopt-trotter">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
+                            <p class="item_name font" style="font-size: 27px;">{{ pet.name }}</p>
                             <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
     </div>
 
     <div id="purchase-adopt" class="popup">
-        <div class="purchase-confirm">
+        <div class="purchase-confirm font">
             <p id="confirm-text">Would you like to buy this pet?</p>
             <button id="yesButton" class="yes-no">Yes</button>
             <button id="noButton" class="yes-no" onclick="closeModal()">No</button>
