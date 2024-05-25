@@ -39,6 +39,11 @@ button {
     margin-bottom: 20px;
 }
 
+@font-face {
+    font-family: myFont;
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
 #back {
     position: absolute;
     top: 30px;
@@ -54,8 +59,8 @@ button {
     padding: 11px 13px;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 16px;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 20px;
+    font-family: myFont;
     font-weight: bold;
 }
 
@@ -64,10 +69,6 @@ button {
     color: #e27e87;
 }
 
-@font-face {
-    font-family: myFont;
-    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
-}
 
 .font {
     font-family: myFont;
@@ -96,4 +97,8 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+}
+
+.topic {
+    text-align: center;
 }
