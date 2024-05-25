@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeLink.classList.add('active');
             }
         });
-    }, { rootMargin: '0px', threshold: 0.1 });
+    }, { rootMargin: '0px', threshold: 0.5 });
 
     sections.forEach(section => {
         observer.observe(section);
