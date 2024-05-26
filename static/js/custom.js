@@ -62,6 +62,22 @@ document.getElementById('saveButton').addEventListener('click', function() {
 });
 
 function saveAvatar(imgData) {
+    var requiredParts = ['gender', 'eyes', 'mouth', 'shirt', 'pants', 'hair'];
+    var missingParts = [];
+    
+    requiredParts.forEach(part => {
+        var partElement = document.getElementById(part);
+        if (partElement.style.backgroundImage === '') {
+            missingParts.push(part);
+        }
+    });
+
+    if (missingParts.length > 0) {
+        var missingPartsMessage = "Please select " + missingParts.join(", ") + " before saving :)" ;
+        alert(missingPartsMessage);
+        return;
+    }
+
     fetch('/save-avatar', {
         method: 'POST',
         headers: {
