@@ -95,7 +95,7 @@
                             <div class="color-options">
                                 {% for item in items %}
                                     {% for colour in item.filter_colour.split(',') %}
-                                        <button class="color-btn" data-part="hair" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
+                                        <button class="color-btn {% if loop.first %}default-color{% endif %}" data-part="hair" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
                                     {% endfor %}
                                 {% endfor %}
                             </div>
@@ -115,7 +115,7 @@
                             <div class="color-options">
                                 {% for item in items %}
                                     {% for colour in item.filter_colour.split(',') %}
-                                        <button class="color-btn" data-part="shirt" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
+                                        <button class="color-btn {% if loop.first %}default-color{% endif %}" data-part="shirt" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
                                     {% endfor %}
                                 {% endfor %}
                             </div>
@@ -135,7 +135,7 @@
                             <div class="color-options">
                                 {% for item in items %}
                                     {% for colour in item.filter_colour.split(',') %}
-                                        <button class="color-btn" data-part="pants" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
+                                        <button class="color-btn {% if loop.first %}default-color{% endif %}" data-part="pants" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
                                     {% endfor %}
                                 {% endfor %}
                             </div>
@@ -154,7 +154,7 @@
                             <div class="color-options">
                                 {% for item in items %}
                                     {% for colour in item.filter_colour.split(',') %}
-                                        <button class="color-btn" data-part="misc" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
+                                        <button class="color-btn {% if loop.first %}default-color{% endif %}" data-part="misc" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
                                     {% endfor %}
                                 {% endfor %}
                             </div>

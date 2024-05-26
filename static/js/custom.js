@@ -136,18 +136,28 @@ document.querySelectorAll('#genderType .option').forEach(button => {
 
 document.querySelectorAll('.options .option').forEach(button => {
     button.addEventListener('click', function() {
-        var part = button.getAttribute('data-part');
-        var imageUrl = button.getAttribute('data-image');
+        var part = this.getAttribute('data-part');
+        var imageUrl = this.getAttribute('data-image');
         console.log('Part:', part, 'Image URL:', imageUrl);
         updateAvatarPart(part, imageUrl);
+
+        this.querySelectorAll('.color-btn').forEach(colorButton => {
+            colorButton.setAttribute('data-part', part);
+        });
+
+        const defaultColorButton = this.querySelector('.default-color');
+        if (defaultColorButton) {
+            defaultColorButton.click();
+        }
     });
 });
+
 
 document.querySelectorAll('.color-btn').forEach(button => {
     button.addEventListener('click', function(event) {
         event.stopPropagation();
-        var part = button.getAttribute('data-part');
-        var filter = button.getAttribute('data-filter');
+        var part = this.getAttribute('data-part'); 
+        var filter = this.getAttribute('data-filter');
         console.log('Changing color for part:', part, 'with filter:', filter);
         changeColor(part, filter);
     });
