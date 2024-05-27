@@ -635,3 +635,8 @@ section {
   .dropdown:hover .dropdown-content {
     display: block;
   }
+
+  #sanctuary{
+    height: 65vh;
+    overflow-y: scroll;
+  }
