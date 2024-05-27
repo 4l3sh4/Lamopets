@@ -24,9 +24,8 @@ app.config['SECRET_KEY'] = 'Battery-AAA'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-# Logging configuration
 logging.basicConfig()
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -187,29 +186,39 @@ def adopt_pet(pet_species):
 @app.route('/forums', methods=['GET', 'POST'])
 @login_required
 def forums():
+    error = None
     if request.method == "POST":
-        title = request.form["title"]
-        existing_topic = Topic.query.filter_by(title=title).first()
-        if existing_topic:
-            return render_template('forums.html', error="Topic already exists.")
+        title = request.form["title"].strip()
+        description = request.form["description"].strip()
 
-        description = request.form["description"]
-        topic = Topic(title=title, description=description, username=current_user.username)
-        db.session.add(topic)
-        db.session.commit()
+        if not title or not description:
+            error = "Title and description cannot be empty."
+        else:
+            existing_topic = Topic.query.filter_by(title=title).first()
+            if existing_topic:
+                error = "Topic already exists."
+            else:
+                topic = Topic(title=title, description=description, username=current_user.username)
+                db.session.add(topic)
+                db.session.commit()
     
     topics = Topic.query.order_by(Topic.id.desc()).all()
-    return render_template('forums.html', topics=topics, username=current_user.username)
+    return render_template('forums.html', topics=topics, username=current_user.username, error=error)
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
     topic = Topic.query.get(id)
+    comments = Comment.query.filter_by(topicId=id).all()  # Ensure comments is defined before rendering
     if request.method == "POST" and current_user.is_authenticated:
-        text = request.form["comment"]
-        comment = Comment(text=text, topicId=id, username=current_user.username)
-        db.session.add(comment)
-        db.session.commit()
-
+        text = request.form["comment"].strip()
+        if text:  # Check if the comment text is not empty or just whitespace
+            comment = Comment(text=text, topicId=id, username=current_user.username)
+            db.session.add(comment)
+            db.session.commit()
+        else:
+            # Handle the case where the comment is empty
+            return render_template("topic.html", topic=topic, comments=comments, error="Comment cannot be empty.")
+    
     comments = Comment.query.filter_by(topicId=id).all()
     return render_template("topic.html", topic=topic, comments=comments)
 
@@ -223,9 +232,9 @@ def delete_topic(id):
             db.session.commit()
             return redirect(url_for('forums'))
         else:
-            abort(403)
+            abort(403)  
     else:
-        abort(404)
+        abort(404)  
 
 @app.route('/delete/comment/<int:id>', methods=['POST'])
 @login_required

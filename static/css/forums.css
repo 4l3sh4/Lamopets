@@ -167,20 +167,35 @@ img {
 .container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; 
-    flex-wrap: wrap; 
+    align-items: stretch; 
+    flex-wrap: wrap;
     padding: 20px;
 }
 
 .topic,
 .browse {
-    width: calc(50% - 15px); 
+    flex: 1; 
+    min-width: calc(50% - 30px); 
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #fbefcb;
     color: #000000;
+    margin: 0px 10px 0px 10px; 
+    display: flex;
+    flex-direction: column;
 }
+
+.topic form {
+    flex-grow: 1;
+}
+
+.scroll {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    max-height: 270px;
+}
+
 
 @font-face {
     font-family: 'myFont';
@@ -195,11 +210,6 @@ h1 {
 .font {
     font-family: myFont;
     font-size: 28px;
-}
-
-.scroll {
-    overflow-y:scroll;
-    max-height: 288px;
 }
 
 .currency-position {
