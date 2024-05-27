@@ -175,7 +175,17 @@ document.querySelectorAll('.color-btn').forEach(button => {
         var part = this.getAttribute('data-part'); 
         var filter = this.getAttribute('data-filter');
         console.log('Changing color for part:', part, 'with filter:', filter);
-        changeColor(part, filter);
+        
+        var option = this.closest('.option');
+        if (option) {
+            var imageUrl = option.getAttribute('data-image');
+            console.log('Updating part:', part, 'with image URL:', imageUrl);
+            
+            updateAvatarPart(part, imageUrl);
+            changeColor(part, filter);
+        } else {
+            console.error('Parent option not found for color button:', this);
+        }
     });
 });
 
