@@ -105,6 +105,7 @@
     flex-direction: column;
     justify-content: center;  
     align-items: center;
+    position: relative;
 }
 
 .item img {
@@ -220,4 +221,24 @@ button p{
 
 #noButton:hover {
     background-color: #a14c53;
+}
+
+.gender-label {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    border-radius: 200%;
+    width: 20px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#label-male{
+    background-color: #8b99b2;
+    color: #fff;
+}
+
+#label-female{
+    background-color: #e89097;
+    color: #fff;
 }

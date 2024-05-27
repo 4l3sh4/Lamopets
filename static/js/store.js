@@ -15,6 +15,28 @@ document.addEventListener("DOMContentLoaded", () => {
     sections.forEach(section => {
         observer.observe(section);
     });
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const targetId = this.getAttribute('href').substring(1); // Get the target id without the #
+            const targetSection = document.getElementById(targetId);
+
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+
+            sections.forEach(section => {
+                if (section.id === targetId) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            navLinks.forEach(link => link.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 });
 
 function closeModalStore() {
