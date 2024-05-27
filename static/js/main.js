@@ -13,14 +13,14 @@ function closeNav() {
 }
 
 window.addEventListener('resize', function() {
-    if (window.innerWidth > 600) {
+    if (window.innerWidth > 900) {
         closeNav(); 
         document.getElementById("navicon").style.display = "none"; 
     }
 });
 
 window.addEventListener('resize', function() {
-    if (window.innerWidth < 600) {
+    if (window.innerWidth < 900) {
         document.getElementById("navicon").style.display = "block"; 
     }
 });

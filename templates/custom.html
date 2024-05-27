@@ -29,16 +29,16 @@
             <div class="category">
                 <label for="genderType">Gender</label>
                 <div id="genderType" class="options">
-                    <div class="option" data-part="gender" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/gender/male.png') }}" onclick="changeGender('male')">
-                        <img src="{{ url_for('static', filename='assets/thumbnails/gender/male.png') }}" alt="Male">
+                    <div class="option" data-part="gender" data-gender="Male" data-image="{{ url_for('static', filename='assets/customization_assets/gender/Male.png') }}" onclick="changeGender('Male')">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/gender/Male.png') }}" alt="Male">
                         <div class="color-options">
                             <button class="color-btn" data-part="gender" style="background-color: #F1E8D2;"></button>
                             <button class="color-btn" data-part="gender" data-filter="sepia(65%) hue-rotate(300deg) brightness(0.62) contrast(300%)" style="background-color: #DBC6B8;"></button>
                             <button class="color-btn" data-part="gender" data-filter="sepia(65%) hue-rotate(300deg) brightness(0.50) contrast(400%)" style="background-color: #806959;"></button>
                         </div>
                     </div>
-                    <div class="option" data-part="gender" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/gender/female.png') }}" onclick="changeGender('female')">
-                        <img src="{{ url_for('static', filename='assets/thumbnails/gender/female.png') }}" alt="Female">
+                    <div class="option" data-part="gender" data-gender="Female" data-image="{{ url_for('static', filename='assets/customization_assets/gender/Female.png') }}" onclick="changeGender('Female')">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/gender/Female.png') }}" alt="Female">
                         <div class="color-options">
                             <button class="color-btn" data-part="gender" style="background-color: #F1E8D2;"></button>
                             <button class="color-btn" data-part="gender" data-filter="sepia(65%) hue-rotate(300deg) brightness(0.62) contrast(300%)" style="background-color: #DBC6B8;"></button>
@@ -52,7 +52,7 @@
                 <label for="eyesType">Eyes</label>
                 <div id="eyesType" class="options">
 
-                    <div class="option" data-part="eyes" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/eyes/m-eyes1.png') }}">
+                    <div class="option" data-part="eyes" data-gender="Male" data-image="{{ url_for('static', filename='assets/customization_assets/eyes/m-eyes1.png') }}">
                         <img src="{{ url_for('static', filename='assets/thumbnails/eyes/eyes.png') }}" alt="Male Eyes">
                         <div class="color-options">
                             <button class="color-btn" data-part="eyes" style="background-color: #848484;"></button>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
 
-                    <div class="option" data-part="eyes" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/eyes/f-eyes1.png') }}">
+                    <div class="option" data-part="eyes" data-gender="Female" data-image="{{ url_for('static', filename='assets/customization_assets/eyes/f-eyes1.png') }}">
                         <img src="{{ url_for('static', filename='assets/thumbnails/eyes/eyes.png') }}" alt="Female Eyes">
                         <div class="color-options">
                             <button class="color-btn" data-part="eyes" style="background-color: #848484;"></button>
@@ -76,10 +76,10 @@
             <div class="category">
                 <label for="mouthType">Mouth</label>
                 <div id="mouthType" class="options">
-                    <div class="option" data-part="mouth" data-gender="male" data-image="{{ url_for('static', filename='assets/customization_assets/mouth/m-mouth1.png') }}">
+                    <div class="option" data-part="mouth" data-gender="Male" data-image="{{ url_for('static', filename='assets/customization_assets/mouth/m-mouth1.png') }}">
                         <img src="{{ url_for('static', filename='assets/thumbnails/mouth/mouth.png') }}" alt="Male Mouth">
                     </div>
-                    <div class="option" data-part="mouth" data-gender="female" data-image="{{ url_for('static', filename='assets/customization_assets/mouth/f-mouth1.png') }}">
+                    <div class="option" data-part="mouth" data-gender="Female" data-image="{{ url_for('static', filename='assets/customization_assets/mouth/f-mouth1.png') }}">
                         <img src="{{ url_for('static', filename='assets/thumbnails/mouth/mouth.png') }}" alt="Female Mouth">
                     </div>
                 </div>
@@ -160,11 +160,8 @@
                             </div>
                         </div>
                     {% endfor %}
-                    <div class="option" data-part="misc" data-gender="male">
-                        <img src="{{ url_for('static', filename='assets/thumbnails/none/none.png') }}" alt="None">
-                    </div>
-                    <div class="option" data-part="misc" data-gender="female">
-                        <img src="{{ url_for('static', filename='assets/thumbnails/none/none.png') }}" alt="None">
+                    <div class="option" data-part="misc" data-gender="unisex">
+                        <img src="{{ url_for('static', filename='assets/thumbnails/none.png') }}" alt="None">
                     </div>
                 </div>
             </div>

@@ -196,12 +196,12 @@ function changeColor(partId, filter) {
 
 function setDefaultClothing() {
     console.log('Setting default clothing for gender:', selectedGender);
-    if (selectedGender === 'male') {
-        console.log('Default male clothing URLs:', defaultMaleShirtUrl, defaultMalePantsUrl);
+    if (selectedGender === 'Male') {
+        console.log('Default Male clothing URLs:', defaultMaleShirtUrl, defaultMalePantsUrl);
         updateAvatarPart('shirt', defaultMaleShirtUrl);
         updateAvatarPart('pants', defaultMalePantsUrl);
-    } else if (selectedGender === 'female') {
-        console.log('Default female clothing URLs:', defaultFemaleShirtUrl, defaultFemalePantsUrl);
+    } else if (selectedGender === 'Female') {
+        console.log('Default Female clothing URLs:', defaultFemaleShirtUrl, defaultFemalePantsUrl);
         updateAvatarPart('shirt', defaultFemaleShirtUrl);
         updateAvatarPart('pants', defaultFemalePantsUrl);
     }

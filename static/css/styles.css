@@ -320,10 +320,15 @@ img {
     z-index: 1000; 
 }
 
-@media screen and (max-width: 800px) {
-    .navbar a{
-        font-size: 12px;
+@media screen and (max-width: 900px) {
+    .navbar{
+        display: none;
     }
+
+    #navicon{
+        display: block;
+    }
+
     .currency-position {
         font-size: 20px;
         width: 60px;
