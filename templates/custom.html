@@ -178,7 +178,7 @@
                             <div class="color-options">
                                 {% for item in items %}
                                     {% for colour in item.filter_colour.split(',') %}
-                                        <button class="color-btn" data-part="shoes" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
+                                        <button class="color-btn {% if loop.first %}default-color{% endif %}" data-part="shoes" data-filter="{{ colour }}" style="background-color: {{ item.colour.split(',')[loop.index0] }};"></button>
                                     {% endfor %}
                                 {% endfor %}
                             </div>
