@@ -152,6 +152,12 @@ document.querySelectorAll('#genderType .option').forEach(button => {
 
 document.querySelectorAll('.options .option').forEach(button => {
     button.addEventListener('click', function() {
+        // Check if gender has been selected
+        if (!selectedGender) {
+            alert('Please select a gender first!');
+            return;
+        }
+
         var part = this.getAttribute('data-part');
         var imageUrl = this.getAttribute('data-image');
         console.log('Part:', part, 'Image URL:', imageUrl);
@@ -168,6 +174,30 @@ document.querySelectorAll('.options .option').forEach(button => {
     });
 });
 
+document.querySelectorAll('#miscType .option').forEach(button => {
+    button.addEventListener('click', function() {
+        var part = this.getAttribute('data-part');
+        var imageUrl = this.getAttribute('data-image');
+        console.log('Part:', part, 'Image URL:', imageUrl);
+        
+        if (part === 'misc') {
+            var miscElement = document.getElementById('misc');
+            miscElement.style.backgroundImage = '';
+            miscElement.style.filter = '';
+        } else {
+            updateAvatarPart(part, imageUrl);
+        }
+
+        this.querySelectorAll('.color-btn').forEach(colorButton => {
+            colorButton.setAttribute('data-part', part);
+        });
+
+        const defaultColorButton = this.querySelector('.default-color');
+        if (defaultColorButton) {
+            defaultColorButton.click();
+        }
+    });
+});
 
 document.querySelectorAll('.color-btn').forEach(button => {
     button.addEventListener('click', function(event) {
