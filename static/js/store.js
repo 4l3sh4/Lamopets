@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             sections.forEach(section => {
                 if (section.id === targetId) {
-                    section.style.display = 'block';
+                    section.style.display = 'inline-block';
                 } else {
                     section.style.display = 'none';
                 }
