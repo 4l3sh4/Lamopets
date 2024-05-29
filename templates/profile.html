@@ -61,7 +61,8 @@
                 <center><a class="button-53 button-a" href="{{url_for('custom')}}">CUSTOMIZE</a><br></center>
                 <br><br>
             </div>
-            <div class="column-2">
+
+            <div class="column-2" id="sanctuary">
                 <h1>{{ current_user.username }}'s Sanctuary</h1>
                 
                 <div class="profile">
@@ -73,8 +74,29 @@
                             </div>
                         </div>
                     {% endfor %}
-                </div>                
-
+                </div>           
+                
+                <h1>{{ current_user.username }}'s Closet</h1>
+                <div class="profile">
+                    {% set item_count_dict = {} %}
+                    {% for inventory, item in inventory_items %}
+                        {% set item_id = item.id %}
+                        {% if item_id not in item_count_dict %}
+                            {% set _ = item_count_dict.update({item_id: {'quantity': 1, 'item': item}}) %}
+                        {% else %}
+                            {% set _ = item_count_dict[item_id].update({'quantity': item_count_dict[item_id].quantity + 1}) %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% for item_id, item_info in item_count_dict.items() %}
+                        <div>
+                            <div class="item-box" id="{{ item_info.item.id }}">
+                                <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
+                                <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>  
             </div>
         </div>
     </div>
