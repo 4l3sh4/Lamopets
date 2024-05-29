@@ -62,10 +62,10 @@
                 <br><br>
             </div>
 
-            <div class="column-2" id="sanctuary">
+            <div class="column-2" id="profile-display">
                 <h1>{{ current_user.username }}'s Sanctuary</h1>
                 
-                <div class="profile">
+                <div class="profile" id="sanctuary">
                     {% for adopted_pet, pet in adopted_pets %}
                         <div>
                             <div class="item" id="{{ adopted_pet.species }}">
@@ -77,7 +77,7 @@
                 </div>           
                 
                 <h1>{{ current_user.username }}'s Closet</h1>
-                <div class="profile">
+                <div class="profile" id="closet">
                     {% set item_count_dict = {} %}
                     {% for inventory, item in inventory_items %}
                         {% set item_id = item.id %}
