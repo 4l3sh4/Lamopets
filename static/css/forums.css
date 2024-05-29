@@ -250,6 +250,8 @@ h1 {
 #delete {
     margin-left: 10px;
     font-size: 18px;
+    background-color: #f1959a;
+    color: #f9f9f9;
 }
 
 .info {

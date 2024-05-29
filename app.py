@@ -85,6 +85,10 @@ class Comment(db.Model):
     topicId = db.Column(db.Integer, db.ForeignKey('topic.id', ondelete='CASCADE'), nullable=False)
     topic = db.relationship('Topic', backref=db.backref('comments', lazy=True, cascade='all, delete-orphan'))
     username = db.Column(db.String(20), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)
+    replies = db.relationship('Comment', backref=db.backref('parent', remote_side=[id]), lazy=True)
+
+    __table_args__ = {'extend_existing': True}
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
@@ -207,19 +211,24 @@ def forums():
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
-    topic = Topic.query.get(id)
-    comments = Comment.query.filter_by(topicId=id).all()  # Ensure comments is defined before rendering
+    topic = db.session.get(Topic, id)
+    if not topic:
+        abort(404)
+
     if request.method == "POST" and current_user.is_authenticated:
         text = request.form["comment"].strip()
-        if text:  # Check if the comment text is not empty or just whitespace
-            comment = Comment(text=text, topicId=id, username=current_user.username)
+        parent_id = request.form["parent_id"]
+        
+        if text:
+            parent_comment = db.session.get(Comment, parent_id) if parent_id else None
+            comment = Comment(text=text, topicId=id, username=current_user.username, parent=parent_comment)
             db.session.add(comment)
             db.session.commit()
         else:
-            # Handle the case where the comment is empty
+            comments = Comment.query.filter_by(topicId=id, parent=None).all()
             return render_template("topic.html", topic=topic, comments=comments, error="Comment cannot be empty.")
     
-    comments = Comment.query.filter_by(topicId=id).all()
+    comments = Comment.query.filter_by(topicId=id, parent=None).all()
     return render_template("topic.html", topic=topic, comments=comments)
 
 @app.route('/delete/topic/<int:id>', methods=['POST'])
@@ -242,6 +251,8 @@ def delete_comment(id):
     comment = Comment.query.get(id)
     if comment:
         if comment.username == current_user.username:
+            # Recursively delete all child comments
+            delete_comment_replies(comment)
             db.session.delete(comment)
             db.session.commit()
             return redirect(url_for('topic', id=comment.topicId))
@@ -249,6 +260,11 @@ def delete_comment(id):
             abort(403)
     else:
         abort(404)
+
+def delete_comment_replies(comment):
+    for reply in comment.replies:
+        delete_comment_replies(reply)
+        db.session.delete(reply)
 
 @app.route('/logout')
 @login_required

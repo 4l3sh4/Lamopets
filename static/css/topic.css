@@ -102,3 +102,29 @@ button {
 .topic {
     text-align: center;
 }
+
+.reply-button {
+    padding: 5px 10px;
+    font-size: 18px;
+    margin-left: 5px;
+    margin-bottom: 0;
+    text-align: center;
+    font-family: myFont;
+    display: inline-block;
+}
+
+.delete-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    margin-left: 5px;
+    margin-bottom: 0;
+    text-align: center;
+    background-color: #f1959a;
+    color: #f9f9f9;
+    font-family: myFont;
+    display: inline-block;
+}
+
+.replies {
+    margin-right: 10px;
+}
