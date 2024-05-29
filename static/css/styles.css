@@ -640,3 +640,15 @@ section {
     height: 65vh;
     overflow-y: scroll;
   }
+
+  .quantity{
+    padding-top: -10px;
+  }
+
+  .item-box{
+    background-color: #eee5c8;  
+    box-shadow: 0 0 10px 12px #eee5c8;
+    border-radius: 10px;
+    margin: 30px 50px;
+    padding-bottom: 10px;
+  }

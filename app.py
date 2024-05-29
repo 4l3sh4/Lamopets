@@ -164,8 +164,10 @@ def profile():
         avatar_url = None
 
     adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.username == current_user.username).all()
+    inventory_items = db.session.query(Inventory, Item).join(Item, Inventory.item_id == Item.id).filter(Inventory.username == current_user.username).all()
 
-    return render_template('profile.html', avatar_url=avatar_url, adopted_pets=adopted_pets)
+
+    return render_template('profile.html', avatar_url=avatar_url, inventory_items=inventory_items, adopted_pets=adopted_pets)
 
 @app.route('/custom')
 @login_required
