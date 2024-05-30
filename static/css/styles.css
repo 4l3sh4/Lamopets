@@ -206,6 +206,12 @@ img {
     width:25%;
     height:100%;
     border-radius: 8%;
+    padding-bottom: 30px;
+}
+
+.gifting-contents h1 {
+    padding-top: 30px;
+    margin-bottom: 10px;
 }
 
 #minigame-thumbnails {

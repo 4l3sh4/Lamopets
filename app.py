@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request, abort, jso
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, DecimalField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 import os
@@ -26,7 +26,7 @@ bcrypt = Bcrypt(app)
 
 # Logging configuration
 logging.basicConfig()
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -101,6 +101,16 @@ class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
+
+class GiftingForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    currency = DecimalField(validators=[InputRequired()], render_kw={"placeholder": "Currency"})
+    submit = SubmitField("Send My Gift!")
+
+    def validate_username_gifting(self, username):
+        existing_user_username = User.query.filter_by(username=username.data).first()
+        if not existing_user_username:
+            raise ValidationError("This user doesn't exist!")
 
 @app.route('/')
 def home():
@@ -262,10 +272,18 @@ def register():
             return str(e), 500
     return render_template('register.html', form=form)
 
-@app.route('/gifting')
+@app.route('/gifting', methods=['GET', 'POST'])
 @login_required
 def gifting():
-    return render_template('gifting.html')
+    form = GiftingForm()
+    if form.validate_on_submit():
+        gifted_money = int(form.currency.data)
+        user = User.query.filter_by(username=form.username.data).first()
+        current_user.currency_balance -= gifted_money
+        db.session.commit()
+        user.currency_balance += gifted_money
+        db.session.commit()
+    return render_template('gifting.html', form=form)
 
 def commit_with_retry(session, retries=5, delay=1):
     for attempt in range(retries):

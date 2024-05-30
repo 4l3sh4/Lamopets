@@ -10,6 +10,7 @@
     <title>Adopt</title>
 </head>
 <body>
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -48,7 +49,8 @@
         </div>
     </nav>
     <div id="content">
-        <div class="container-adopt">
+        <div class="container-adopt" style="height:550px; border-radius: 10px;">
+            <center><a class="button-53 button-a" style="margin:30px;">ADOPT PETS!</a></center>
             <div class="nav-adopt">
                 <a href="#adopt-aquana">Aquana</a>
                 <a href="#adopt-jackaloaf">Jackaloaf</a>
