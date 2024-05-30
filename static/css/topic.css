@@ -13,7 +13,7 @@ img {
     margin-top: 20px;
 }
 
-.logo{
+.logo {
     transition: transform 0.5s ease;
 }
 
@@ -69,7 +69,6 @@ button {
     color: #e27e87;
 }
 
-
 .font {
     font-family: myFont;
     font-size: 28px;
@@ -103,28 +102,32 @@ button {
     text-align: center;
 }
 
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .reply-button {
-    padding: 5px 10px;
+    padding: 0px 5px;
     font-size: 18px;
-    margin-left: 5px;
-    margin-bottom: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 14px; 
     text-align: center;
     font-family: myFont;
-    display: inline-block;
 }
 
 .delete-button {
-    padding: 5px 10px;
+    padding: 0px 5px;
     font-size: 14px;
-    margin-left: 5px;
-    margin-bottom: 0;
+    margin-bottom: 10px;
     text-align: center;
     background-color: #f1959a;
     color: #f9f9f9;
     font-family: myFont;
-    display: inline-block;
 }
 
 .replies {
-    margin-right: 10px;
+    margin-left: 5px;
 }
