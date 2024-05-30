@@ -49,8 +49,15 @@
     </nav>
     <br>
     <div class="minigame-contents">
-        <a href="{{url_for('minigamesfeedingtime')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}"></a>
+        <a onclick="openWin()"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}"></a>
         <a href="{{url_for('minigamesjumpjumpjackaloaf')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}"></a>
     </div>
+    <script>
+        let myWindow;
+        function openWin() {
+            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
+            myWindow.resizeTo(300, 300);
+        }
+        </script>
 </body>
 </html>

@@ -198,7 +198,7 @@ class Piranha {
             this.x = canvas.width - 900;
         }
         this.y = Math.random() * (canvas.height - 150) + 90;
-        this.radius = 50;
+        this.radius = 40;
         this.speed = Math.random() * 2 + 2;
         this.frameX = 0;
         this.frameY = 0;
