@@ -68,6 +68,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer, default=1000)
     avatar = db.Column(db.Text, nullable=True)
+    profile_pic = db.Column(db.Text, nullable=True)
 
     inventory = db.relationship('Inventory', back_populates='user_obj')
     adoptedpet = db.relationship('AdoptedPet', back_populates='user_obj')
@@ -90,6 +91,10 @@ class Comment(db.Model):
     topicId = db.Column(db.Integer, db.ForeignKey('topic.id', ondelete='CASCADE'), nullable=False)
     topic = db.relationship('Topic', backref=db.backref('comments', lazy=True, cascade='all, delete-orphan'))
     username = db.Column(db.String(20), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)
+    replies = db.relationship('Comment', backref=db.backref('parent', remote_side=[id]), lazy=True)
+
+    __table_args__ = {'extend_existing': True}
 
 class Pet(db.Model): 
     species = db.Column(db.String(2), primary_key=True, nullable=False)
@@ -292,9 +297,9 @@ def forums():
                 topic = Topic(title=title, description=description, username=current_user.username)
                 db.session.add(topic)
                 db.session.commit()
-    
+
     topics = Topic.query.order_by(Topic.id.desc()).all()
-    profile_pics = {topic.username: User.query.filter_by(username=topic.username).first().profile_pic for topic in topics}
+    profile_pics = {topic.username: (User.query.filter_by(username=topic.username).first().profile_pic or '') for topic in topics}
     return render_template('forums.html', topics=topics, profile_pics=profile_pics, error=error)
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
@@ -314,8 +319,8 @@ def topic(id):
             db.session.commit()
 
     comments = Comment.query.filter_by(topicId=id, parent=None).all()
-    profile_pics = {comment.username: User.query.filter_by(username=comment.username).first().profile_pic for comment in comments}
-    profile_pics[topic.username] = User.query.filter_by(username=topic.username).first().profile_pic
+    profile_pics = {comment.username: (User.query.filter_by(username=comment.username).first().profile_pic or '') for comment in comments}
+    profile_pics[topic.username] = User.query.filter_by(username=topic.username).first().profile_pic or ''
 
     return render_template("topic.html", topic=topic, comments=comments, profile_pics=profile_pics)
 
@@ -339,7 +344,6 @@ def delete_comment(id):
     comment = Comment.query.get(id)
     if comment:
         if comment.username == current_user.username:
-            # Recursively delete all child comments
             delete_comment_replies(comment)
             db.session.delete(comment)
             db.session.commit()
