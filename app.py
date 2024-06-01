@@ -152,6 +152,9 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('home'))
+        else:
+            error_message = "Invalid username or password. Please try again."
+            return render_template('login.html', form=form, error_message=error_message)
     return render_template('login.html', form=form)
 
 @app.route('/profile')
