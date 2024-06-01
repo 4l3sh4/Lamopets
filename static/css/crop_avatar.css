@@ -2,20 +2,20 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 80px; /* Adjust the gap as needed */
+    gap: 80px; 
 }
 
 .cropper-container {
     margin-top: 20px;
-    max-width: 350px; /* Set your desired maximum width */
-    max-height: 530px; /* Set your desired maximum height */
+    max-width: 350px; 
+    max-height: 530px; 
     border-radius: 5px;
 }
 
 .avatar {
-    max-width: 100%; /* Ensure the image does not exceed the container's width */
-    max-height: 100%; /* Ensure the image does not exceed the container's height */
-    display: block; /* Center the image within the container */
+    max-width: 100%; 
+    max-height: 100%; 
+    display: block; 
 }
 
 .display {
@@ -35,7 +35,7 @@
 
 .display .buttons {
     display: flex;
-    gap: 10px; /* Adjust the gap between buttons */
+    gap: 10px; 
 }
 
 @font-face {

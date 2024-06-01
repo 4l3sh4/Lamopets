@@ -15,6 +15,10 @@
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
 
+    <div class="center" id="logout-button">
+        <a href="{{url_for('logout')}}">Logout</a>
+    </div>
+
     <h2 class="currency-position">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
