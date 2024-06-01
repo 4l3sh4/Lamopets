@@ -125,13 +125,9 @@ class Item(db.Model):
             grouped_items[item.base_id].append(item)
         return grouped_items
 
-class RegisterForm(FlaskForm): 
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Username"})
-    
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Password"})
-    
+class RegisterForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Register")
 
     def validate_username(self, username):
@@ -374,7 +370,7 @@ def register():
         try:
             commit_with_retry(db.session)
 
-            default_items = ["H01BLACK-F", "H03BLACK-F", "H04BLACK-F", "H01BLACK-M", "H03BLACK-M", "H04BLACK-M", "U03PURPLE-F", "U04GREEN-F", "U07BLUE-F", "U01PURPLE-M", "U04GREEN-M", "U06BLUE-M", "L02GREY-F", "L03GREEN-F", "L05BLUE-F", "L01GREY-M", "L04GREY-M", "L05BLUE-M"]  
+            default_items = ["H01BLACK-F", "H03BLACK-F", "H04BLACK-F", "H01BLACK-M", "H03BLACK-M", "H04BLACK-M", "U03PURPLE-F", "U04GREEN-F", "U07BLUE-F", "U01PURPLE-M", "U04GREEN-M", "U06BLUE-M", "L02GREY-F", "L03GREEN-F", "L05BLUE-F", "L01GREY-M", "L04GREY-M", "L05BLUE-M"]
             for item_id in default_items:
                 item = Item.query.filter_by(id=item_id).first()
                 if item:
@@ -387,6 +383,9 @@ def register():
         except Exception as e:
             db.session.rollback()
             return str(e), 500
+    if request.method == 'POST' and form.errors:
+        error_message = next(iter(form.errors.values()))[0]
+        return render_template('register.html', form=form, error_message=error_message)
     return render_template('register.html', form=form)
 
 @app.route('/gifting')
