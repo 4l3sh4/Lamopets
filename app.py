@@ -35,15 +35,33 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class Pet(db.Model):
-    __tablename__ = 'pet'
-    id = db.Column(db.Integer, primary_key=True)
-    species = db.Column(db.String(50), unique=True, nullable=False)
-    name = db.Column(db.String(50), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    egg_image_url = db.Column(db.String(200))
-    pet_image_url = db.Column(db.String(200))
 
+class Inventory(db.Model):
+    __tablename__ = 'inventory'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
+    username = db.Column(db.String(20), nullable=False) 
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    user_obj = db.relationship('User', back_populates='inventory')
+    item = db.relationship('Item', back_populates='inventory')
+
+    @property
+    def user(self):
+        return User.query.filter_by(username=self.username).first()
+
+class AdoptedPet(db.Model):
+    __tablename__ = 'adopted_pet'
+    adopt_id = db.Column(db.Integer, primary_key=True)
+    species = db.Column(db.String(2), db.ForeignKey('pet.species'), nullable=False)
+    user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
+    username = db.Column(db.String(20), nullable=False) 
+    pet = db.relationship('Pet', backref='adopted_by')
+    user_obj = db.relationship('User', back_populates='adoptedpet')
+
+    @property
+    def user(self):
+        return User.query.filter_by(username=self.username).first()
+    
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -51,26 +69,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer(), default=1000)
     avatar = db.Column(db.Text, nullable=True)
-    profile_pic = db.Column(db.Text, nullable=True)  # Add this line
+    profile_pic = db.Column(db.Text, nullable=True) 
     inventory = db.relationship('Inventory', back_populates='user', uselist=False)
-
-class Inventory(db.Model):
-    __tablename__ = 'inventory'
-    id = db.Column(db.Integer, primary_key=True)
-    inventory_id = db.Column(db.String(120), unique=True, nullable=False)
-    user_name = db.Column(db.Integer, db.ForeignKey('user.username'), unique=True)
-    user = db.relationship('User', back_populates='inventory')
-
-class AdoptedPet(db.Model):
-    __tablename__ = 'adopted_pet'
-    adopt_id = db.Column(db.Integer, primary_key=True)
-    species = db.Column(db.String(50), db.ForeignKey('pet.species'), nullable=False)
-    username = db.Column(db.String(20), nullable=False)
-    pet = db.relationship('Pet', backref='adopted_by')
-
-    @property
-    def user(self):
-        return User.query.filter_by(username=self.username).first()
 
 class Topic(db.Model):
     __tablename__ = 'topic'
@@ -90,6 +90,13 @@ class Comment(db.Model):
     replies = db.relationship('Comment', backref=db.backref('parent', remote_side=[id]), lazy=True)
 
     __table_args__ = {'extend_existing': True}
+
+class Pet(db.Model): 
+    species = db.Column(db.String(2), primary_key=True, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    egg_image_url = db.Column(db.String(200), nullable=False)
+    pet_image_url = db.Column(db.String(200), nullable=False)
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
@@ -200,8 +207,8 @@ def adopt_pet(pet_species):
         if current_user.currency_balance >= pet.price:
             current_user.currency_balance -= pet.price
             db.session.commit()
-
-            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username)
+            
+            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username, user_id=current_user.id)
             db.session.add(adopted_pet)
             db.session.commit()
             return jsonify({'success': True})
