@@ -304,3 +304,12 @@ h1 {
   .dropdown:hover .dropdown-content {
     display: block;
   }
+
+  .profile-pic {
+    width: 45px;
+    margin-right: 15px;
+    margin-left: 5px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background-color: aliceblue;
+  }

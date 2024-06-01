@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
+    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
+    <script src="https://unpkg.com/cropperjs"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile_pic.css') }}">
+    <title>Profile Pic</title>
+</head>
+<body>
+    <div class="center" id="back">
+        <a href="{{url_for('profile')}}">Back</a>
+    </div>
+    <div id="content">
+        <div class="row">
+            <div class="column-1 cropper-container">
+                {% if avatar_url %}
+                    <img class="avatar" src="{{ avatar_url }}" alt="User Avatar" id="user-avatar" style="background-color: #ffffff;">
+                {% else %}
+                    <img class="avatar" src="{{ url_for('static', filename='assets/default_avatar.png') }}" alt="User Avatar" id="user-avatar">
+                {% endif %}
+            </div>
+            <div class="display">
+                <img id="croppedAvatar" src="" alt="Cropped Avatar">
+                <div class="buttons">
+                    <a class="button crop" id="cropButton">Crop</a>
+                    <a class="button save" id="saveButton">Save</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cropper;
+        const image = document.getElementById('user-avatar');
+        const cropButton = document.getElementById('cropButton');
+        const saveButton = document.getElementById('saveButton');
+
+        image.addEventListener('load', () => {
+            cropper = new Cropper(image, {
+                aspectRatio: 1,
+                viewMode: 0.35,
+                autoCropArea: 0.38,
+                responsive: true, // Ensure the cropper adjusts with the window size
+            });
+        });
+
+        cropButton.addEventListener('click', () => {
+            const canvas = cropper.getCroppedCanvas({
+                width: 200, 
+                height: 200
+            });
+            const croppedImage = canvas.toDataURL('image/png');
+
+            // Display cropped image
+            document.getElementById('croppedAvatar').src = croppedImage;
+        });
+
+        saveButton.addEventListener('click', () => {
+            const canvas = cropper.getCroppedCanvas({
+                width: 200, 
+                height: 200 
+            });
+            const croppedImageData = canvas.toDataURL('image/png').split(',')[1];
+
+            fetch('/save-avatar-cropped', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ croppedImage: croppedImageData }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Profile picture saved successfully!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

@@ -51,6 +51,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer(), default=1000)
     avatar = db.Column(db.Text, nullable=True)
+    profile_pic = db.Column(db.Text, nullable=True)  # Add this line
     inventory = db.relationship('Inventory', back_populates='user', uselist=False)
 
 class Inventory(db.Model):
@@ -145,6 +146,26 @@ def save_avatar():
     db.session.commit()
     return jsonify({'success': True, 'avatar_url': url_for('static', filename='avatars/avatar.png')})
 
+@app.route('/crop-avatar')
+@login_required
+def crop_avatar():
+    avatar_data = current_user.avatar
+    if avatar_data:
+        avatar_url = f"data:image/png;base64,{avatar_data}"
+    else:
+        avatar_url = None
+    return render_template('crop_avatar.html', avatar_url=avatar_url)
+
+@app.route('/save-avatar-cropped', methods=['POST'])
+@login_required
+def save_avatar_cropped():
+    data = request.get_json()
+    cropped_image_data = data['croppedImage']
+    current_user.profile_pic = cropped_image_data
+    db.session.commit()
+    print(f"Saved profile_pic for user {current_user.username}: {current_user.profile_pic[:50]}...")  # Debug statement
+    return jsonify({'success': True})
+
 @app.route('/store')
 @login_required
 def store():
@@ -207,7 +228,7 @@ def forums():
                 db.session.commit()
     
     topics = Topic.query.order_by(Topic.id.desc()).all()
-    return render_template('forums.html', topics=topics, username=current_user.username, error=error)
+    return render_template('forums.html', topics=topics, username=current_user.username, profile_pic=current_user.profile_pic, error=error)
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
@@ -226,10 +247,10 @@ def topic(id):
             db.session.commit()
         else:
             comments = Comment.query.filter_by(topicId=id, parent=None).all()
-            return render_template("topic.html", topic=topic, comments=comments, error="Comment cannot be empty.")
+            return render_template("topic.html", topic=topic, comments=comments, profile_pic=current_user.profile_pic, error="Comment cannot be empty.")
     
     comments = Comment.query.filter_by(topicId=id, parent=None).all()
-    return render_template("topic.html", topic=topic, comments=comments)
+    return render_template("topic.html", topic=topic, comments=comments, profile_pic=current_user.profile_pic)
 
 @app.route('/delete/topic/<int:id>', methods=['POST'])
 @login_required
