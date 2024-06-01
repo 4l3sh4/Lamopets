@@ -1,6 +1,6 @@
 <div class="d-flex text-body-secondary pt-3">
-    {% if profile_pic %}
-        <img src="data:image/png;base64,{{ profile_pic }}" alt="Profile Picture" class="profile-pic">
+    {% if profile_pics[comment.username] %}
+        <img src="data:image/png;base64,{{ profile_pics[comment.username] }}" alt="Profile Picture" class="profile-pic">
     {% endif %}
     <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
         <div class="d-flex justify-content-between info">

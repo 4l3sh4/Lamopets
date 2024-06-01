@@ -77,8 +77,8 @@
 
                 {% for item in topics %}
                 <div class="d-flex text-body-secondary pt-3">
-                    {% if profile_pic %}
-                        <img src="data:image/png;base64,{{ profile_pic }}" alt="Profile Picture" class="profile-pic">
+                    {% if profile_pics[item.username] %}
+                        <img src="data:image/png;base64,{{ profile_pics[item.username] }}" alt="Profile Picture" class="profile-pic">
                     {% endif %}
                     <p class="pb-3 mb-0 small lh-sm border-bottom info">
                         <strong class="text-gray-dark">@{{ item.username }}</strong><br>

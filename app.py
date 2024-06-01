@@ -228,7 +228,8 @@ def forums():
                 db.session.commit()
     
     topics = Topic.query.order_by(Topic.id.desc()).all()
-    return render_template('forums.html', topics=topics, username=current_user.username, profile_pic=current_user.profile_pic, error=error)
+    profile_pics = {topic.username: User.query.filter_by(username=topic.username).first().profile_pic for topic in topics}
+    return render_template('forums.html', topics=topics, profile_pics=profile_pics, error=error)
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
@@ -245,12 +246,12 @@ def topic(id):
             comment = Comment(text=text, topicId=id, username=current_user.username, parent=parent_comment)
             db.session.add(comment)
             db.session.commit()
-        else:
-            comments = Comment.query.filter_by(topicId=id, parent=None).all()
-            return render_template("topic.html", topic=topic, comments=comments, profile_pic=current_user.profile_pic, error="Comment cannot be empty.")
-    
+
     comments = Comment.query.filter_by(topicId=id, parent=None).all()
-    return render_template("topic.html", topic=topic, comments=comments, profile_pic=current_user.profile_pic)
+    profile_pics = {comment.username: User.query.filter_by(username=comment.username).first().profile_pic for comment in comments}
+    profile_pics[topic.username] = User.query.filter_by(username=topic.username).first().profile_pic
+
+    return render_template("topic.html", topic=topic, comments=comments, profile_pics=profile_pics)
 
 @app.route('/delete/topic/<int:id>', methods=['POST'])
 @login_required
