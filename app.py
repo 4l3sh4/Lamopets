@@ -166,7 +166,6 @@ def profile():
     adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.username == current_user.username).all()
     inventory_items = db.session.query(Inventory, Item).join(Item, Inventory.item_id == Item.id).filter(Inventory.username == current_user.username).all()
 
-
     return render_template('profile.html', avatar_url=avatar_url, inventory_items=inventory_items, adopted_pets=adopted_pets)
 
 @app.route('/custom')
@@ -311,6 +310,15 @@ def delete_comment(id):
             abort(403)
     else:
         abort(404)
+
+@app.route('/photobooth')
+@login_required
+def photobooth():
+    user_id = current_user.id
+    avatar_data = current_user.avatar  
+    avatar_url = f"data:image/png;base64,{avatar_data}" if avatar_data else None
+    adopted_pets = AdoptedPet.query.filter_by(user_id=user_id).all()  
+    return render_template('photobooth.html', avatar_url=avatar_url, adopted_pets=adopted_pets)
 
 @app.route('/logout')
 @login_required
@@ -495,7 +503,7 @@ def add_items_data():
         {"id": "L05BLUE-F", "base_id": "L05-F", "gender": "Female", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/pants/f-pants5.png", "image_url": 'assets/customization_assets/pants/f-pants5.png'},
         {"id": "L05GREEN-F", "base_id": "L05-F", "gender": "Female", "price": 350, "colour": "#8aab7f", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/pants/f-pants5.png", "image_url": 'assets/customization_assets/pants/f-pants5.png'},
 
-        {"id": "F01BLUE-M", "base_id": "F01-M", "gender": "Male", "price": 150, "colour": "#506388", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/shoes/m-shoes1.png", "image_url": 'assets/customization_assets/shoes/m-shoes1.png'},
+        {"id": "F01BLACK-M", "base_id": "F01-M", "gender": "Male", "price": 150, "colour": "#494a4c", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/shoes/m-shoes1.png", "image_url": 'assets/customization_assets/shoes/m-shoes1.png'},
         {"id": "F01BROWN-M", "base_id": "F01-M", "gender": "Male", "price": 250, "colour": "#85775c", "filter_colour": "sepia(105%)", "thumbnail_url": "/static/assets/thumbnails/shoes/m-shoes1.png", "image_url": 'assets/customization_assets/shoes/m-shoes1.png'},
         {"id": "F01LIGHTBROWN-M", "base_id": "F01-M", "gender": "Male", "price": 350, "colour": "#a27e67", "filter_colour": "sepia(95%) hue-rotate(340deg) brightness(1.1) contrast(140%)", "thumbnail_url": "/static/assets/thumbnails/shoes/m-shoes1.png", "image_url": 'assets/customization_assets/shoes/m-shoes1.png'},
 
@@ -503,9 +511,9 @@ def add_items_data():
         {"id": "F01GREEN-F", "base_id": "F01-F", "gender": "Female", "price": 250, "colour": "#7de877", "filter_colour": "hue-rotate(300deg)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes1.png", "image_url": 'assets/customization_assets/shoes/f-shoes1.png'},
         {"id": "F01PINK-F", "base_id": "F01-F", "gender": "Female", "price": 350, "colour": "#FF9BA3", "filter_colour": "hue-rotate(190deg)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes1.png", "image_url": 'assets/customization_assets/shoes/f-shoes1.png'},
 
-        {"id": "F02DARKBLUE-F", "base_id": "F02-F", "gender": "Female", "price": 150, "colour": "#506388", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
-        {"id": "F02CYAN-F", "base_id": "F02-F", "gender": "Female", "price": 250, "colour": "#5f7e89", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
-        {"id": "F02GREEN-F", "base_id": "F02-F", "gender": "Female", "price": 350, "colour": "#53674c", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
+        {"id": "F02BLUE-F", "base_id": "F02-F", "gender": "Female", "price": 150, "colour": "#3F5494", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
+        {"id": "F02GREY-F", "base_id": "F02-F", "gender": "Female", "price": 250, "colour": "#545454", "filter_colour": "grayscale(100%)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
+        {"id": "F02PINK-F", "base_id": "F02-F", "gender": "Female", "price": 350, "colour": "#E4A7BA", "filter_colour": "sepia(95%) hue-rotate(300deg) brightness(1.3)", "thumbnail_url": "/static/assets/thumbnails/shoes/f-shoes2.png", "image_url": 'assets/customization_assets/shoes/f-shoes2.png'},
     
         {"id": "M01GREY-M", "base_id": "M01-M", "gender": "Male", "price": 150, "colour": "#848484", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/misc/m-misc1.png", "image_url": 'assets/customization_assets/misc/m-misc1.png'},
         {"id": "M01BLUE-M", "base_id": "M01-M", "gender": "Male", "price": 250, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/misc/m-misc1.png", "image_url": 'assets/customization_assets/misc/m-misc1.png'},

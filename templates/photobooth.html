@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Photobooth</title>
+</head>
+<body>
+    <div class="center" id="back">
+        <a href="{{url_for('profile')}}">Back</a>
+    </div>
+    
+    <div class="photobooth-container">
+        <div class="avatar-settings-container">
+            <div class="avatar-canvas">
+                <div id="photobooth" class="photobooth">
+                    <div id="background" class="background"></div>
+                    <img id="avatar" src="{{ avatar_url }}" alt="Avatar" class="avatar">
+                    {% if adopted_pet %}
+                        <img id="pet" src="{{ adopted_pet.pet.pet_image_url }}" alt="{{ adopted_pet.pet.name }}" class="pet">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="settings" id="background" style="background-color: #eddba5">
+                <h2>Choose your background:</h2>
+                <div class="color-options">
+                    <div class="color-option" style="background-color: white;" onclick="changeBackgroundColor('white')"></div>
+                    <div class="color-option" style="background-color: lightblue;" onclick="changeBackgroundColor('lightblue')"></div>
+                    <div class="color-option" style="background-color: #eee5c8;" onclick="changeBackgroundColor('#eee5c8')"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="center">
+        <button onclick="saveCanvas()">Save</button>
+    </div>
+
+    <script>
+        function changeBackgroundColor(color) {
+            const background = document.getElementById('background');
+            background.style.backgroundColor = color;
+        }
+
+        function saveCanvas() {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const photobooth = document.getElementById('photobooth');
+            const avatar = document.getElementById('avatar');
+            const background = document.getElementById('background');
+            const pet = document.getElementById('pet');
+
+            const photoboothWidth = photobooth.offsetWidth;
+            const photoboothHeight = photobooth.offsetHeight;
+
+            canvas.width = photoboothWidth;
+            canvas.height = photoboothHeight;
+
+            // Draw the background color
+            const backgroundColor = getComputedStyle(background).backgroundColor; // Use background element for color
+            context.fillStyle = backgroundColor;
+            context.fillRect(0, 0, photoboothWidth, photoboothHeight);
+
+            // Draw the avatar image
+            const avatarWidth = avatar.offsetWidth;
+            const avatarHeight = avatar.offsetHeight;
+            context.drawImage(avatar, 0, 0, avatarWidth, avatarHeight);
+
+            // Draw the pet image if it exists
+            if (pet) {
+                const petWidth = pet.offsetWidth;
+                const petHeight = pet.offsetHeight;
+                const petTop = parseInt(getComputedStyle(pet).top);
+                const petLeft = parseInt(getComputedStyle(pet).left);
+                context.drawImage(pet, petLeft, petTop, petWidth, petHeight);
+            }
+
+            // Convert canvas to image and trigger download
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = 'photobooth.png';
+            link.click();
+        }
+
+
+
+
+        window.onload = function() {
+            const avatar = document.getElementById('avatar');
+            const photobooth = document.getElementById('photobooth');
+            const background = document.getElementById('background');
+
+            const avatarWidth = avatar.clientWidth;
+            const avatarHeight = avatar.clientHeight;
+
+            photobooth.style.width = avatarWidth + 'px';
+            photobooth.style.height = avatarHeight + 'px';
+            background.style.width = avatarWidth + 'px';
+            background.style.height = avatarHeight + 'px';
+
+            // Adjust the position of the background to match the avatar
+            background.style.top = avatar.offsetTop + 'px';
+            background.style.left = avatar.offsetLeft + 'px';
+        };
+    </script>
+
+    <style>
+        .photobooth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+        }
+        .avatar-settings-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .avatar-canvas {
+            margin-right: 20px;
+        }
+        .settings {
+            text-align: left;
+            padding: 20px;
+            margin: 20px;
+        }
+        .color-options {
+            display: flex;
+            justify-content: space-between;
+        }
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .photobooth {
+            position: relative;
+            display: inline-block;
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+        .avatar {
+            width: 400px; 
+            height: 580px; 
+        }
+        .pet {
+            width: 240px; 
+            height: auto; 
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin: 10px;
+        }
+
+        #back {
+        position: absolute;
+        top: 30px;
+        right: 20px;
+        }
+
+        #back a {
+            background-color: #e27e87;
+            overflow: hidden;
+            border: 4px solid #eddba5;
+            color: #eddba5;
+            text-align: center;
+            padding: 11px 13px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 22px;
+            font-family: myFont;
+            font-weight: bold;
+        }
+
+        #back a:hover {
+            background-color: #eddba5;
+            color: #e27e87;
+        }
+    </style>
+</body>
+</html>
