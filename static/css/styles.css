@@ -320,10 +320,15 @@ img {
     z-index: 1000; 
 }
 
-@media screen and (max-width: 800px) {
-    .navbar a{
-        font-size: 12px;
+@media screen and (max-width: 900px) {
+    .navbar{
+        display: none;
     }
+
+    #navicon{
+        display: block;
+    }
+
     .currency-position {
         font-size: 20px;
         width: 60px;
@@ -471,7 +476,7 @@ img {
 
 .container {
     background: #f9f9ef;
-    height: 1720px;
+    height: 2000px;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 36px;
@@ -629,4 +634,21 @@ section {
   
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+
+  #sanctuary{
+    height: 65vh;
+    overflow-y: scroll;
+  }
+
+  .quantity{
+    padding-top: -10px;
+  }
+
+  .item-box{
+    background-color: #eee5c8;  
+    box-shadow: 0 0 10px 12px #eee5c8;
+    border-radius: 10px;
+    margin: 30px 50px;
+    padding-bottom: 10px;
   }
