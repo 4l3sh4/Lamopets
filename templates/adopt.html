@@ -55,7 +55,7 @@
     </nav>
     <div id="content">
         <div class="container-adopt">
-            <h1 style="text-align: center;">Adopt</h1>
+            <h1 class="font" style="text-align: center;">ADOPT</h1>
             <div class="nav-adopt">
                 <a href="#adopt-aquana">Aquana</a>
                 <a href="#adopt-jackaloaf">Jackaloaf</a>
@@ -64,26 +64,26 @@
 
             {% for pet in pets %}
                 {% if pet.species.startswith("A") %}
-                    <div class="adopt" id="adopt-aquana">
+                    <div class="adopt font" id="adopt-aquana">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
+                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
                             <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("J") %}
-                    <div class="adopt" id="adopt-jackaloaf">
+                    <div class="adopt font" id="adopt-jackaloaf">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
+                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
                             <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("T") %}
-                    <div class="adopt" id="adopt-trotter">
+                    <div class="adopt font" id="adopt-trotter">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
+                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
                             <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
 
     <div id="purchase-adopt" class="popup">
         <div class="purchase-confirm">
-            <p id="confirm-text-adopt">Would you like to buy this pet?</p>
+            <p id="confirm-text-adopt" class="font" style="font-size: 32px;">Would you like to buy this pet?</p>
             <button id="yesButton" class="yes-no">Yes</button>
             <button id="noButton" class="yes-no" onclick="closeModalAdopt()">No</button>
         </div>

@@ -242,3 +242,12 @@ button p{
     background-color: #e89097;
     color: #fff;
 }
+
+@font-face {
+    font-family: 'myFont';
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
+.font {
+    font-family: myFont;
+}
