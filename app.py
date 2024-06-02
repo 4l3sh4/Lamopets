@@ -24,7 +24,6 @@ app.config['SECRET_KEY'] = 'Battery-AAA'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-# Logging configuration
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
@@ -69,6 +68,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     currency_balance = db.Column(db.Integer, default=1000)
     avatar = db.Column(db.Text, nullable=True)
+    profile_pic = db.Column(db.Text, nullable=True)
 
     inventory = db.relationship('Inventory', back_populates='user_obj')
     adoptedpet = db.relationship('AdoptedPet', back_populates='user_obj')
@@ -91,6 +91,10 @@ class Comment(db.Model):
     topicId = db.Column(db.Integer, db.ForeignKey('topic.id', ondelete='CASCADE'), nullable=False)
     topic = db.relationship('Topic', backref=db.backref('comments', lazy=True, cascade='all, delete-orphan'))
     username = db.Column(db.String(20), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)
+    replies = db.relationship('Comment', backref=db.backref('parent', remote_side=[id]), lazy=True)
+
+    __table_args__ = {'extend_existing': True}
 
 class Pet(db.Model): 
     species = db.Column(db.String(2), primary_key=True, nullable=False)
@@ -121,13 +125,9 @@ class Item(db.Model):
             grouped_items[item.base_id].append(item)
         return grouped_items
 
-class RegisterForm(FlaskForm): 
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Username"})
-    
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Password"})
-    
+class RegisterForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Register")
 
     def validate_username(self, username):
@@ -152,6 +152,9 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('home'))
+        else:
+            error_message = "Invalid username or password. Please try again."
+            return render_template('login.html', form=form, error_message=error_message)
     return render_template('login.html', form=form)
 
 @app.route('/profile')
@@ -187,6 +190,26 @@ def save_avatar():
     current_user.avatar = image_data
     db.session.commit()
     return jsonify({'success': True, 'avatar_url': url_for('static', filename='avatars/avatar.png')})
+
+@app.route('/crop-avatar')
+@login_required
+def crop_avatar():
+    avatar_data = current_user.avatar
+    if avatar_data:
+        avatar_url = f"data:image/png;base64,{avatar_data}"
+    else:
+        avatar_url = None
+    return render_template('crop_avatar.html', avatar_url=avatar_url)
+
+@app.route('/save-avatar-cropped', methods=['POST'])
+@login_required
+def save_avatar_cropped():
+    data = request.get_json()
+    cropped_image_data = data['croppedImage']
+    current_user.profile_pic = cropped_image_data
+    db.session.commit()
+    print(f"Saved profile_pic for user {current_user.username}: {current_user.profile_pic[:50]}...")  # Debug statement
+    return jsonify({'success': True})
 
 @app.route('/store')
 @login_required
@@ -258,31 +281,47 @@ def adopt_pet(pet_species):
 @app.route('/forums', methods=['GET', 'POST'])
 @login_required
 def forums():
+    error = None
     if request.method == "POST":
-        title = request.form["title"]
-        existing_topic = Topic.query.filter_by(title=title).first()
-        if existing_topic:
-            return render_template('forums.html', error="Topic already exists.")
+        title = request.form["title"].strip()
+        description = request.form["description"].strip()
 
-        description = request.form["description"]
-        topic = Topic(title=title, description=description, username=current_user.username)
-        db.session.add(topic)
-        db.session.commit()
-    
+        if not title or not description:
+            error = "Title and description cannot be empty."
+        else:
+            existing_topic = Topic.query.filter_by(title=title).first()
+            if existing_topic:
+                error = "Topic already exists."
+            else:
+                topic = Topic(title=title, description=description, username=current_user.username)
+                db.session.add(topic)
+                db.session.commit()
+
     topics = Topic.query.order_by(Topic.id.desc()).all()
-    return render_template('forums.html', topics=topics, username=current_user.username)
+    profile_pics = {topic.username: (User.query.filter_by(username=topic.username).first().profile_pic or '') for topic in topics}
+    return render_template('forums.html', topics=topics, profile_pics=profile_pics, error=error)
 
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
-    topic = Topic.query.get(id)
-    if request.method == "POST" and current_user.is_authenticated:
-        text = request.form["comment"]
-        comment = Comment(text=text, topicId=id, username=current_user.username)
-        db.session.add(comment)
-        db.session.commit()
+    topic = db.session.get(Topic, id)
+    if not topic:
+        abort(404)
 
-    comments = Comment.query.filter_by(topicId=id).all()
-    return render_template("topic.html", topic=topic, comments=comments)
+    if request.method == "POST" and current_user.is_authenticated:
+        text = request.form["comment"].strip()
+        parent_id = request.form["parent_id"]
+        
+        if text:
+            parent_comment = db.session.get(Comment, parent_id) if parent_id else None
+            comment = Comment(text=text, topicId=id, username=current_user.username, parent=parent_comment)
+            db.session.add(comment)
+            db.session.commit()
+
+    comments = Comment.query.filter_by(topicId=id, parent=None).all()
+    profile_pics = {comment.username: (User.query.filter_by(username=comment.username).first().profile_pic or '') for comment in comments}
+    profile_pics[topic.username] = User.query.filter_by(username=topic.username).first().profile_pic or ''
+
+    return render_template("topic.html", topic=topic, comments=comments, profile_pics=profile_pics)
 
 @app.route('/delete/topic/<int:id>', methods=['POST'])
 @login_required
@@ -294,9 +333,9 @@ def delete_topic(id):
             db.session.commit()
             return redirect(url_for('forums'))
         else:
-            abort(403)
+            abort(403)  
     else:
-        abort(404)
+        abort(404)  
 
 @app.route('/delete/comment/<int:id>', methods=['POST'])
 @login_required
@@ -304,6 +343,7 @@ def delete_comment(id):
     comment = Comment.query.get(id)
     if comment:
         if comment.username == current_user.username:
+            delete_comment_replies(comment)
             db.session.delete(comment)
             db.session.commit()
             return redirect(url_for('topic', id=comment.topicId))
@@ -311,6 +351,11 @@ def delete_comment(id):
             abort(403)
     else:
         abort(404)
+
+def delete_comment_replies(comment):
+    for reply in comment.replies:
+        delete_comment_replies(reply)
+        db.session.delete(reply)
 
 @app.route('/logout')
 @login_required
@@ -328,7 +373,7 @@ def register():
         try:
             commit_with_retry(db.session)
 
-            default_items = ["H01BLACK-F", "H03BLACK-F", "H04BLACK-F", "H01BLACK-M", "H03BLACK-M", "H04BLACK-M", "U03PURPLE-F", "U04GREEN-F", "U07BLUE-F", "U01PURPLE-M", "U04GREEN-M", "U06BLUE-M", "L02GREY-F", "L03GREEN-F", "L05BLUE-F", "L01GREY-M", "L04GREY-M", "L05BLUE-M"]  
+            default_items = ["H01BLACK-F", "H03BLACK-F", "H04BLACK-F", "H01BLACK-M", "H03BLACK-M", "H04BLACK-M", "U03PURPLE-F", "U04GREEN-F", "U07BLUE-F", "U01PURPLE-M", "U04GREEN-M", "U06BLUE-M", "L02GREY-F", "L03GREEN-F", "L05BLUE-F", "L01GREY-M", "L04GREY-M", "L05BLUE-M"]
             for item_id in default_items:
                 item = Item.query.filter_by(id=item_id).first()
                 if item:
@@ -341,6 +386,9 @@ def register():
         except Exception as e:
             db.session.rollback()
             return str(e), 500
+    if request.method == 'POST' and form.errors:
+        error_message = next(iter(form.errors.values()))[0]
+        return render_template('register.html', form=form, error_message=error_message)
     return render_template('register.html', form=form)
 
 @app.route('/gifting')
