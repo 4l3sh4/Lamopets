@@ -47,6 +47,31 @@ img {
     color: #e27e87;
 }
 
+#delete-account {
+    position: absolute;
+    top: 35px;
+    left: 120px;
+}
+
+#delete-account a {
+    background-color: #e27e87;
+    overflow: hidden;
+    border: 4px solid #eddba5;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Sugar Cream";
+    font-weight: bold;
+}
+
+#delete-account a:hover {
+    background-color: #eddba5;
+    color: #e27e87;
+}
+
 #content-3 {
     font-family: "Sugar Cream";
 }

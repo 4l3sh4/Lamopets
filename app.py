@@ -149,12 +149,15 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user)
-            return redirect(url_for('home'))
+        if user:
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user)
+                return redirect(url_for('home'))
+            else:
+                error_message = "Invalid password. Please try again."
         else:
-            error_message = "Invalid username or password. Please try again."
-            return render_template('login.html', form=form, error_message=error_message)
+            error_message = "Username does not exist. Please try again."
+        return render_template('login.html', form=form, error_message=error_message)
     return render_template('login.html', form=form)
 
 @app.route('/profile')
@@ -356,6 +359,21 @@ def delete_comment_replies(comment):
     for reply in comment.replies:
         delete_comment_replies(reply)
         db.session.delete(reply)
+
+@app.route('/delete_account', methods=['POST'])
+@login_required
+def delete_account():
+    # Delete user's related data
+    Inventory.query.filter_by(user_id=current_user.id).delete()
+    AdoptedPet.query.filter_by(user_id=current_user.id).delete()
+    Comment.query.filter_by(username=current_user.username).delete()
+    Topic.query.filter_by(username=current_user.username).delete()
+    # Delete the user
+    user = User.query.get(current_user.id)
+    db.session.delete(user)
+    db.session.commit()
+    logout_user()
+    return jsonify({'success': True, 'message': 'Account deleted successfully'}), 200
 
 @app.route('/logout')
 @login_required

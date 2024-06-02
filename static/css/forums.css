@@ -193,7 +193,7 @@ img {
 .scroll {
     flex-grow: 1; 
     overflow-y: auto; 
-    max-height: 350px;
+    max-height: 280px;
 }
 
 
