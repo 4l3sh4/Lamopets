@@ -21,7 +21,10 @@
         <form method="POST" action="{{ url_for('login') }}">
             {{ form.hidden_tag() }}
             {{ form.username }}
-            {{ form.password }}
+            <div class="password-container">
+                {{ form.password }}
+                <span class="toggle-password" onclick="togglePassword('password')">&#x1F441;</span>
+            </div>
             {{ form.submit }}
         </form>
         <a href="{{url_for('register')}}">Don't have an account? Sign Up</a>
@@ -35,6 +38,15 @@
         {% if error_message %}
             alert("{{ error_message }}");
         {% endif %}
+        function togglePassword(fieldId) {
+            var passwordField = document.getElementById(fieldId);
+            var fieldType = passwordField.getAttribute("type");
+            if (fieldType === "password") {
+                passwordField.setAttribute("type", "text");
+            } else {
+                passwordField.setAttribute("type", "password");
+            }
+        }
     </script>
 </section>
 </body>
