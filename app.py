@@ -315,9 +315,9 @@ def delete_comment(id):
 @login_required
 def photobooth():
     user_id = current_user.id
-    avatar_data = current_user.avatar  
+    avatar_data = current_user.avatar
     avatar_url = f"data:image/png;base64,{avatar_data}" if avatar_data else None
-    adopted_pets = AdoptedPet.query.filter_by(user_id=user_id).all()  
+    adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.user_id == user_id).all()
     return render_template('photobooth.html', avatar_url=avatar_url, adopted_pets=adopted_pets)
 
 @app.route('/logout')
