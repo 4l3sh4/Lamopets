@@ -24,45 +24,55 @@ function hidePet() {
 }
 
 function saveCanvas() {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    const photobooth = document.getElementById('photobooth');
-    const avatar = document.getElementById('avatar');
     const background = document.getElementById('background');
-    const pet = document.getElementById('pet');
+    const backgroundColor = getComputedStyle(background).backgroundColor;
 
-    const photoboothWidth = photobooth.offsetWidth;
-    const photoboothHeight = photobooth.offsetHeight;
+    // Check if the background color is chosen
+    if (backgroundColor !== 'rgba(0, 0, 0, 0)') { // Transparent background
+        // Proceed with saving canvas
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const photobooth = document.getElementById('photobooth');
+        const avatar = document.getElementById('avatar');
+        const pet = document.getElementById('pet');
 
-    canvas.width = photoboothWidth;
-    canvas.height = photoboothHeight;
+        const photoboothWidth = photobooth.offsetWidth;
+        const photoboothHeight = photobooth.offsetHeight;
 
-    // Draw the background color
-    const backgroundColor = getComputedStyle(background).backgroundColor; 
-    context.fillStyle = backgroundColor;
-    context.fillRect(0, 0, photoboothWidth, photoboothHeight);
+        canvas.width = photoboothWidth;
+        canvas.height = photoboothHeight;
 
-    // Draw the avatar image
-    const avatarWidth = avatar.offsetWidth;
-    const avatarHeight = avatar.offsetHeight;
-    context.drawImage(avatar, 0, 0, avatarWidth, avatarHeight);
+        // Draw the background color
+        context.fillStyle = backgroundColor;
+        context.fillRect(0, 0, photoboothWidth, photoboothHeight);
 
-    // Draw the pet image if it exists
-    if (pet && pet.src) {
-        const petWidth = pet.offsetWidth;
-        const petHeight = pet.offsetHeight;
-        const petTop = parseInt(getComputedStyle(pet).top);
-        const petLeft = parseInt(getComputedStyle(pet).left);
-        context.drawImage(pet, petLeft, petTop, petWidth, petHeight);
+        // Calculate the center position for the avatar
+        const avatarX = (photoboothWidth - avatar.width) / 2;
+        const avatarY = (photoboothHeight - avatar.height) / 2;
+
+        // Draw the avatar image
+        context.drawImage(avatar, avatarX, avatarY, avatar.width, avatar.height);
+
+        // Draw the pet image if it exists
+        if (pet && pet.src) {
+            const petX = (photoboothWidth - pet.width); 
+            const petY = (photoboothHeight - pet.height) - 2;
+            context.drawImage(pet, petX, petY, pet.width, pet.height);
+        }
+
+        // Convert canvas to image and trigger download
+        const image = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'photobooth.png';
+        link.click();
+    } else {
+        // Show warning message
+        alert('Please choose a background color before saving!');
     }
-
-    // Convert canvas to image and trigger download
-    const image = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = image;
-    link.download = 'photobooth.png';
-    link.click();
 }
+
+
 
 window.onload = function() {
     const avatar = document.getElementById('avatar');
