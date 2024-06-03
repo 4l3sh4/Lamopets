@@ -56,10 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.ok) {
                 closeModalAdopt();
-
+                alert('Adoption Successful!');
                 setTimeout(() => {
                     location.reload();
-                }, 700);
+                }, 500);
 
             } else {
                 alert('Adoption Unsuccessful');

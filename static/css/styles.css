@@ -719,11 +719,11 @@ padding-bottom: 10px;
 
 .button-container {
     display: flex;
-    justify-content: center; /* Center buttons horizontally */
+    justify-content: center; 
 }
 
 .button-container a {
-    margin-right: 10px; /* Adjust spacing between buttons */
+    margin-right: 10px; 
 }
 
 #custom-btn {

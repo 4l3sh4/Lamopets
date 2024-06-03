@@ -7,14 +7,14 @@
 }
 .avatar-settings-container {
     display: flex;
-    justify-content: space-between; /* Adjusted to space-between */
+    justify-content: space-between; 
     align-items: center;
 }
 .avatar-canvas {
     margin-right: 20px;
 }
 .settings {
-    text-align: center; /* Center the text */
+    text-align: center; 
     padding: 20px;
     margin-left: 40px;
     margin-top: 5px;
@@ -23,13 +23,13 @@
 }
 .settings-container {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column;
     align-items: center;
     height: 520px;
 }
 .color-options {
     display: flex;
-    justify-content: center; /* Center the color options */
+    justify-content: center;
 }
 .color-option {
     width: 40px;
@@ -76,7 +76,7 @@
     cursor: pointer;
     border-radius: 20px;
     background-color: #f8ecca;
-    display: inline-flex; /* Use inline-flex for proper wrapping */
+    display: inline-flex; 
 }
 
 .pet-option img{
