@@ -16,16 +16,16 @@
 .settings {
     text-align: center; /* Center the text */
     padding: 20px;
-    margin-left: 20px;
+    margin-left: 40px;
     margin-top: 5px;
-    width: 90vh;
+    width: 80vh;
     background-color: #eddba5;
 }
 .settings-container {
     display: flex;
     flex-direction: column; /* Stack items vertically */
     align-items: center;
-    height: 600px;
+    height: 520px;
 }
 .color-options {
     display: flex;
@@ -54,16 +54,17 @@
     margin-top: 10px;
 }
 .avatar {
-    width: 400px; 
-    height: 580px; 
+    width: 320px; 
+    height: 480px; 
+    right: -15px;
 }
 
 .pet {
     width: auto; 
-    height: 220px; 
+    height: 190px; 
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: -5px;
+    bottom: -25px;
 }
 
 .pet-option {
