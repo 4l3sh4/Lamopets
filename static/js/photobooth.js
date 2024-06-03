@@ -60,6 +60,7 @@ function saveCanvas() {
         link.click();
         alert('Your photo is successfully saved! Check your device for the downloaded photo!');
     } else {
+        // Show warning message
         alert('Please choose a background color before saving!');
     }
 }
@@ -77,6 +78,8 @@ window.onload = function() {
     background.style.width = avatarWidth + 'px';
     background.style.height = avatarHeight + 'px';
 
+    // Adjust the position of the background to match the avatar
     background.style.top = avatar.offsetTop + 'px';
     background.style.left = avatar.offsetLeft + 'px';
 };
+
