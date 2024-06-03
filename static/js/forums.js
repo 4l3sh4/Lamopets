@@ -6,7 +6,7 @@ function openNav() {
 }
 
 function closeNav() {
-    document.getElementById("side-nav").style.width = "0";
+    document.getElementById("side-navigation").style.width = "0";
     document.getElementById("content").style.transform = "translateX(0)";
     document.querySelector(".logo").style.transform = "translateX(0)";
     document.getElementById("navicon").style.display = "block"; 

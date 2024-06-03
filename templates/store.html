@@ -11,9 +11,14 @@
     <title>Store</title>
 </head>
 <body>
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
+    </div>
+
+    <div class="center" id="logout-button">
+        <a href="{{url_for('logout')}}">Logout</a>
     </div>
 
     <h2 class="currency-position">
@@ -52,7 +57,7 @@
     </nav>
     <div id="content">
         <div class="container-store">
-            <h1 style="text-align: center;">Store</h1>
+            <h1 class="font" style="text-align: center;">STORE</h1>
             <div class="nav-store">
                 <a href="#store-head">Head</a>
                 <a href="#store-upperb">Upper Body</a>
@@ -177,12 +182,10 @@
 
     <div id="purchase-store" class="popup">
         <div class="purchase-confirm">
-            <p id="confirm-text-store">Would you like to buy this item?</p>
+            <p id="confirm-text-store" class="font" style="font-size: 32px;">Would you like to buy this item?</p>
             <button id="yesButton" class="yes-no">Yes</button>
             <button id="noButton" class="yes-no" onclick="closeModalStore()">No</button>
         </div>
     </div>
-
-    <a href="{{url_for('logout')}}">Press here to logout</a>
 </body>
 </html>
