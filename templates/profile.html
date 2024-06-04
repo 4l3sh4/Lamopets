@@ -82,48 +82,118 @@
                     <img src="{{ url_for('static', filename='assets/default_avatar.png') }}" alt="User Avatar" id="user-avatar">
                 {% endif %}
                 <br><br>
-                <center><a class="button-53 button-a" href="{{ url_for('custom') }}">CUSTOMIZE</a><br></center>
-                <center><a class="button-53 button-a" href="{{ url_for('crop_avatar') }}">PROFILE PIC</a><br></center>
+                <div class="button-container">
+                    <a class="button-53 button-a" id="custom-btn" href="{{url_for('custom')}}">CUSTOMIZE</a>
+                    <a class="button-53 button-a" id="photobooth-btn" href="{{url_for('photobooth')}}"><img src="{{ url_for('static', filename='assets/thumbnails/photo-camera.png') }}" alt="photobooth"></a>
+                </div>
+                <center><a class="button-53 button-a" id="pfp-btn" href="{{url_for('crop_avatar')}}">PROFILE PIC</a><br></center>
                 <br><br>
             </div>
 
-            <div class="column-2" id="sanctuary">
-                <h1>{{ current_user.username }}'s Sanctuary</h1>
-                
-                <div class="profile">
-                    {% for adopted_pet, pet in adopted_pets %}
-                        <div>
-                            <div class="item" id="{{ adopted_pet.species }}">
-                                <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
-                                <p class="item_name">{{ pet.name }}</p>
+            <div class="column-2" id="profile-display">
+
+                <button class="back-button" style="display: none;" onclick="goBack()">Back</button> 
+                <button class="button-53" onclick="toggleSanctuary()">MY PETS</button>
+                <button class="button-53" onclick="toggleCloset()">MY CLOSET</button>
+
+                <div id="sanctuary" style="display: none">
+                    <h1>{{ current_user.username }}'s Sanctuary</h1>
+                    <div class="profile">
+                        {% for adopted_pet, pet in adopted_pets %}
+                            <div>
+                                <div class="item" id="{{ adopted_pet.species }}">
+                                    <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
+                                    <p class="item_name">{{ pet.name }}</p>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>           
-                
-                <h1>{{ current_user.username }}'s Closet</h1>
-                <div class="profile">
-                    {% set item_count_dict = {} %}
-                    {% for inventory, item in inventory_items %}
-                        {% set item_id = item.id %}
-                        {% if item_id not in item_count_dict %}
-                            {% set _ = item_count_dict.update({item_id: {'quantity': 1, 'item': item}}) %}
-                        {% else %}
-                            {% set _ = item_count_dict[item_id].update({'quantity': item_count_dict[item_id].quantity + 1}) %}
-                        {% endif %}
-                    {% endfor %}
-                    
-                    {% for item_id, item_info in item_count_dict.items() %}
-                        <div>
-                            <div class="item-box" id="{{ item_info.item.id }}">
-                                <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
-                                <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                        {% endfor %}
+                    </div>           
+                </div>
+
+                <div id="closet" style="display: none;">
+                    <h1>{{ current_user.username }}'s Closet</h1>
+                    <div class="profile">
+                        {% set item_count_dict = {} %}
+                        {% for inventory, item in inventory_items %}
+                            {% set item_id = item.id %}
+                            {% if item_id not in item_count_dict %}
+                                {% set _ = item_count_dict.update({item_id: {'quantity': 1, 'item': item}}) %}
+                            {% else %}
+                                {% set _ = item_count_dict[item_id].update({'quantity': item_count_dict[item_id].quantity + 1}) %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% for item_id, item_info in item_count_dict.items() %}
+                            <div>
+                                <div class="item-box" id="{{ item_info.item.id }}">
+                                    <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
+                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>  
+                        {% endfor %}
+                    </div>  
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleSanctuary() {
+            var sanctuary = document.getElementById("sanctuary");
+            var closet = document.getElementById("closet");
+            var backButton = document.querySelector("#profile-display button:nth-child(1)"); 
+            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
+            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+
+            sanctuary.style.display = "block";
+            closet.style.display = "none";
+            
+            var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.justifyContent = "flex-start";
+            sanctuary.style.flexDirection = "column";
+
+            backButton.style.display = "block";
+            petsButton.style.display = "none";
+            closetButton.style.display = "none";
+        }
+
+        function toggleCloset() {
+            var sanctuary = document.getElementById("sanctuary");
+            var closet = document.getElementById("closet");
+            var backButton = document.querySelector("#profile-display button:nth-child(1)"); 
+            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
+            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+
+            sanctuary.style.display = "none";
+            closet.style.display = "block";
+
+            var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.justifyContent = "flex-start";
+            closet.style.flexDirection = "column";
+
+            backButton.style.display = "block";
+            petsButton.style.display = "none";
+            closetButton.style.display = "none";
+        }
+
+        function goBack() {
+            var sanctuary = document.getElementById("sanctuary");
+            var closet = document.getElementById("closet");
+            var backButton = document.querySelector("#profile-display button:nth-child(1)"); 
+            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
+            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+
+            sanctuary.style.display = "none";
+            closet.style.display = "none";
+
+            var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.justifyContent = "center";
+
+            backButton.style.display = "none";
+            petsButton.style.display = "block";
+            closetButton.style.display = "block";
+        }
+
+    </script>
 </body>
 </html>
