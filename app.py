@@ -211,7 +211,7 @@ def save_avatar_cropped():
     cropped_image_data = data['croppedImage']
     current_user.profile_pic = cropped_image_data
     db.session.commit()
-    print(f"Saved profile_pic for user {current_user.username}: {current_user.profile_pic[:50]}...")  # Debug statement
+    print(f"Saved profile_pic for user {current_user.username}: {current_user.profile_pic[:50]}...") 
     return jsonify({'success': True})
 
 @app.route('/store')
