@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/photobooth.css') }}">
+    <script src="{{url_for('static', filename='js/photobooth.js')}}"></script>
+    <title>Photobooth</title>
+</head>
+<body>
+    <div class="center" id="back">
+        <a href="{{url_for('profile')}}">Back</a>
+    </div>
+    
+    <div class="photobooth-container">
+        <div class="avatar-settings-container">
+            <div class="avatar-canvas">
+                <div id="photobooth" class="photobooth">
+                    <div id="background" class="background"></div>
+                    <img id="avatar" src="{{ avatar_url }}" alt="Avatar" class="avatar">
+                    {% for adopted_pet, pet in adopted_pets %}
+                        <img id="pet" src="{{ pet.pet_image_url }}" class="pet" style="display: none;"></img>
+                    {% endfor %}
+                </div>
+                <div class="center">
+                    <button id="save" onclick="saveCanvas()">Save</button>
+                </div>
+            </div>
+            <div class="settings-container">
+                <div class="settings" style="background-color: #eddba5">
+                    <h2>Choose your background:</h2>
+                    <div class="color-options">
+                        <div class="color-option" style="background-color: white;" onclick="changeBackgroundColor('white')"></div>
+                        <div class="color-option" style="background-color: lightblue;" onclick="changeBackgroundColor('lightblue')"></div>
+                        <div class="color-option" style="background-color: #eee5c8;" onclick="changeBackgroundColor('#eee5c8')"></div>
+                    </div>
+                </div>
+
+                <div class="settings" style="background-color: #eddba5">
+                    <h2>Choose your pet:</h2>
+                    <div class="options">
+                        {% for adopted_pet, pet in adopted_pets %}
+                            <div class="pet-option" style="background-image: url('{{ pet.pet_image_url }}');" onclick="changePet('{{ pet.pet_image_url }}')"></div>
+                        {% endfor %}
+                        <div class="pet-option" style="background-image: url('{{ url_for('static', filename='assets/thumbnails/none.png') }}');" onclick="hidePet()"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

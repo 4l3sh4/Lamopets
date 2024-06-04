@@ -140,8 +140,20 @@ function changeGender(gender) {
     console.log('Selected gender:', gender);
     var genderImageUrl = "{{ url_for('static', filename='assets/customization_assets/gender/') }}" + gender + ".png";
     updateAvatarPart('gender', genderImageUrl);
+    resetCustomItems(); 
     setDefaultClothing();
     filterOptions();
+}
+
+function resetCustomItems() {
+    var customParts = ['eyes', 'mouth', 'misc', 'pants', 'shirt', 'hair', 'shoes'];
+    customParts.forEach(part => {
+        if (part !== 'gender') {
+            var partElement = document.getElementById(part);
+            partElement.style.backgroundImage = '';
+            partElement.style.filter = '';
+        }
+    });
 }
 
 document.querySelectorAll('#genderType .option').forEach(button => {

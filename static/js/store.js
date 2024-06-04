@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(({status, body}) => {
             if (status === 200 && body.success) {
                 closeModalStore();
+                alert('Purchase Successful!');
                 setTimeout(() => {
                     location.reload();
                 }, 700);
