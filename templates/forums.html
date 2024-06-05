@@ -10,6 +10,7 @@
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
 </head>
 <body>
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo center">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -69,7 +70,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label font">Start Chat</label><br>
-                    <textarea class="form-control my-0" id="description" name="description" rows="5" cols="73"></textarea>
+                    <textarea class="form-control my-0" id="description" name="description" rows="3" cols="73"></textarea>
                 </div>
                 <button type="submit" class="my-2 fs-5 btn btn-primary font">Send</button>
             </form>

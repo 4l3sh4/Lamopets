@@ -10,7 +10,9 @@
             </p>
             <div>
                 <div class="button-container">
-                    <button type="button" class="reply-button" id="reply-{{ comment.id }}" onclick="setParentId({{ comment.id }})">Reply</button>
+                    {% if comment.get_nesting_level() < MAX_NESTING_LEVEL %}
+                        <button type="button" class="reply-button" id="reply-{{ comment.id }}" onclick="setParentId({{ comment.id }})">Reply</button>
+                    {% endif %}
                     {% if comment.username == current_user.username %}
                         <form id="delete-form-{{ comment.id }}" action="{{ url_for('delete_comment', id=comment.id) }}" method="post" style="display: inline;">
                             <button type="button" class="delete-button" id="delete" onclick="confirmDeleteComment({{ comment.id }})">Delete</button>
