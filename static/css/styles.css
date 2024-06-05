@@ -747,15 +747,10 @@ padding-bottom: 10px;
     justify-content: center; 
 }
 
-.button-container a {
-    margin-right: 10px; 
-}
-
 #custom-btn {
-    width: 130px !important;
-    height: 30px;
-    padding: 20px !important;
     font-size: 28px; 
+    width: 110px;
+    height: 30px;
 }
 
 #pfp-btn {
@@ -765,7 +760,12 @@ padding-bottom: 10px;
 }
 
 #photobooth-btn img {
-    width: 40px !important;
-    height: 40px;
+    width: 40px;
     padding-left: 5px;
+}
+
+#photobooth-btn {
+    width: 10px;
+    height: 53px;
+    margin-top: 5px;
 }
