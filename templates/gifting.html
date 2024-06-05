@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/join.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <title>Gifting</title>
@@ -58,10 +59,11 @@
         <h2>Well, feel free to gift some of your wares to your friends!</h2>
         <img src="{{ url_for('static', filename='assets/gifted-trotter.png') }}">
         <div class="row">
-            <div class="column-gift-1">
-                <h3>w.i.p</h3>
-            </div>
+            <form method="POST" action="" class="gifting">
+            {{ form.username }}
+            {{ form.currency }}
+            {{ form.submit }}
+            {{ form.csrf_token }}
         </div>
-    </div>
 </body>
 </html>

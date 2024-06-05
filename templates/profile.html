@@ -26,7 +26,8 @@
     </script>
 </head>
 <body>
-    <script src="{{ url_for('static', filename='js/background_balls.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -62,7 +63,7 @@
             </div>
             <a href="{{ url_for('profile') }}">Profile</a>
         </div>
-        <div id="sidenav" class="sidenav">    
+        <div id="sidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{{ url_for('home') }}" class="split">Home</a>
             <a href="{{ url_for('forums') }}">Chat</a>
@@ -89,7 +90,6 @@
                 <center><a class="button-53 button-a" id="pfp-btn" href="{{url_for('crop_avatar')}}">PROFILE PIC</a><br></center>
                 <br><br>
             </div>
-
             <div class="column-2" id="profile-display">
 
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
@@ -104,6 +104,10 @@
                                 <div class="item" id="{{ adopted_pet.species }}">
                                     <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
                                     <p class="item_name">{{ adopted_pet.adopt_name }}</p>
+                                    <div id="share-buttons">
+                                        <!-- facebook -->
+                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/<a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -136,8 +140,19 @@
             </div>
         </div>
     </div>
-
     <script>
+        async function downloadImage(imageSrc) {
+          const image = await fetch(imageSrc)
+          const imageBlog = await image.blob()
+          const imageURL = URL.createObjectURL(imageBlog)
+
+          const link = document.createElement('a')
+          link.href = imageURL
+          link.download = 'Congratulations on your very cool pet!'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          }
         function toggleSanctuary() {
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
