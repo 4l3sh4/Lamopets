@@ -6,16 +6,37 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <title>Profile</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function confirmDeleteAccount() {
+            if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+                $.ajax({
+                    url: '{{ url_for("delete_account") }}',
+                    type: 'POST',
+                    success: function(response) {
+                        alert(response.message);
+                        window.location.href = '{{ url_for("home") }}';
+                    },
+                    error: function(response) {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 <body>
-    <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/background_balls.js') }}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
 
     <div class="center" id="logout-button">
-        <a href="{{url_for('logout')}}">Logout</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <div class="center" id="delete-account">
+        <a href="javascript:void(0);" onclick="confirmDeleteAccount()">Delete Account</a>
     </div>
 
     <h2 class="currency-position">
@@ -26,30 +47,30 @@
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <a href="{{ url_for('home') }}" class="split">Home</a>
+            <a href="{{ url_for('forums') }}">Chat</a>
+            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
+            <a href="{{ url_for('minigames') }}">Earn Coins</a>
+            <a href="{{ url_for('store') }}">Buy Apparels</a>
             <div class="dropdown">
                 <button class="dropbtn">Knicks & Knacks
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
+                    <a href="{{ url_for('gifting') }}">Gifting</a>
                 </div>
             </div>
-            <a href="{{url_for('profile')}}">Profile</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">    
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
-            <a href="{{url_for('profile')}}">Profile</a>
+            <a href="{{ url_for('home') }}" class="split">Home</a>
+            <a href="{{ url_for('forums') }}">Chat</a>
+            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
+            <a href="{{ url_for('minigames') }}">Earn Coins</a>
+            <a href="{{ url_for('store') }}">Buy Apparels</a>
+            <a href="{{ url_for('gifting') }}">Knicks & Knacks</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
         </div>
     </nav>
     <div id="content">
@@ -71,7 +92,7 @@
 
             <div class="column-2" id="profile-display">
 
-                <button class="back-button" style="display: none;" onclick="goBack()">Back</button> 
+                <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
                 <button class="button-53" onclick="toggleSanctuary()">MY PETS</button>
                 <button class="button-53" onclick="toggleCloset()">MY CLOSET</button>
 
@@ -120,7 +141,7 @@
         function toggleSanctuary() {
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
-            var backButton = document.querySelector("#profile-display button:nth-child(1)"); 
+            var backButton = document.querySelector(".back-button"); 
             var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
             var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
 
@@ -139,7 +160,7 @@
         function toggleCloset() {
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
-            var backButton = document.querySelector("#profile-display button:nth-child(1)"); 
+            var backButton = document.querySelector(".back-button"); 
             var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
             var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
 
@@ -158,7 +179,7 @@
         function goBack() {
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
-            var backButton = document.querySelector("#profile-display button:nth-child(1)"); 
+            var backButton = document.querySelector(".back-button"); 
             var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
             var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
 
