@@ -16,10 +16,13 @@
 .settings {
     text-align: center; 
     padding: 20px;
+    margin-top: -20px;
     margin-left: 40px;
-    margin-top: 5px;
+    margin-bottom: 30px;
     width: 80vh;
-    background-color: #eddba5;
+    background-color: #f9eecd;
+    border-radius: 20px;
+    
 }
 .settings-container {
     display: flex;
@@ -37,7 +40,15 @@
     border-radius: 50%;
     cursor: pointer;
     margin: 10px;
+    border: none;
+    transition: transform 0.3s ease;
+    box-shadow: 4px 4px 4px #a9a9a9;
 }
+
+.color-option:hover{
+    box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+}
+
 .controls {
     margin-bottom: 20px;
 }
@@ -75,8 +86,13 @@
     background-position: center;
     cursor: pointer;
     border-radius: 20px;
-    background-color: #f8ecca;
+    background-color: #ffffff;
     display: inline-flex; 
+    box-shadow: 4px 4px 4px #a9a9a9;
+}
+
+.pet-option:hover{
+    box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
 }
 
 .pet-option img{
@@ -126,4 +142,9 @@
     background-color: #eddba5;
     color: #e27e87;
     cursor: pointer;
+}
+
+.center{
+    margin-left: 40px;
+    justify-content: center;
 }

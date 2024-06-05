@@ -734,7 +734,8 @@ padding-bottom: 10px;
 }
 
 #pfp-btn {
-    font-size: 28px; 
+    font-size: 25px; 
+    width: 130px !important;
 }
 
 #photobooth-btn img {
