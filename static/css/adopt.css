@@ -167,12 +167,30 @@
 
 .purchase-confirm {
     background-color: #fefefe;
-    margin: 15% auto; 
-    padding: 70px;
+    margin: 10% auto; 
+    padding: 50px;
     border: 5px solid #c8980a;
     border-radius: 60px;
     width: 30%; 
     font-size: 25px;
+}
+
+.purchase-confirm img{
+    margin-top: -25px;
+}
+
+.name-confirm {
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 50px;
+    border: 5px solid #c8980a;
+    border-radius: 60px;
+    width: 30%; 
+    font-size: 25px;
+}
+
+.name-confirm img{
+    margin-top: -25px;
 }
 
 button {
@@ -209,6 +227,15 @@ button p{
 
 #noButton:hover {
     background-color: #a14c53;
+}
+
+#confirmNameButton {
+    width: auto;
+    background-color: #7ee27e;
+}
+
+#confirmNameButton:hover {
+    background-color: #336b33;
 }
 
 @font-face {

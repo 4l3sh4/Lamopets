@@ -54,6 +54,7 @@ class AdoptedPet(db.Model):
     adopt_id = db.Column(db.Integer, primary_key=True)
     species = db.Column(db.String(2), db.ForeignKey('pet.species'), nullable=False)
     user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
+    adopt_name = db.Column(db.String(20), nullable=False)
     username = db.Column(db.String(20), nullable=False) 
     pet = db.relationship('Pet', backref='adopted_by')
     user_obj = db.relationship('User', back_populates='adoptedpet')
@@ -275,13 +276,20 @@ def adopt():
 @app.route('/adopt_pet/<string:pet_species>', methods=['POST'])
 @login_required
 def adopt_pet(pet_species):
+    data = request.get_json()
+    pet_name = data.get('pet_name')
+
+    if not (4 <= len(pet_name) <= 20):
+        return jsonify(success=False, message="Pet name must be between 4 and 20 characters."), 400
+
     pet = Pet.query.filter_by(species=pet_species).first()
+
     if pet:
         if current_user.currency_balance >= pet.price:
             current_user.currency_balance -= pet.price
             db.session.commit()
             
-            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username, user_id=current_user.id)
+            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username, user_id=current_user.id, adopt_name=pet_name)
             db.session.add(adopted_pet)
             db.session.commit()
             return jsonify({'success': True})
