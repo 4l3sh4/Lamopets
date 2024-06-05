@@ -96,8 +96,20 @@
     <div id="purchase-adopt" class="popup">
         <div class="purchase-confirm">
             <p id="confirm-text-adopt" class="font" style="font-size: 32px;">Would you like to buy this pet?</p>
+            <img id="purchase-egg-img" src="" alt="Pet Egg Image" style="width: auto; height: 150px;">
+            <br>
             <button id="yesButton" class="yes-no">Yes</button>
             <button id="noButton" class="yes-no" onclick="closeModalAdopt()">No</button>
+        </div>
+    </div>
+
+    <div id="name-adopt" class="popup">
+        <div class="name-confirm">
+            <p id="name-text-adopt" class="font" style="font-size: 32px;">Name your pet!</p>
+            <img id="name-egg-img" src="" alt="Pet Egg Image" style="width: auto; height: 150px;">
+            <br>
+            <input type="text" id="pet-name-input" class="font" style="font-size: 24px;" minlength="4" maxlength="20" required>
+            <button id="confirmNameButton" class="yes-no">Confirm</button>
         </div>
     </div>
     

@@ -9,6 +9,7 @@
     <title>Photobooth</title>
 </head>
 <body>
+    <div class="bubble-container"></div>
     <div class="center" id="back">
         <a href="{{url_for('profile')}}">Back</a>
     </div>
@@ -28,16 +29,19 @@
                 </div>
             </div>
             <div class="settings-container">
-                <div class="settings" style="background-color: #eddba5">
+                <div class="settings">
                     <h2>Choose your background:</h2>
                     <div class="color-options">
                         <div class="color-option" style="background-color: white;" onclick="changeBackgroundColor('white')"></div>
                         <div class="color-option" style="background-color: lightblue;" onclick="changeBackgroundColor('lightblue')"></div>
-                        <div class="color-option" style="background-color: #eee5c8;" onclick="changeBackgroundColor('#eee5c8')"></div>
+                        <div class="color-option" style="background-color: #f5ecce;" onclick="changeBackgroundColor('#f5ecce')"></div>
+                        <div class="color-option" style="background-color: #f4e2ff;" onclick="changeBackgroundColor('#f4e2ff')"></div>
+                        <div class="color-option" style="background-color: #a0c5ac;" onclick="changeBackgroundColor('#a0c5ac')"></div>
+                        <div class="color-option" style="background-color: #fde3ed;" onclick="changeBackgroundColor('#fde3ed')"></div>
                     </div>
                 </div>
 
-                <div class="settings" style="background-color: #eddba5">
+                <div class="settings">
                     <h2>Choose your pet:</h2>
                     <div class="options">
                         {% for adopted_pet, pet in adopted_pets %}
@@ -49,5 +53,63 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        // Some random colors
+        const colors = ["#e27e87", "#eddba5", "#ffffff"];
+
+        // Number of balls to be created
+        const numBalls = 60;
+        const balls = [];
+
+        // Get viewport dimensions
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Create balls and append them to the bubble container
+        const bubbleContainer = document.querySelector('.bubble-container');
+
+        for (let i = 0; i < numBalls; i++) {
+            let ball = document.createElement("div");
+            ball.classList.add("ball");
+            ball.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+            // Set initial position within the viewport
+            ball.style.left = `${Math.random() * (viewportWidth - 80)}px`; // Subtract ball max size to avoid overflow
+            ball.style.top = `${Math.random() * (viewportHeight - 80)}px`; // Subtract ball max size to avoid overflow
+
+            // Set random size
+            let size = Math.random() * 7; // In em
+            ball.style.transform = `scale(${size})`;
+            ball.style.width = `${size}em`;
+            ball.style.height = `${size}em`;
+
+            balls.push(ball);
+            bubbleContainer.append(ball);
+        }
+
+        // Keyframes
+        balls.forEach((el, i, ra) => {
+            let to = {
+                x: Math.random() * (i % 2 === 0 ? -viewportWidth / 10 : viewportWidth / 10),
+                y: Math.random() * (viewportHeight / 10)
+            };
+
+            let anim = el.animate(
+                [
+                    { transform: "translate(0, 0)" },
+                    { transform: `translate(${to.x}px, ${to.y}px)` }
+                ],
+                {
+                    duration: (Math.random() + 1) * 4000, // Random duration
+                    direction: "alternate",
+                    fill: "both",
+                    iterations: Infinity,
+                    easing: "ease-in-out"
+                }
+            );
+        });
+    </script>
 </body>
 </html>
