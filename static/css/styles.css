@@ -717,23 +717,11 @@ padding-bottom: 10px;
 
 .back-button {
     position: absolute; 
-    top: 20px; 
-    left: 20px; 
+    top: 5px; 
+    left: -108px; 
     z-index: 999; 
-    background-color: #e27e87; 
-    border: 5px solid #eddba5; 
     cursor: pointer; 
-    height: 40px !important;
-    width: 70px !important;
-    font-size: 25px;
-    color: #eddba5;
-    font-family: "Sugar Cream";
-}
-
-.back-button:hover {
-    background-color: #eddba5; 
-    border: 5px solid #eddba5; 
-    color: #e27e87;
+    width: 300px !important;
 }
 
 #photobooth-btn {
