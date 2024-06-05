@@ -757,3 +757,7 @@ padding-bottom: 10px;
     height: 53px;
     margin-top: 5px;
 }
+
+.item p{
+    margin-top: -20px;
+}
