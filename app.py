@@ -96,6 +96,14 @@ class Comment(db.Model):
 
     __table_args__ = {'extend_existing': True}
 
+    def get_nesting_level(self):
+        level = 0
+        current = self
+        while current.parent_id:
+            level += 1
+            current = current.parent
+        return level
+
 class Pet(db.Model): 
     species = db.Column(db.String(2), primary_key=True, nullable=False)
     name = db.Column(db.String(100), nullable=False)
@@ -303,27 +311,36 @@ def forums():
     profile_pics = {topic.username: (User.query.filter_by(username=topic.username).first().profile_pic or '') for topic in topics}
     return render_template('forums.html', topics=topics, profile_pics=profile_pics, error=error)
 
+
+#Limit nested comments
+MAX_NESTING_LEVEL = 2
+
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
 def topic(id):
     topic = db.session.get(Topic, id)
     if not topic:
         abort(404)
 
+    error = None
+
     if request.method == "POST" and current_user.is_authenticated:
         text = request.form["comment"].strip()
         parent_id = request.form["parent_id"]
-        
+
         if text:
             parent_comment = db.session.get(Comment, parent_id) if parent_id else None
-            comment = Comment(text=text, topicId=id, username=current_user.username, parent=parent_comment)
-            db.session.add(comment)
-            db.session.commit()
+            if parent_comment and parent_comment.get_nesting_level() >= MAX_NESTING_LEVEL:
+                error = f"Maximum nesting level of {MAX_NESTING_LEVEL} reached. Cannot add more replies."
+            else:
+                comment = Comment(text=text, topicId=id, username=current_user.username, parent=parent_comment)
+                db.session.add(comment)
+                db.session.commit()
 
     comments = Comment.query.filter_by(topicId=id, parent=None).all()
     profile_pics = {comment.username: (User.query.filter_by(username=comment.username).first().profile_pic or '') for comment in comments}
     profile_pics[topic.username] = User.query.filter_by(username=topic.username).first().profile_pic or ''
 
-    return render_template("topic.html", topic=topic, comments=comments, profile_pics=profile_pics)
+    return render_template("topic.html", topic=topic, comments=comments, profile_pics=profile_pics, error=error, MAX_NESTING_LEVEL=MAX_NESTING_LEVEL)
 
 @app.route('/delete/topic/<int:id>', methods=['POST'])
 @login_required
