@@ -37,7 +37,7 @@ let score = 0;
 let maxScore = 0;
 let gameOver = false;
 
-window.onload = function() {
+document.body.onkeyup = function() {
     canvas = document.getElementById("canvas2");
     canvas.height = canvasHeight;
     canvas.width = canvasWidth;
@@ -68,6 +68,7 @@ window.onload = function() {
     requestAnimationFrame(update);
 
     document.addEventListener("keydown", moveJackaloaf);
+    document.body.onkeyup = null
 }
 
 function update(){
