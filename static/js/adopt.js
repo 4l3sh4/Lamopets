@@ -20,38 +20,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.price-adopt');
-    const popup = document.getElementById('purchase-adopt');
+
+    const purchasePopup = document.getElementById('purchase-adopt');
     const confirmText = document.getElementById('confirm-text-adopt');
+    const purchaseEggImg = document.getElementById('purchase-egg-img');
     const yesButton = document.getElementById('yesButton');
+
+    const namePopup = document.getElementById('name-adopt');
+    const confirmNameButton = document.getElementById('confirmNameButton');
+    const petNameInput = document.getElementById('pet-name-input');
+    const nameEggImg = document.getElementById('name-egg-img');
+    
+    let selectedPetSpecies;
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const petName = button.getAttribute('data-name');
             const petPrice = button.getAttribute('data-price');
-            confirmText.textContent = `Would you like to buy ${petName} for $${petPrice}?`;
-            popup.style.display = 'block';
-
             const petElement = button.closest('.item');
+            const eggImgUrl = petElement.querySelector('img').src;
+
+            confirmText.textContent = `Would you like to buy ${petName} for $${petPrice}?`;
+            purchaseEggImg.src = eggImgUrl;
+            purchasePopup.style.display = 'block';
+
             document.querySelectorAll('.item.active').forEach(item => item.classList.remove('active'));
             petElement.classList.add('active');
 
-            document.querySelector('#pet-id').value = petElement.id;
+            selectedPetSpecies = petElement.id;
         });
     });
 
-    const initialPetElement = document.querySelector('.item.active');
-    if (initialPetElement) {
-        initialPetElement.classList.add('active');
-    }
-
     yesButton.addEventListener('click', function() {
-        const petSpecies = document.querySelector('.item.active').id;
+        purchasePopup.style.display = 'none';
+        namePopup.style.display = 'block';
 
-        fetch('/adopt_pet/' + petSpecies, {
+        const activePetElement = document.querySelector('.item.active');
+        const eggImgUrl = activePetElement.querySelector('img').src;
+        nameEggImg.src = eggImgUrl;
+    });
+
+    confirmNameButton.addEventListener('click', function() {
+        const petName = petNameInput.value.trim();
+
+        if (petName.length < 4 || petName.length > 20) {
+            alert('Pet name must be between 4 and 20 characters.');
+            return;
+        }
+
+        fetch('/adopt_pet/' + selectedPetSpecies, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ pet_name: petName })
         })
         .then(response => {
             if (response.ok) {
@@ -74,5 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function closeModalAdopt() {
     document.getElementById('purchase-adopt').style.display = 'none';
+    document.getElementById('name-adopt').style.display = 'none';
     document.querySelector('.item.active').classList.remove('active');
 }
