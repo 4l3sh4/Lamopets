@@ -62,6 +62,22 @@ document.getElementById('saveButton').addEventListener('click', function() {
 });
 
 function saveAvatar(imgData) {
+    var requiredParts = ['gender', 'eyes', 'mouth', 'shirt', 'pants', 'hair'];
+    var missingParts = [];
+    
+    requiredParts.forEach(part => {
+        var partElement = document.getElementById(part);
+        if (partElement.style.backgroundImage === '') {
+            missingParts.push(part);
+        }
+    });
+
+    if (missingParts.length > 0) {
+        var missingPartsMessage = "Please select " + missingParts.join(", ") + " before saving :)" ;
+        alert(missingPartsMessage);
+        return;
+    }
+
     fetch('/save-avatar', {
         method: 'POST',
         headers: {
@@ -69,7 +85,12 @@ function saveAvatar(imgData) {
         },
         body: JSON.stringify({ image: imgData }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.error || 'Failed to save avatar'); });
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             alert('Avatar saved successfully!');
@@ -119,8 +140,20 @@ function changeGender(gender) {
     console.log('Selected gender:', gender);
     var genderImageUrl = "{{ url_for('static', filename='assets/customization_assets/gender/') }}" + gender + ".png";
     updateAvatarPart('gender', genderImageUrl);
+    resetCustomItems(); 
     setDefaultClothing();
     filterOptions();
+}
+
+function resetCustomItems() {
+    var customParts = ['eyes', 'mouth', 'misc', 'pants', 'shirt', 'hair', 'shoes'];
+    customParts.forEach(part => {
+        if (part !== 'gender') {
+            var partElement = document.getElementById(part);
+            partElement.style.backgroundImage = '';
+            partElement.style.filter = '';
+        }
+    });
 }
 
 document.querySelectorAll('#genderType .option').forEach(button => {
@@ -131,20 +164,70 @@ document.querySelectorAll('#genderType .option').forEach(button => {
 
 document.querySelectorAll('.options .option').forEach(button => {
     button.addEventListener('click', function() {
-        var part = button.getAttribute('data-part');
-        var imageUrl = button.getAttribute('data-image');
+        // Check if gender has been selected
+        if (!selectedGender) {
+            alert('Please select a gender first!');
+            return;
+        }
+
+        var part = this.getAttribute('data-part');
+        var imageUrl = this.getAttribute('data-image');
         console.log('Part:', part, 'Image URL:', imageUrl);
         updateAvatarPart(part, imageUrl);
+
+        this.querySelectorAll('.color-btn').forEach(colorButton => {
+            colorButton.setAttribute('data-part', part);
+        });
+
+        const defaultColorButton = this.querySelector('.default-color');
+        if (defaultColorButton) {
+            defaultColorButton.click();
+        }
+    });
+});
+
+document.querySelectorAll('#miscType .option').forEach(button => {
+    button.addEventListener('click', function() {
+        var part = this.getAttribute('data-part');
+        var imageUrl = this.getAttribute('data-image');
+        console.log('Part:', part, 'Image URL:', imageUrl);
+        
+        if (part === 'misc') {
+            var miscElement = document.getElementById('misc');
+            miscElement.style.backgroundImage = '';
+            miscElement.style.filter = '';
+        } else {
+            updateAvatarPart(part, imageUrl);
+        }
+
+        this.querySelectorAll('.color-btn').forEach(colorButton => {
+            colorButton.setAttribute('data-part', part);
+        });
+
+        const defaultColorButton = this.querySelector('.default-color');
+        if (defaultColorButton) {
+            defaultColorButton.click();
+        }
     });
 });
 
 document.querySelectorAll('.color-btn').forEach(button => {
     button.addEventListener('click', function(event) {
         event.stopPropagation();
-        var part = button.getAttribute('data-part');
-        var filter = button.getAttribute('data-filter');
+        var part = this.getAttribute('data-part'); 
+        var filter = this.getAttribute('data-filter');
         console.log('Changing color for part:', part, 'with filter:', filter);
-        changeColor(part, filter);
+        
+        var option = this.closest('.option');
+        if (option) {
+            var imageUrl = option.getAttribute('data-image');
+            console.log('Updating part:', part, 'with image URL:', imageUrl);
+            
+            updateAvatarPart(part, imageUrl);
+            changeColor(part, filter);
+        } else {
+            console.error('Parent option not found for color button:', this);
+        }
     });
 });
 
@@ -155,12 +238,12 @@ function changeColor(partId, filter) {
 
 function setDefaultClothing() {
     console.log('Setting default clothing for gender:', selectedGender);
-    if (selectedGender === 'male') {
-        console.log('Default male clothing URLs:', defaultMaleShirtUrl, defaultMalePantsUrl);
+    if (selectedGender === 'Male') {
+        console.log('Default Male clothing URLs:', defaultMaleShirtUrl, defaultMalePantsUrl);
         updateAvatarPart('shirt', defaultMaleShirtUrl);
         updateAvatarPart('pants', defaultMalePantsUrl);
-    } else if (selectedGender === 'female') {
-        console.log('Default female clothing URLs:', defaultFemaleShirtUrl, defaultFemalePantsUrl);
+    } else if (selectedGender === 'Female') {
+        console.log('Default Female clothing URLs:', defaultFemaleShirtUrl, defaultFemalePantsUrl);
         updateAvatarPart('shirt', defaultFemaleShirtUrl);
         updateAvatarPart('pants', defaultFemalePantsUrl);
     }

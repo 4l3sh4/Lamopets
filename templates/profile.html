@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <title>Profile</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function confirmDeleteAccount() {
+            if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+                $.ajax({
+                    url: '{{ url_for("delete_account") }}',
+                    type: 'POST',
+                    success: function(response) {
+                        alert(response.message);
+                        window.location.href = '{{ url_for("home") }}';
+                    },
+                    error: function(response) {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -14,6 +31,13 @@
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
+    </div>
+
+    <div class="center" id="logout-button">
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <div class="center" id="delete-account">
+        <a href="javascript:void(0);" onclick="confirmDeleteAccount()">Delete Account</a>
     </div>
 
     <h2 class="currency-position">
@@ -24,62 +48,95 @@
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <a href="{{ url_for('home') }}" class="split">Home</a>
+            <a href="{{ url_for('forums') }}">Chat</a>
+            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
+            <a href="{{ url_for('minigames') }}">Earn Coins</a>
+            <a href="{{ url_for('store') }}">Buy Apparels</a>
             <div class="dropdown">
                 <button class="dropbtn">Knicks & Knacks
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
+                    <a href="{{ url_for('gifting') }}">Gifting</a>
                 </div>
             </div>
-            <a href="{{url_for('profile')}}">Profile</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
-            <a href="{{url_for('profile')}}">Profile</a>
+            <a href="{{ url_for('home') }}" class="split">Home</a>
+            <a href="{{ url_for('forums') }}">Chat</a>
+            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
+            <a href="{{ url_for('minigames') }}">Earn Coins</a>
+            <a href="{{ url_for('store') }}">Buy Apparels</a>
+            <a href="{{ url_for('gifting') }}">Knicks & Knacks</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
         </div>
     </nav>
     <div id="content">
         <div class="row">
             <div class="column-1">
                 {% if avatar_url %}
-                    <img class=avatar src="{{ avatar_url }}" alt="User Avatar" id="user-avatar" style="background-color: #ffffff;">
+                    <img class="avatar" src="{{ avatar_url }}" alt="User Avatar" id="user-avatar" style="background-color: #ffffff;">
                 {% else %}
                     <img src="{{ url_for('static', filename='assets/default_avatar.png') }}" alt="User Avatar" id="user-avatar">
                 {% endif %}
                 <br><br>
-                <center><a class="button-53 button-a" href="{{url_for('custom')}}">CUSTOMIZE</a><br></center>
+                <div class="button-container">
+                    <a class="button-53 button-a" id="custom-btn" href="{{url_for('custom')}}">CUSTOMIZE</a>
+                    <a class="button-53 button-a" id="photobooth-btn" href="{{url_for('photobooth')}}"><img src="{{ url_for('static', filename='assets/thumbnails/photo-camera.png') }}" alt="photobooth"></a>
+                </div>
+                <center><a class="button-53 button-a" id="pfp-btn" href="{{url_for('crop_avatar')}}">PROFILE PIC</a><br></center>
                 <br><br>
             </div>
-            <div class="column-2" id="sanctuary">
-                <h1>{{ current_user.username }}'s Sanctuary</h1>
+            <div class="column-2" id="profile-display">
 
-                <div class="profile">
-                    {% for adopted_pet, pet in adopted_pets %}
-                        <div>
-                            <div class="item" id="{{ adopted_pet.species }}">
-                                <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
-                                <p class="item_name" style="margin:0;">{{ pet.name }}</p>
-                                <div id="share-buttons">
-                                    <!-- facebook -->
-                                    <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/<a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
+                <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
+                <button class="button-53" onclick="toggleSanctuary()">MY PETS</button>
+                <button class="button-53" onclick="toggleCloset()">MY CLOSET</button>
+
+                <div id="sanctuary" style="display: none">
+                    <h1>{{ current_user.username }}'s Sanctuary</h1>
+                    <div class="profile">
+                        {% for adopted_pet, pet in adopted_pets %}
+                            <div>
+                                <div class="item" id="{{ adopted_pet.species }}">
+                                    <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
+                                    <p class="item_name">{{ adopted_pet.adopt_name }}</p>
+                                    <div id="share-buttons">
+                                        <!-- facebook -->
+                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/<a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>           
                 </div>
 
+                <div id="closet" style="display: none;">
+                    <h1>{{ current_user.username }}'s Closet</h1>
+                    <div class="profile">
+                        {% set item_count_dict = {} %}
+                        {% for inventory, item in inventory_items %}
+                            {% set item_id = item.id %}
+                            {% if item_id not in item_count_dict %}
+                                {% set _ = item_count_dict.update({item_id: {'quantity': 1, 'item': item}}) %}
+                            {% else %}
+                                {% set _ = item_count_dict[item_id].update({'quantity': item_count_dict[item_id].quantity + 1}) %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% for item_id, item_info in item_count_dict.items() %}
+                            <div>
+                                <div class="item-box" id="{{ item_info.item.id }}">
+                                    <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
+                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>  
+                </div>
             </div>
         </div>
     </div>
@@ -96,6 +153,62 @@
           link.click()
           document.body.removeChild(link)
           }
+        function toggleSanctuary() {
+            var sanctuary = document.getElementById("sanctuary");
+            var closet = document.getElementById("closet");
+            var backButton = document.querySelector(".back-button"); 
+            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
+            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+
+            sanctuary.style.display = "block";
+            closet.style.display = "none";
+            
+            var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.justifyContent = "flex-start";
+            sanctuary.style.flexDirection = "column";
+
+            backButton.style.display = "block";
+            petsButton.style.display = "none";
+            closetButton.style.display = "none";
+        }
+
+        function toggleCloset() {
+            var sanctuary = document.getElementById("sanctuary");
+            var closet = document.getElementById("closet");
+            var backButton = document.querySelector(".back-button"); 
+            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
+            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+
+            sanctuary.style.display = "none";
+            closet.style.display = "block";
+
+            var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.justifyContent = "flex-start";
+            closet.style.flexDirection = "column";
+
+            backButton.style.display = "block";
+            petsButton.style.display = "none";
+            closetButton.style.display = "none";
+        }
+
+        function goBack() {
+            var sanctuary = document.getElementById("sanctuary");
+            var closet = document.getElementById("closet");
+            var backButton = document.querySelector(".back-button"); 
+            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
+            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+
+            sanctuary.style.display = "none";
+            closet.style.display = "none";
+
+            var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.justifyContent = "center";
+
+            backButton.style.display = "none";
+            petsButton.style.display = "block";
+            closetButton.style.display = "block";
+        }
+
     </script>
 </body>
 </html>

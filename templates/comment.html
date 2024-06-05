@@ -1,0 +1,39 @@
+<div class="d-flex text-body-secondary pt-3">
+    {% if profile_pics[comment.username] %}
+        <img src="data:image/png;base64,{{ profile_pics[comment.username] }}" alt="Profile Picture" class="profile-pic">
+    {% endif %}
+    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+        <div class="d-flex justify-content-between info">
+            <p class="lh-sm info">
+                <strong class="text-gray-dark">@{{ comment.username }}</strong><br>
+                {{ comment.text }}
+            </p>
+            <div>
+                <div class="button-container">
+                    {% if comment.get_nesting_level() < MAX_NESTING_LEVEL %}
+                        <button type="button" class="reply-button" id="reply-{{ comment.id }}" onclick="setParentId({{ comment.id }})">Reply</button>
+                    {% endif %}
+                    {% if comment.username == current_user.username %}
+                        <form id="delete-form-{{ comment.id }}" action="{{ url_for('delete_comment', id=comment.id) }}" method="post" style="display: inline;">
+                            <button type="button" class="delete-button" id="delete" onclick="confirmDeleteComment({{ comment.id }})">Delete</button>
+                        </form>
+                    {% endif %}
+                </div>
+                {% if comment.replies|length > 0 %}
+                    <a class="replies" data-bs-toggle="collapse" data-bs-target="#replies-{{ comment.id }}" aria-expanded="false" aria-controls="replies-{{ comment.id }}">
+                        {{ comment.replies|length }} Replies
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="collapse" id="replies-{{ comment.id }}">
+            <div class="ms-3 mt-2">
+                {% for reply in comment.replies %}
+                    {% with comment=reply %}
+                        {% include 'comment.html' %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

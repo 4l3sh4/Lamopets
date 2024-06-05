@@ -7,15 +7,21 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/adopt.css') }}"> 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/adopt.js')}}"></script>
     <title>Adopt</title>
 </head>
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
-        <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
-        <img src="{{ url_for('static', filename='assets/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
+        <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
+        <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
+
+    <div class="center" id="logout-button">
+        <a href="{{url_for('logout')}}">Logout</a>
+    </div>
+
     <h2 class="currency-position" data-currency="{{ current_user.currency_balance }}">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
@@ -60,27 +66,27 @@
 
             {% for pet in pets %}
                 {% if pet.species.startswith("A") %}
-                    <div class="adopt" id="adopt-aquana">
+                    <div class="adopt font" id="adopt-aquana">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
-                            <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("J") %}
-                    <div class="adopt" id="adopt-jackaloaf">
+                    <div class="adopt font" id="adopt-jackaloaf">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
-                            <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("T") %}
-                    <div class="adopt" id="adopt-trotter">
+                    <div class="adopt font" id="adopt-trotter">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name">{{ pet.name }}</p>
-                            <button class="price" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
                 {% endif %}
@@ -102,9 +108,21 @@
 
     <div id="purchase-adopt" class="popup">
         <div class="purchase-confirm">
-            <p id="confirm-text">Would you like to buy this pet?</p>
+            <p id="confirm-text-adopt" class="font" style="font-size: 32px;">Would you like to buy this pet?</p>
+            <img id="purchase-egg-img" src="" alt="Pet Egg Image" style="width: auto; height: 150px;">
+            <br>
             <button id="yesButton" class="yes-no">Yes</button>
-            <button id="noButton" class="yes-no" onclick="closeModal()">No</button>
+            <button id="noButton" class="yes-no" onclick="closeModalAdopt()">No</button>
+        </div>
+    </div>
+
+    <div id="name-adopt" class="popup">
+        <div class="name-confirm">
+            <p id="name-text-adopt" class="font" style="font-size: 32px;">Name your pet!</p>
+            <img id="name-egg-img" src="" alt="Pet Egg Image" style="width: auto; height: 150px;">
+            <br>
+            <input type="text" id="pet-name-input" class="font" style="font-size: 24px;" minlength="4" maxlength="20" required>
+            <button id="confirmNameButton" class="yes-no">Confirm</button>
         </div>
     </div>
     <script>
