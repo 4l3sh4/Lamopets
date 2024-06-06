@@ -1,9 +1,9 @@
-from flask import Flask, render_template, url_for, redirect, request, abort, jsonify
+from flask import Flask, render_template, url_for, redirect, request, abort, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, DecimalField, SubmitField, SelectField
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.validators import InputRequired, Length, ValidationError, DataRequired, EqualTo
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 import os
@@ -79,6 +79,12 @@ class User(db.Model, UserMixin):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.currency_balance = 1000
+
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
 
 class Topic(db.Model):
     __tablename__ = 'topic'
@@ -160,6 +166,12 @@ class GiftingForm(FlaskForm):
         existing_user_username = User.query.filter_by(username=username.data).first()
         if not existing_user_username:
             raise ValidationError("This user doesn't exist!")
+        
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField('Old Password', validators=[DataRequired()], render_kw={"placeholder": "Old Password"})
+    new_password = PasswordField('New Password', validators=[DataRequired()], render_kw={"placeholder": "New Password"})
+    confirm_new_password = PasswordField('Confirm New Password', validators=[DataRequired(), EqualTo('new_password')], render_kw={"placeholder": "Confirm Password"})
+    submit = SubmitField('Change Password')
 
 @app.route('/')
 def home():
@@ -180,6 +192,24 @@ def login():
             error_message = "Username does not exist. Please try again."
         return render_template('login.html', form=form, error_message=error_message)
     return render_template('login.html', form=form)
+
+@app.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    message = None
+    message_type = None
+    if form.validate_on_submit():
+        if current_user.check_password(form.old_password.data):
+            current_user.set_password(form.new_password.data)
+            db.session.commit()
+            message = 'Your password has been updated!'
+            message_type = 'success'
+            return render_template('change_password.html', form=form, message=message, message_type=message_type)
+        else:
+            message = 'Old password is incorrect.'
+            message_type = 'danger'
+    return render_template('change_password.html', form=form, message=message, message_type=message_type)
 
 @app.route('/profile')
 @login_required
@@ -464,7 +494,7 @@ def gifting():
         if gifted_money <= 0:
             return jsonify({'status': 'error', 'message': 'Gift amount must be a positive number.'})
         
-        if gifted_money >= 100:
+        if gifted_money > 100:
             return jsonify({'status': 'error', 'message': 'You can\'t gift more than $100 at a time.'})
         
         user = User.query.filter_by(username=form.username.data).first()
