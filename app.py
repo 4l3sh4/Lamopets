@@ -458,11 +458,27 @@ def gifting():
     form = GiftingForm()
     if form.validate_on_submit():
         gifted_money = int(form.currency.data)
+        
+        if gifted_money <= 0:
+            return jsonify({'status': 'error', 'message': 'Gift amount must be a positive number.'})
+        
         user = User.query.filter_by(username=form.username.data).first()
+        
+        if not user:
+            return jsonify({'status': 'error', 'message': 'The username you entered does not exist.'})
+        
+        if user.username == current_user.username:
+            return jsonify({'status': 'error', 'message': 'You can\'t gift to yourself.'})
+        
+        if current_user.currency_balance < gifted_money:
+            return jsonify({'status': 'error', 'message': 'You do not have enough balance to gift that amount.'})
+
         current_user.currency_balance -= gifted_money
-        db.session.commit()
         user.currency_balance += gifted_money
         db.session.commit()
+        
+        return jsonify({'status': 'success', 'message': f'You have successfully gifted {gifted_money} coins to {user.username}.'})
+    
     return render_template('gifting.html', form=form)
 
 def commit_with_retry(session, retries=5, delay=1):
