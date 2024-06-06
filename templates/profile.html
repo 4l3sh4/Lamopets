@@ -104,7 +104,7 @@
                     <div class="profile">
                         {% for adopted_pet, pet in adopted_pets %}
                             <div>
-                                <div class="item" id="{{ adopted_pet.species }}">
+                                <div class="item-box" id="{{ adopted_pet.species }}">
                                     <img src="{{ pet.pet_image_url }}" alt="{{ pet.name }}" class="pets_img">
                                     <p class="item_name">{{ adopted_pet.adopt_name }}</p>
                                     <div id="share-buttons">
