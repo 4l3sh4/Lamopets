@@ -72,6 +72,31 @@ img {
     color: #e27e87;
 }
 
+#change-password {
+    position: absolute;
+    top: 35px;
+    left: 286px;
+}
+
+#change-password a {
+    background-color: #e27e87;
+    overflow: hidden;
+    border: 4px solid #eddba5;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Sugar Cream";
+    font-weight: bold;
+}
+
+#change-password a:hover {
+    background-color: #eddba5;
+    color: #e27e87;
+}
+
 #content-3 {
     font-family: "Sugar Cream";
 }

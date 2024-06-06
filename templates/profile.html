@@ -39,6 +39,9 @@
     <div class="center" id="delete-account">
         <a href="javascript:void(0);" onclick="confirmDeleteAccount()">Delete Account</a>
     </div>
+    <div class="center" id="change-password">
+        <a href="{{ url_for('change_password') }}">Change Password</a>
+    </div>
 
     <h2 class="currency-position">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
