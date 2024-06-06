@@ -59,11 +59,41 @@
         <h2>Well, feel free to gift some of your wares to your friends!</h2>
         <img src="{{ url_for('static', filename='assets/gifted-trotter.png') }}">
         <div class="row">
-            <form method="POST" action="" class="gifting">
-            {{ form.username }}
-            {{ form.currency }}
-            {{ form.submit }}
-            {{ form.csrf_token }}
+            <form id="gifting-form" method="POST" action="" class="gifting">
+                {{ form.username }}
+                {{ form.currency }}
+                {{ form.submit }}
+                {{ form.csrf_token }}
+            </form>
         </div>
+    </div>
+    <div id="message-container"></div>
+
+    <script>
+        document.getElementById('gifting-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(this);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for("gifting") }}', true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    const response = JSON.parse(xhr.responseText);
+                    alert(response.message); // Display the alert with the message from the server
+                } else {
+                    alert('An error occurred. Please try again.');
+                }
+            };
+
+            xhr.onerror = function() {
+                alert('An error occurred. Please try again.');
+            };
+
+            xhr.send(formData);
+            
+        });
+    </script>
 </body>
 </html>
