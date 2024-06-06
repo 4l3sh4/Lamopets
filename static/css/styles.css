@@ -764,6 +764,10 @@ padding-bottom: 10px;
     margin-top: 5px;
 }
 
-.item p{
+.item-box p{
+    margin-top: -20px;
+}
+
+#share-buttons{
     margin-top: -20px;
 }
