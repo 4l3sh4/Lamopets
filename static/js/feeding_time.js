@@ -198,7 +198,7 @@ class Piranha {
             this.x = canvas.width - 900;
         }
         this.y = Math.random() * (canvas.height - 150) + 90;
-        this.radius = 50;
+        this.radius = 40;
         this.speed = Math.random() * 2 + 2;
         this.frameX = 0;
         this.frameY = 0;
@@ -307,7 +307,7 @@ setInterval(function(){
 },1000)
 
 // animation loop
-function animate(){
+document.body.onkeyup = function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.drawImage(backgroundImages[i], 0, 0, canvas.width, canvas.height);
     handleBabies();
@@ -316,6 +316,7 @@ function animate(){
     player.draw();
     ctx.fillStyle = 'black';
     ctx.fillText('Score: ' + score, 10, 50);
+    document.body.onkeyup = null
     //allows us to include periodic events in our game :)
     gameFrame++;
     if (!gameOver) requestAnimationFrame(animate);
