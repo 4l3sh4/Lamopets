@@ -2,9 +2,10 @@ from flask import Flask, render_template, url_for, redirect, request, abort, jso
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, DecimalField, SubmitField
+from wtforms import StringField, PasswordField, DecimalField, SubmitField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+from datetime import datetime, timedelta
 import os
 import logging
 import time
@@ -70,6 +71,7 @@ class User(db.Model, UserMixin):
     currency_balance = db.Column(db.Integer, default=1000)
     avatar = db.Column(db.Text, nullable=True)
     profile_pic = db.Column(db.Text, nullable=True)
+    last_gift_time = db.Column(db.DateTime)
 
     inventory = db.relationship('Inventory', back_populates='user_obj')
     adoptedpet = db.relationship('AdoptedPet', back_populates='user_obj')
@@ -462,6 +464,9 @@ def gifting():
         if gifted_money <= 0:
             return jsonify({'status': 'error', 'message': 'Gift amount must be a positive number.'})
         
+        if gifted_money > 100:
+            return jsonify({'status': 'error', 'message': 'You can\'t gift more than $100 at a time.'})
+        
         user = User.query.filter_by(username=form.username.data).first()
         
         if not user:
@@ -472,9 +477,14 @@ def gifting():
         
         if current_user.currency_balance < gifted_money:
             return jsonify({'status': 'error', 'message': 'You do not have enough balance to gift that amount.'})
+        
+        last_gift_time = current_user.last_gift_time
+        if last_gift_time and datetime.utcnow() - last_gift_time < timedelta(hours=4):
+            return jsonify({'status': 'error', 'message': 'You can only gift once every 4 hours.'})
 
         current_user.currency_balance -= gifted_money
         user.currency_balance += gifted_money
+        current_user.last_gift_time = datetime.utcnow()
         db.session.commit()
         
         return jsonify({'status': 'success', 'message': f'You have successfully gifted {gifted_money} coins to {user.username}.'})
