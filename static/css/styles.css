@@ -788,3 +788,11 @@ padding-bottom: 10px;
     height: 53px;
     margin-top: 5px;
 }
+
+.item-box p{
+    margin-top: -20px;
+}
+
+#share-buttons{
+    margin-top: -20px;
+}
