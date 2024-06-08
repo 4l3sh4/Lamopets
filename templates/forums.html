@@ -90,7 +90,7 @@
                         <strong class="text-gray-dark"> <a href="/topic/{{ item.id }}">{{ item.title }}</a></strong><br>
                         {{ item.description }}
                     </p>
-                    {% if item.username == current_user.username %}
+                    {% if item.username == current_user.username or current_user.moderator == 'yes' %}
                     <form class="delete" id="delete-form-{{ item.id }}" action="{{ url_for('delete_topic', id=item.id) }}" method="post">
                         <button type="button" class="font" id="delete" onclick="confirmDeleteTopic({{ item.id }})">Delete</button>
                     </form>
