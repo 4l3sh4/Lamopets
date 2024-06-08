@@ -273,7 +273,7 @@ img {
     margin-left: 50px;
     margin-right: 50px;
     padding: 10px;
-    border-radius: 5%;
+    border-radius: 10px;
     font-family: 'Sugar Cream';
     font-size: 30px;
 }
@@ -288,6 +288,56 @@ img {
 .gifting-contents h1 {
     padding-top: 30px;
     margin-bottom: 10px;
+}
+
+form.gifting {
+    flex:50%;
+    height: 220px;
+    padding-top: 15px;
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-bottom: 30px;
+    background-color: #eddba5;
+    border-radius: 20px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="number"] {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form input[type="text"] {
+    margin-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+form input[type="submit"] {
+    font-family: 'Sugar Cream';
+    font-size: 22px;
+    width: 30%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form input[type="submit"] {
+    background-color: #e27e87;
+    color: #fff;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #f1a4aa;
+    color: #fff;
 }
 
 #minigame-thumbnails {
@@ -309,7 +359,7 @@ img {
     margin-left: 50px;
     margin-right: 50px;
     padding: 30px;
-    border-radius: 5%;
+    border-radius: 10px;
 }
 
 .minigame-contents img {
