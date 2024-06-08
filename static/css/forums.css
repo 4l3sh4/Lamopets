@@ -216,7 +216,7 @@ img {
 .scroll {
     flex-grow: 1;
     overflow-y: auto;
-    max-height: 280px;
+    max-height: 220px;
 }
 
 @font-face {

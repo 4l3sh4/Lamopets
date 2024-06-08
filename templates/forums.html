@@ -33,14 +33,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <div class="dropdown">
-                <button class="dropbtn">Knicks & Knacks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
-                </div>
-            </div>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">
@@ -50,7 +43,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </div>
@@ -77,26 +70,28 @@
         </div>
         <div class="browse">
             <h1 class="my-2 fs-0 text">Join Chats!</h1>
-            <div class="my-3 p-3 bg-body rounded shadow-sm scroll">
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
                 <h6 class="border-bottom pb-2 mb-0 font">Browse Topics</h6>
 
-                {% for item in topics %}
-                <div class="d-flex text-body-secondary pt-3">
-                    {% if profile_pics[item.username] %}
-                        <img src="data:image/png;base64,{{ profile_pics[item.username] }}" alt="Profile Picture" class="profile-pic">
-                    {% endif %}
-                    <p class="pb-3 mb-0 small lh-sm border-bottom info">
-                        <strong class="text-gray-dark">@{{ item.username }}</strong><br>
-                        <strong class="text-gray-dark"> <a href="/topic/{{ item.id }}">{{ item.title }}</a></strong><br>
-                        {{ item.description }}
-                    </p>
-                    {% if item.username == current_user.username or current_user.moderator == 'yes' %}
-                    <form class="delete" id="delete-form-{{ item.id }}" action="{{ url_for('delete_topic', id=item.id) }}" method="post">
-                        <button type="button" class="font" id="delete" onclick="confirmDeleteTopic({{ item.id }})">Delete</button>
-                    </form>
-                    {% endif %}
+                <div class="scroll">
+                    {% for item in topics %}
+                    <div class="d-flex text-body-secondary pt-3">
+                        {% if profile_pics[item.username] %}
+                            <img src="data:image/png;base64,{{ profile_pics[item.username] }}" alt="Profile Picture" class="profile-pic">
+                        {% endif %}
+                        <p class="pb-3 mb-0 small lh-sm border-bottom info">
+                            <strong class="text-gray-dark">@{{ item.username }}</strong><br>
+                            <strong class="text-gray-dark"> <a href="/topic/{{ item.id }}">{{ item.title }}</a></strong><br>
+                            {{ item.description }}
+                        </p>
+                        {% if item.username == current_user.username or current_user.moderator == 'yes' %}
+                        <form class="delete" id="delete-form-{{ item.id }}" action="{{ url_for('delete_topic', id=item.id) }}" method="post">
+                            <button type="button" class="font" id="delete" onclick="confirmDeleteTopic({{ item.id }})">Delete</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
 
             </div>
         </div>

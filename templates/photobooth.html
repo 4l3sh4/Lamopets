@@ -43,7 +43,7 @@
 
                 <div class="settings">
                     <h2>Choose your pet:</h2>
-                    <div class="options">
+                    <div class="options scroll">
                         {% for adopted_pet, pet in adopted_pets %}
                             <div class="pet-option" style="background-image: url('{{ pet.pet_image_url }}');" onclick="changePet('{{ pet.pet_image_url }}')"></div>
                         {% endfor %}
