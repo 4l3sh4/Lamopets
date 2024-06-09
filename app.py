@@ -72,6 +72,7 @@ class User(db.Model, UserMixin):
     avatar = db.Column(db.Text, nullable=True)
     profile_pic = db.Column(db.Text, nullable=True)
     last_gift_time = db.Column(db.DateTime)
+    moderator = db.Column(db.String(3), nullable=False, default='no')
 
     inventory = db.relationship('Inventory', back_populates='user_obj')
     adoptedpet = db.relationship('AdoptedPet', back_populates='user_obj')
@@ -397,21 +398,23 @@ def topic(id):
 def delete_topic(id):
     topic = Topic.query.get(id)
     if topic:
-        if topic.username == current_user.username:
+        print(f"Current user: {current_user.username}, Moderator: {current_user.moderator}")
+        if topic.username == current_user.username or current_user.moderator == 'yes':
             db.session.delete(topic)
             db.session.commit()
             return redirect(url_for('forums'))
         else:
-            abort(403)  
+            abort(403)
     else:
-        abort(404)  
+        abort(404)
 
 @app.route('/delete/comment/<int:id>', methods=['POST'])
 @login_required
 def delete_comment(id):
     comment = Comment.query.get(id)
     if comment:
-        if comment.username == current_user.username:
+        print(f"Current user: {current_user.username}, Moderator: {current_user.moderator}")
+        if comment.username == current_user.username or current_user.moderator == 'yes':
             delete_comment_replies(comment)
             db.session.delete(comment)
             db.session.commit()
