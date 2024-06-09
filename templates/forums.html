@@ -10,6 +10,7 @@
     <script src="{{url_for('static', filename='js/forums.js')}}"></script>
 </head>
 <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo center">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
@@ -72,7 +73,6 @@
             <h1 class="my-2 fs-0 text">Join Chats!</h1>
             <div class="my-3 p-3 bg-body rounded shadow-sm">
                 <h6 class="border-bottom pb-2 mb-0 font">Browse Topics</h6>
-
                 <div class="scroll">
                     {% for item in topics %}
                     <div class="d-flex text-body-secondary pt-3">
@@ -92,10 +92,23 @@
                     </div>
                     {% endfor %}
                 </div>
-
             </div>
         </div>
     </div>
+    <center>
+    <div id="share-buttons" style="margin-top: -15px;">
+        <!-- facebook -->
+        <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>
+        <!-- twitter -->
+        <a class="twitter" target="blank"><i class="fab fa-twitter"></i></a>
+        <!-- linkedin -->
+        <a class="linkedin" target="blank"><i class="fab fa-linkedin"></i></a>
+        <!-- whatsapp-->
+        <a class="whatsapp" target="blank"><i class="fab fa-whatsapp"></i></a>
+        <!-- telegram-->
+        <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
+    </div>
+    </center>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         function confirmDeleteTopic(topicId) {

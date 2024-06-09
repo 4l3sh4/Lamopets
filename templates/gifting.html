@@ -9,6 +9,7 @@
     <title>Gifting</title>
 </head>
 <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
@@ -60,6 +61,19 @@
         </div>
     </div>
     <div id="message-container"></div>
+    <br>
+    <div id="share-buttons" style="margin-top: -15px;">
+        <!-- facebook -->
+        <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>
+        <!-- twitter -->
+        <a class="twitter" target="blank"><i class="fab fa-twitter"></i></a>
+        <!-- linkedin -->
+        <a class="linkedin" target="blank"><i class="fab fa-linkedin"></i></a>
+        <!-- whatsapp-->
+        <a class="whatsapp" target="blank"><i class="fab fa-whatsapp"></i></a>
+        <!-- telegram-->
+        <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
+    </div>
 
     <script>
         document.getElementById('gifting-form').addEventListener('submit', function(event) {
