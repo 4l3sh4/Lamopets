@@ -86,7 +86,7 @@
             </div>
 
             <div class="category">
-                <label for="hairType">Hair</label>
+                <label for="hairType">Head</label>
                 <div id="hairType" class="options">
                     
                     {% for base_id, items in grouped_items.items() if base_id.startswith('H') %}
@@ -146,7 +146,7 @@
             </div>
 
             <div class="category">
-                <label for="miscType">Accessories</label>
+                <label for="miscType">Misc</label>
                 <div id="miscType" class="options">
                     {% for base_id, items in grouped_items.items() if base_id.startswith('M') %}
                         <div class="option" data-part="misc" data-gender="{{ items[0].gender }}" data-image="{{ url_for('static', filename=items[0].image_url) }}">
@@ -167,7 +167,7 @@
             </div>
 
             <div class="category">
-                <label for="shoesType">Shoes</label>
+                <label for="shoesType">Feet</label>
                 <div id="shoesType" class="options">
                     {% for base_id, items in grouped_items.items() if base_id.startswith('F') %}
                         <div class="option" data-part="shoes" data-gender="{{ items[0].gender }}" data-image="{{ url_for('static', filename=items[0].image_url) }}">
