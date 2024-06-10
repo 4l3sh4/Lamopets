@@ -619,6 +619,7 @@ form input[type="submit"]:hover {
     gap: 30px;
     padding: 30px;
     box-sizing: border-box;
+    border-radius: 10px;
 }
 
 .container div {
