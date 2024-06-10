@@ -469,7 +469,7 @@ def register():
         try:
             commit_with_retry(db.session)
 
-            default_items = ["H01BLACK-F", "H03BLACK-F", "H04BLACK-F", "H01BLACK-M", "H03BLACK-M", "H04BLACK-M", "U03PURPLE-F", "U04GREEN-F", "U07BLUE-F", "U01PURPLE-M", "U04GREEN-M", "U06BLUE-M", "L02GREY-F", "L03GREEN-F", "L05BLUE-F", "L01GREY-M", "L04GREY-M", "L05BLUE-M"]
+            default_items = ["H02BLACK-F", "H03BLACK-F", "H01BLACK-F", "H04BLACK-M", "H02BLACK-M", "H01BLACK-M", "U05PURPLE-F", "U02GREEN-F", "U01BLUE-F", "U04PURPLE-M", "U02GREEN-M", "U01BLUE-M", "L03GREY-F", "L02GREEN-F", "L01BLUE-F", "L03GREY-M", "L02GREY-M", "L01BLUE-M"]
             for item_id in default_items:
                 item = Item.query.filter_by(id=item_id).first()
                 if item:
