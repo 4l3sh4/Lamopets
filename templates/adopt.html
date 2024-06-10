@@ -34,14 +34,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <div class="dropdown">
-                <button class="dropbtn">Knicks & Knacks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
-                </div>
-            </div>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">    
@@ -51,7 +44,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
@@ -69,7 +62,7 @@
                     <div class="adopt font" id="adopt-aquana">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
+                            <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
                             <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
@@ -77,7 +70,7 @@
                     <div class="adopt font" id="adopt-jackaloaf">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
+                            <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
                             <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
@@ -85,13 +78,14 @@
                     <div class="adopt font" id="adopt-trotter">
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
-                            <p class="item_name" style="font-size: 28px;">{{ pet.name }}</p>
+                            <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
                             <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
                         </div>
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
+        <br>
         <div id="share-buttons" style="padding-top:10px;">
             <!-- facebook -->
             <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>

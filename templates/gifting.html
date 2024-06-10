@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/join.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <title>Gifting</title>
 </head>
 <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{url_for('static', filename='js/background_balls.js')}}"></script>
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
@@ -32,14 +32,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <div class="dropdown">
-                <button class="dropbtn">Knicks & Knacks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
-                </div>
-            </div>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">    
@@ -49,7 +42,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
@@ -68,6 +61,19 @@
         </div>
     </div>
     <div id="message-container"></div>
+    <br>
+    <div id="share-buttons" style="margin-top: -15px;">
+        <!-- facebook -->
+        <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>
+        <!-- twitter -->
+        <a class="twitter" target="blank"><i class="fab fa-twitter"></i></a>
+        <!-- linkedin -->
+        <a class="linkedin" target="blank"><i class="fab fa-linkedin"></i></a>
+        <!-- whatsapp-->
+        <a class="whatsapp" target="blank"><i class="fab fa-whatsapp"></i></a>
+        <!-- telegram-->
+        <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
+    </div>
 
     <script>
         document.getElementById('gifting-form').addEventListener('submit', function(event) {

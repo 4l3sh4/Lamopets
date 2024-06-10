@@ -1,5 +1,8 @@
 body {
     background-color: #99d1cb;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
 .center {
@@ -14,7 +17,7 @@ img {
     margin-bottom: 10px;
 }
 
-.logo{
+.logo {
     transition: transform 0.5s ease;
 }
 
@@ -35,7 +38,6 @@ img {
     font-family: "Sugar Cream";
     src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
 }
-
 
 .navigation {
     background-color: #e27e87;
@@ -58,7 +60,7 @@ img {
     font-weight: bold;
 }
 
-.navigation a:hover, .dropdown:hover .dropbtn{
+.navigation a:hover, .dropdown:hover .dropbtn {
     background-color: #eddba5;
     color: #e27e87;
 }
@@ -82,10 +84,15 @@ img {
     z-index: 1000;
 }
 
-@media screen and (max-width: 800px) {
-    .navbar a{
-        font-size: 12px;
+@media screen and (max-width: 900px) {
+    .navigation {
+        display: none;
     }
+
+    #navicon {
+        display: block;
+    }
+
     .currency-position {
         font-size: 20px;
         width: 60px;
@@ -95,12 +102,14 @@ img {
 }
 
 @media screen and (max-width: 600px) {
-    .navbar{
+    .navigation {
         display: none;
     }
-    #navicon{
+
+    #navicon {
         display: block;
     }
+
     .currency-position {
         font-size: 15px;
         width: 40px;
@@ -112,17 +121,24 @@ img {
     #navicon {
         display: none;
     }
+
     .sidenav {
         display: none;
     }
+
     .content {
-        transform: "translateX(0)"
+        transform: translateX(0);
     }
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
 .sidenav {
@@ -147,7 +163,8 @@ img {
     transition: 0.3s;
     font-size: 20px;
     text-transform: uppercase;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: 'Sugar Cream';
+    text-align: center;
     font-weight: bold;
 }
 
@@ -166,24 +183,30 @@ img {
 
 .container {
     display: flex;
-    justify-content: space-between;
-    align-items: stretch; 
     flex-wrap: wrap;
+    justify-content: space-between;
     padding: 20px;
 }
 
 .topic,
 .browse {
-    flex: 1; 
-    min-width: calc(50% - 30px); 
+    flex: 1;
+    min-width: calc(50% - 30px);
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #fbefcb;
-    color: #000000;
-    margin: 0px 10px 0px 10px; 
+    color: #000;
+    margin: 10px;
     display: flex;
     flex-direction: column;
+}
+
+@media screen and (max-width: 900px) {
+    .topic,
+    .browse {
+        min-width: calc(100% - 30px);
+    }
 }
 
 .topic form {
@@ -191,11 +214,10 @@ img {
 }
 
 .scroll {
-    flex-grow: 1; 
-    overflow-y: auto; 
-    max-height: 280px;
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 220px;
 }
-
 
 @font-face {
     font-family: 'myFont';
@@ -239,31 +261,27 @@ h1 {
 
 .currency-position {
     position: absolute;
-    top: 20px; 
+    top: 20px;
     right: 20px;
     width: auto;
-    height: auto; 
-    padding: 3px 10px; 
+    height: auto;
+    padding: 3px 10px;
     border-color: #eddba5;
     border-width: 8px;
     border-style: double;
     background-color: #e27e87;
-    border-radius: 50px; 
+    border-radius: 50px;
     font-family: myFont;
     font-weight: bold;
-    font-size: 25px; 
+    font-size: 25px;
     display: flex;
     align-items: center;
 }
 
 #coin {
-    width: 30px; 
-    height: auto; 
+    width: 30px;
+    height: auto;
     margin-right: 5px;
-}
-
-.logo.center {
-    text-align: center;
 }
 
 .d-flex {
@@ -289,9 +307,9 @@ h1 {
 .dropdown {
     float: right;
     overflow: hidden;
-  }
-  
-  .dropdown .dropbtn {
+}
+
+.dropdown .dropbtn {
     color: #eddba5;
     text-transform: uppercase;
     font-size: 17px;
@@ -303,41 +321,41 @@ h1 {
     border-right: none;
     border-top: none;
     border-bottom: none;
-  }
-  
-  .dropdown-content {
+}
+
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
     z-index: 1;
-  }
-  
-  .dropdown-content a {
+}
+
+.dropdown-content a {
     color: black;
     float: none;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #ddd;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
+}
 
-  .profile-pic {
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.profile-pic {
     width: 45px;
     margin-right: 15px;
     margin-left: 5px;
-    border: 1px solid #000000;
+    border: 1px solid #000;
     border-radius: 5px;
     background-color: aliceblue;
-  }
+}
 
 /* balls */
 .ball {

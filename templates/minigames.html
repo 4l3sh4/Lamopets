@@ -32,14 +32,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <div class="dropdown">
-                <button class="dropbtn">Knicks & Knacks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
-                </div>
-            </div>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">    
@@ -49,7 +42,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
@@ -58,6 +51,7 @@
         <a onclick="openWin()"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}"></a>
         <a href="{{url_for('minigamesjumpjumpjackaloaf')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}"></a>
     </div>
+    <br>
     <div id="share-buttons">
         <!-- facebook -->
         <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>

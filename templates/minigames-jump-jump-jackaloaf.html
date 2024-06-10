@@ -27,14 +27,7 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <div class="dropdown">
-                <button class="dropbtn">Knicks & Knacks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
-                </div>
-            </div>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">    
@@ -44,12 +37,13 @@
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
+            <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
     </nav>
     <br>
     <div class="minigame-player">
+        <p>Press any key to start playing!</p>
         <canvas id="canvas2"></canvas>
         <script src="{{url_for('static', filename='js/jump_jump_jackaloaf.js')}}"></script>
     </div>
