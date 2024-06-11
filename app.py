@@ -41,14 +41,10 @@ class Inventory(db.Model):
     __tablename__ = 'inventory'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
-    username = db.Column(db.String(20), nullable=False) 
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
     user_obj = db.relationship('User', back_populates='inventory')
     item = db.relationship('Item', back_populates='inventory')
 
-    @property
-    def user(self):
-        return User.query.filter_by(username=self.username).first()
 
 class AdoptedPet(db.Model):
     __tablename__ = 'adopted_pet'
@@ -56,13 +52,8 @@ class AdoptedPet(db.Model):
     species = db.Column(db.String(2), db.ForeignKey('pet.species'), nullable=False)
     user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
     adopt_name = db.Column(db.String(20), nullable=False)
-    username = db.Column(db.String(20), nullable=False) 
     pet = db.relationship('Pet', backref='adopted_by')
     user_obj = db.relationship('User', back_populates='adoptedpet')
-
-    @property
-    def user(self):
-        return User.query.filter_by(username=self.username).first()
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +77,11 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
+    
+    def __setattr__(self, name, value):
+        if name == 'currency_balance' and value > 10000:
+            value = 10000
+        super().__setattr__(name, value)
 
 class Topic(db.Model):
     __tablename__ = 'topic'
@@ -221,8 +217,8 @@ def profile():
     else:
         avatar_url = None
 
-    adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.username == current_user.username).all()
-    inventory_items = db.session.query(Inventory, Item).join(Item, Inventory.item_id == Item.id).filter(Inventory.username == current_user.username).all()
+    adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.user_id == current_user.id).all()
+    inventory_items = db.session.query(Inventory, Item).join(Item, Inventory.item_id == Item.id).filter(Inventory.user_id == current_user.id).all()
 
     return render_template('profile.html', avatar_url=avatar_url, inventory_items=inventory_items, adopted_pets=adopted_pets)
 
@@ -285,7 +281,7 @@ def purchase_item(item_id):
         current_user.currency_balance -= item.price
         db.session.commit()
 
-        inventory = Inventory(user_id=current_user.id, username=current_user.username, item_id=item.id)
+        inventory = Inventory(user_id=current_user.id, item_id=item.id)
         db.session.add(inventory)
         db.session.commit()
 
@@ -332,7 +328,7 @@ def adopt_pet(pet_species):
             current_user.currency_balance -= pet.price
             db.session.commit()
             
-            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username, user_id=current_user.id, adopt_name=pet_name)
+            adopted_pet = AdoptedPet(species=pet_species, user_id=current_user.id, adopt_name=pet_name)
             db.session.add(adopted_pet)
             db.session.commit()
             return jsonify({'success': True})
@@ -473,7 +469,7 @@ def register():
             for item_id in default_items:
                 item = Item.query.filter_by(id=item_id).first()
                 if item:
-                    inventory = Inventory(user_id=new_user.id, username=new_user.username, item_id=item.id)
+                    inventory = Inventory(user_id=new_user.id, item_id=item.id)
                     db.session.add(inventory)
             
             commit_with_retry(db.session)
