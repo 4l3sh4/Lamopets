@@ -291,6 +291,30 @@ def purchase_item(item_id):
         print(f'Error purchasing item: {e}')
         return jsonify({'error': 'Internal Server Error'}), 500
 
+@app.route('/delete_item/<item_id>', methods=['DELETE'])
+def delete_item(item_id):
+    if not current_user.is_authenticated:
+        return jsonify({'message': 'Unauthorized'}), 401
+    
+    try:
+        inventory_item = Inventory.query.filter_by(user_id=current_user.id, item_id=item_id).first()
+        if inventory_item:
+            item = inventory_item.item
+            refund_amount = item.price // 2
+
+            db.session.delete(inventory_item)
+
+            current_user.currency_balance += refund_amount
+            db.session.commit()
+            
+            return jsonify({'message': 'Item deleted successfully.', 'refund': refund_amount}), 200
+        else:
+            return jsonify({'message': 'Item not found in user inventory.'}), 404
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify({'message': 'Failed to delete item.'}), 500
+
 @app.route('/minigames')
 @login_required
 def minigames():
@@ -563,7 +587,7 @@ def add_items_data():
         {"id": "H03BROWN-F", "base_id": "H03-F", "gender": "Female", "price": 160, "colour": "#7F654A", "filter_colour": "sepia(95%) hue-rotate(350deg) brightness(0.7) contrast(140%)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair3.png", "image_url": 'assets/customization_assets/hair/f-hair3.png'},
         {"id": "H03BLONDE-F", "base_id": "H03-F", "gender": "Female", "price": 180, "colour": "#E8CEA1", "filter_colour": "sepia(100%) brightness(1.3)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair3.png", "image_url": 'assets/customization_assets/hair/f-hair3.png'},
 
-        {"id": "H04PGREY-F", "base_id": "H04-F", "gender": "Female", "price": 50, "colour": "#848484", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
+        {"id": "H04GREY-F", "base_id": "H04-F", "gender": "Female", "price": 50, "colour": "#848484", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
         {"id": "H04GREEN-F", "base_id": "H04-F", "gender": "Female", "price": 100, "colour": "#8aab7f", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
         {"id": "H04BLUE-F", "base_id": "H04-F", "gender": "Female", "price": 150, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
         {"id": "H04PURPLE-F", "base_id": "H04-F", "gender": "Female", "price": 200, "colour": "#b796c2", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(240deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},

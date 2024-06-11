@@ -89,8 +89,9 @@
             <div class="column-2" id="profile-display">
 
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
-                <button class="button-53" onclick="toggleSanctuary()">MY PETS</button>
-                <button class="button-53" onclick="toggleCloset()">MY CLOSET</button>
+                <a class="delete-button" style="display: none;" onclick="displayDelete()"><img src="{{ url_for('static', filename='assets/thumbnails/delete.png') }}" alt="delete button"></a>
+                <button class="button-53" id="petsButton" onclick="toggleSanctuary()">MY PETS</button>
+                <button class="button-53" id="closetButton" onclick="toggleCloset()">MY CLOSET</button>
 
                 <div id="sanctuary" style="display: none">
                     <h1>{{ current_user.username }}'s Sanctuary</h1>
@@ -128,6 +129,7 @@
                                 <div class="item-box" id="{{ item_info.item.id }}">
                                     <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
                                     <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                                    <button class="delete-item-button" onclick="deleteItem('{{ item_info.item.id }}')">Delete</button>
                                 </div>
                             </div>
                         {% endfor %}
@@ -165,8 +167,9 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var deleteButton = document.querySelector(".delete-button"); 
+            var petsButton = document.querySelector("#petsButton"); 
+            var closetButton = document.querySelector("#closetButton"); 
 
             sanctuary.style.display = "block";
             closet.style.display = "none";
@@ -176,6 +179,7 @@
             sanctuary.style.flexDirection = "column";
 
             backButton.style.display = "block";
+            deleteButton.style.display = "block";
             petsButton.style.display = "none";
             closetButton.style.display = "none";
         }
@@ -184,8 +188,9 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var deleteButton = document.querySelector(".delete-button"); 
+            var petsButton = document.querySelector("#petsButton"); 
+            var closetButton = document.querySelector("#closetButton"); 
 
             sanctuary.style.display = "none";
             closet.style.display = "block";
@@ -195,6 +200,7 @@
             closet.style.flexDirection = "column";
 
             backButton.style.display = "block";
+            deleteButton.style.display = "block";
             petsButton.style.display = "none";
             closetButton.style.display = "none";
         }
@@ -203,8 +209,9 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var deleteButton = document.querySelector(".delete-button"); 
+            var petsButton = document.querySelector("#petsButton"); 
+            var closetButton = document.querySelector("#closetButton"); 
 
             sanctuary.style.display = "none";
             closet.style.display = "none";
@@ -213,32 +220,36 @@
             profileDisplay.style.justifyContent = "center";
 
             backButton.style.display = "none";
+            deleteButton.style.display = "none";
             petsButton.style.display = "block";
             closetButton.style.display = "block";
         }
 
-    </script>
-    <script>
-        let myWindow;
-        function openWin() {
-            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
-            myWindow.resizeTo(300, 300);
+        function displayDelete() {
+            var deleteButtons = document.querySelectorAll(".delete-item-button");
+            deleteButtons.forEach(button => {
+                button.style.display = "block";
+            });
         }
 
-        const link = 'https://4l35h4.pythonanywhere.com/';
-        const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
-        const title = encodeURIComponent('Lamopets');
-
-        const fb = document.querySelector('.facebook');
-        fb.href = `https://www.facebook.com/share.php?u=${link}`;
-        const twitter = document.querySelector('.twitter');
-        twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
-        const linkedIn = document.querySelector('.linkedin');
-        linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
-        const whatsapp = document.querySelector('.whatsapp');
-        whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
-        const telegram = document.querySelector('.telegram');
-        telegram.href = `https://telegram.me/share/url?url=${link}&text=${msg}`;
+        async function deleteItem(itemId) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                try {
+                    const response = await fetch(`/delete_item/${itemId}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        // Reload the page or update the inventory display
+                        location.reload();
+                    } else {
+                        alert("Failed to delete item.");
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert("An error occurred while deleting the item.");
+                }
+            }
+        }
     </script>
 </body>
 </html>
