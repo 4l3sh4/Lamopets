@@ -770,6 +770,20 @@ padding-bottom: 10px;
     width: 300px !important;
 }
 
+.delete-item-button {
+    font-size: 25px;
+    background-color: #f1959a;
+    color: #f9f9f9;
+    border-radius: 10px;
+    height: 30px !important;
+    width: 100px !important;
+    font-family:'Sugar Cream';
+}
+
+.delete-item-button:hover{
+    cursor: pointer;
+}
+
 #photobooth-btn {
     width: 20px !important;
     height: auto;

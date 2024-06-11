@@ -104,6 +104,7 @@
                                     <div id="share-buttons">
                                         <!-- facebook -->
                                         <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/<a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
+                                        <center><button class="delete-item-button" onclick="releasePet('{{ adopted_pet.adopt_id }}')" style="display: none;">Release</button></center>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +130,7 @@
                                 <div class="item-box" id="{{ item_info.item.id }}">
                                     <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
                                     <div class="quantity">Quantity: {{ item_info.quantity }}</div>
-                                    <button class="delete-item-button" onclick="deleteItem('{{ item_info.item.id }}')">Delete</button>
+                                    <center><button class="delete-item-button" onclick="deleteItem('{{ item_info.item.id }}')" style="display: none;">Recycle</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -227,11 +228,14 @@
 
         function displayDelete() {
             var deleteButtons = document.querySelectorAll(".delete-item-button");
-            deleteButtons.forEach(button => {
-                button.style.display = "block";
-            });
+            if (deleteButtons.length > 0) {
+                var currentDisplay = deleteButtons[0].style.display;
+                var newDisplay = (currentDisplay === "none" || currentDisplay === "") ? "block" : "none";
+                deleteButtons.forEach(button => {
+                    button.style.display = newDisplay;
+                });
+            }
         }
-
         async function deleteItem(itemId) {
             if (confirm("Are you sure you want to delete this item?")) {
                 try {
@@ -239,7 +243,6 @@
                         method: 'DELETE'
                     });
                     if (response.ok) {
-                        // Reload the page or update the inventory display
                         location.reload();
                     } else {
                         alert("Failed to delete item.");
@@ -247,6 +250,23 @@
                 } catch (error) {
                     console.error('Error:', error);
                     alert("An error occurred while deleting the item.");
+                }
+            }
+        }
+        async function releasePet(adopt_id) {
+            if (confirm("Are you sure you want to release this pet?")) {
+                try {
+                    const response = await fetch(`{{ url_for('release_pet', adopt_id='') }}${adopt_id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert("Failed to release pet.");
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert("An error occurred while releasing the pet.");
                 }
             }
         }

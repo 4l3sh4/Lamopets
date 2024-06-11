@@ -359,6 +359,16 @@ def adopt_pet(pet_species):
     else:
         abort(404) 
 
+@app.route('/release_pet/<adopt_id>', methods=['DELETE'])
+def release_pet(adopt_id):
+    adopted_pet = AdoptedPet.query.filter_by(adopt_id=adopt_id, user_id=current_user.id).first()
+    if adopted_pet:
+        db.session.delete(adopted_pet)
+        db.session.commit()
+        return jsonify({'message': 'Pet released successfully.'}), 200
+    else:
+        return jsonify({'message': 'Pet not found.'}), 404
+
 @app.route('/forums', methods=['GET', 'POST'])
 @login_required
 def forums():
