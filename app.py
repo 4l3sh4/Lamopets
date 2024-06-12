@@ -495,7 +495,7 @@ def gifting():
         if gifted_money <= 0:
             return jsonify({'status': 'error', 'message': 'Gift amount must be a positive number.'})
         
-        if gifted_money > 100:
+        if gifted_money > 1000:
             return jsonify({'status': 'error', 'message': 'You can\'t gift more than $100 at a time.'})
         
         user = User.query.filter_by(username=form.username.data).first()
