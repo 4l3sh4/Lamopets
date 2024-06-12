@@ -342,7 +342,7 @@ form input[type="submit"]:hover {
 
 #minigame-thumbnails {
     width: 40%;
-    border-radius: 5%;
+    border-radius: 20px;
     margin-left: 5px;
     margin-right: 5px;
 }
@@ -365,7 +365,7 @@ form input[type="submit"]:hover {
 .minigame-contents img {
     width:50%;
     height:100%;
-    border-radius: 8%;
+    border-radius: 50px;
 }
 
 .minigame-contents img:hover {
