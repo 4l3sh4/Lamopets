@@ -8,7 +8,7 @@
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <title>Mini Games</title>
 </head>
-<body onkeydown="getKeyAndMove(event)">
+<body onkeydown="getKeyAndMove(event)" oncontextmenu="return false;">
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
@@ -36,8 +36,6 @@
         </center>
     </div>
 <script>
-    window.resizeTo(900, 700);
-
     var actualTime = new Date(Date.now());
     var endOfDay = new Date(actualTime.getFullYear(), actualTime.getMonth(), actualTime.getDate() + 1, 0, 0, 0);
     var timeRemaining = endOfDay.getTime() - actualTime.getTime();

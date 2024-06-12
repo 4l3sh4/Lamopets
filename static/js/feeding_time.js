@@ -273,7 +273,7 @@ function handleGameOver(){
     ctx.fillText('GAME OVER', 270, 230);
     ctx.fillText('You have gained ' + score*2 + ' Lamocoins!', 70, 300);
     gameOver = true;
-    fetch('/gain_currency', {
+    fetch('/gain_currency_ft', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

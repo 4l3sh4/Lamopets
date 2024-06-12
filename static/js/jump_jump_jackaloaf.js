@@ -37,7 +37,25 @@ let score = 0;
 let maxScore = 0;
 let gameOver = false;
 
-document.body.onkeyup = function() {
+document.body.onload = function before_start() {
+    canvas = document.getElementById("canvas2");
+    canvas.height = canvasHeight;
+    canvas.width = canvasWidth;
+    context = canvas.getContext("2d");
+
+    jackaloafRight = new Image();
+    jackaloafRight.src = '/static/assets/sprite-sheets/jackaloaf-right.png';
+    jackaloaf.img = jackaloafRight;
+    jackaloafRight.onload = function(){
+        context.drawImage(jackaloaf.img,jackaloaf.x,jackaloaf.y,jackaloaf.width,jackaloaf.height);
+    }
+    context.font = "50px Trebuchet MS";
+    context.fillText('Jump, Jump, Jackaloaf!', 80, 110);
+    context.font = "30px Trebuchet MS";
+    context.fillText('Press any key to start!', 210, 400);
+}
+
+document.body.onkeyup = function animate() {
     canvas = document.getElementById("canvas2");
     canvas.height = canvasHeight;
     canvas.width = canvasWidth;
@@ -123,9 +141,7 @@ function update(){
     if (gameOver){
         context.font = "35px Trebuchet MS";
         context.fillText("You've gained " + Math.trunc(score/250) + " Lamocoins!", 125, 400);
-        context.font = "31px Trebuchet MS";
-        context.fillText("Press 'Space' to Restart!", 190, 450);
-        fetch('/gain_currency', {
+        fetch('/gain_currency_jjj', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -153,23 +169,6 @@ function moveJackaloaf(e) {
         // move left
         velocityX = -4;
         jackaloaf.img = jackaloafLeft;
-    }
-    else if (e.code == "Space" && gameOver) {
-        // reset
-        jackaloaf = {
-            img: jackaloafRight,
-            x: jackaloafX,
-            y: jackaloafY,
-            width: jackaloafWidth,
-            height: jackaloafHeight
-        }
-
-        velocityX = 0;
-        velocityY = initialVelocityY;
-        score = 0;
-        maxScore = 0;
-        gameOver = false;
-        placeClouds();
     }
 }
 
@@ -234,3 +233,6 @@ function updateScore() {
         maxScore -= points;
     }
 }
+
+before_start();
+animate();

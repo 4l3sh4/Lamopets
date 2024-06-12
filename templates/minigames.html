@@ -56,7 +56,7 @@
     <br>
     <div class="minigame-contents">
         <a onclick="openWin()"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}"></a>
-        <a href="{{url_for('minigamesjumpjumpjackaloaf')}}"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}"></a>
+        <a onclick="openWinTwo()"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}"></a>
     </div>
     <div id="share-buttons">
         <!-- facebook -->
@@ -73,8 +73,12 @@
     <script>
         let myWindow;
         function openWin() {
-            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
-            myWindow.resizeTo(300, 300);
+            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=700", "popup");
+            myWindow.resizeTo(900, 700);
+        }
+        function openWinTwo() {
+            myWindow = window.open("{{url_for('minigamesjumpjumpjackaloaf')}}", "width=900, height=700", "popup");
+            myWindow.resizeTo(900, 700);
         }
 
         const link = 'https://4l35h4.pythonanywhere.com/';
