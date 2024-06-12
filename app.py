@@ -72,8 +72,8 @@ class User(db.Model, UserMixin):
     avatar = db.Column(db.Text, nullable=True)
     profile_pic = db.Column(db.Text, nullable=True)
     last_gift_time = db.Column(db.DateTime)
-    last_played_time_ft = db.Column(db.DateTime)
-    last_played_time_jjj = db.Column(db.DateTime)
+    last_played_time_ft = db.Column(db.String)
+    last_played_time_jjj = db.Column(db.String)
     daily_chances_ft = db.Column(db.Integer, default=10)
     daily_chances_jjj = db.Column(db.Integer, default=5)
 
@@ -770,8 +770,22 @@ def gain_currency():
         db.session.commit()
         current_user.daily_chances_ft -= 1
         db.session.commit()
-        current_user.last_played_time_ft = datetime.utcnow().date()
+        current_user.last_played_time_ft = datetime.now().strftime("%m/%d/%Y")
         db.session.commit()
+    if current_user.daily_chances_ft == 0:
+        current_user.daily_chances_ft = 0
+        db.session.commit()
+
+@app.route('/reset_chances_ft', methods=['POST'])
+@login_required
+def reset_chances_ft():
+    temp_date = datetime.now().strftime("%m/%d/%Y")
+    if current_user.last_played_time_ft != temp_date:
+        current_user.daily_chances_ft = 5
+        db.session.commit()
+        current_user.last_played_time_ft = datetime.now().strftime("%m/%d/%Y")
+        db.session.commit()
+    return redirect(url_for('minigames-feeding-time'))
 
 if __name__ == '__main__':
     with app.app_context():

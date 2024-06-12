@@ -20,16 +20,47 @@
     <div class="minigame-player">
         <h1 style="background-color: #e27e87; padding: 10px; border-radius: 40px; margin-left: 220px; margin-right: 220px; font-family:'Trebuchet MS';">Daily chances left: {{ current_user.daily_chances_ft }}</h1>
         {% if current_user.daily_chances_ft == 0 %}
-            <h3 style="background-color: #eddba5; padding: 10px; border-radius: 20px; margin-left: 50px; margin-right: 50px; color:#ac672f; font-family:'Trebuchet MS'; border: #ac672f 5px inset">Oops, looks like you've used up all your daily chances!<br>You can't earn anymore Lamocoins, but you can still continue playing<br>to achieve a higher score!</h3>
+            <div style="background-color: #eddba5; padding: 10px; border-radius: 20px; margin-left: 50px; margin-right: 50px; margin-bottom:30px; color:#ac672f; font-family:'Trebuchet MS'; border: #ac672f 4px inset">
+            <h3>Oops, looks like you've used up all your daily chances!<br>You can't earn anymore Lamocoins, but you can still continue playing<br>to achieve a higher score.</h3>
+            <b><span id="timeRemaining"></span></b>
+            <br>
+            <progress id="dayProgression" value="0"></progress>
+            </div>
         {% endif %}
         <canvas id="canvas1"></canvas>
         <script src="{{url_for('static', filename='js/feeding_time.js')}}"></script>
         <center>
-        <a class="button-53" style="margin-top: 30px;">Reset my daily chances, please!</a>
+        {% if current_user.daily_chances_ft == 0 %}
+            <a class="button-53" style="margin-top: 30px; font-family:'Trebuchet MS'; font-size:25px;" onclick="myFunction()">Gimme back<br>my daily chances!</a>
+        {% endif %}
         </center>
     </div>
 <script>
     window.resizeTo(900, 700);
+
+    var actualTime = new Date(Date.now());
+    var endOfDay = new Date(actualTime.getFullYear(), actualTime.getMonth(), actualTime.getDate() + 1, 0, 0, 0);
+    var timeRemaining = endOfDay.getTime() - actualTime.getTime();
+    document.getElementById('timeRemaining').appendChild(document.createTextNode(Math.trunc(timeRemaining / 1000 / 60 / 60) + " hours left until the next reset!"));
+    document.getElementById('dayProgression').value = 1 - (timeRemaining / 1000 / 60 / 60 / 24);
+
+    function myFunction() {
+        fetch('/reset_chances_ft', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        })
+        .then(response => {
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        })
+        .catch(error => {
+            alert('Uh oh! Oops!')
+        });
+    }
+
 </script>
 </body>
 </html>
