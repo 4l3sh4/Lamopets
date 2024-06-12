@@ -51,30 +51,23 @@
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
-            <a href="{{ url_for('home') }}" class="split">Home</a>
-            <a href="{{ url_for('forums') }}">Chat</a>
-            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
-            <a href="{{ url_for('minigames') }}">Earn Coins</a>
-            <a href="{{ url_for('store') }}">Buy Apparels</a>
-            <div class="dropdown">
-                <button class="dropbtn">Knicks & Knacks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{ url_for('gifting') }}">Gifting</a>
-                </div>
-            </div>
-            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{url_for('home')}}" class="split">Home</a>
+            <a href="{{url_for('forums')}}">Chat</a>
+            <a href="{{url_for('gifting')}}">Gift</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <a href="{{url_for('adopt')}}">Adopt Pets</a>
+            <a href="{{url_for('minigames')}}">Earn Coins</a>
+            <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{{ url_for('home') }}" class="split">Home</a>
-            <a href="{{ url_for('forums') }}">Chat</a>
-            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
-            <a href="{{ url_for('minigames') }}">Earn Coins</a>
-            <a href="{{ url_for('store') }}">Buy Apparels</a>
-            <a href="{{ url_for('gifting') }}">Knicks & Knacks</a>
-            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{url_for('home')}}" class="split">Home</a>
+            <a href="{{url_for('profile')}}">Profile</a>
+            <a href="{{url_for('minigames')}}">Earn Coins</a>
+            <a href="{{url_for('adopt')}}">Adopt Pets</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <a href="{{url_for('gifting')}}">Gift</a>
+            <a href="{{url_for('forums')}}">Chat</a>
         </div>
     </nav>
     <div id="content">
@@ -141,6 +134,16 @@
                     </div>  
                 </div>
             </div>
+        </div>
+        <div id="share-buttons" style="margin-top: -115px; margin-left: 400px;">
+            <!-- twitter -->
+            <a class="twitter" target="blank"><i class="fab fa-twitter"></i></a>
+            <!-- linkedin -->
+            <a class="linkedin" target="blank"><i class="fab fa-linkedin"></i></a>
+            <!-- whatsapp-->
+            <a class="whatsapp" target="blank"><i class="fab fa-whatsapp"></i></a>
+            <!-- telegram-->
+            <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
     <script>
@@ -212,6 +215,26 @@
             closetButton.style.display = "block";
         }
 
+    </script>
+    <script>
+        let myWindow;
+        function openWin() {
+            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
+            myWindow.resizeTo(300, 300);
+        }
+
+        const link = 'https://4l35h4.pythonanywhere.com/';
+        const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
+        const title = encodeURIComponent('Lamopets');
+
+        const twitter = document.querySelector('.twitter');
+        twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
+        const linkedIn = document.querySelector('.linkedin');
+        linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
+        const whatsapp = document.querySelector('.whatsapp');
+        whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
+        const telegram = document.querySelector('.telegram');
+        telegram.href = `https://telegram.me/share/url?url=${link}&text=${msg}`;
     </script>
 </body>
 </html>

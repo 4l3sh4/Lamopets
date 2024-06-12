@@ -29,28 +29,21 @@
         <div id="mainnav" class="navbar">
             <a href="{{url_for('home')}}" class="split">Home</a>
             <a href="{{url_for('forums')}}">Chat</a>
+            <a href="{{url_for('gifting')}}">Gift</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('adopt')}}">Adopt Pets</a>
             <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <div class="dropdown">
-                <button class="dropbtn">Knicks & Knacks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{url_for('gifting')}}">Gifting</a>
-                </div>
-            </div>
             <a href="{{url_for('profile')}}">Profile</a>
         </div>
-        <div id="sidenav" class="sidenav">    
+        <div id="sidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Knicks & Knacks</a>
             <a href="{{url_for('profile')}}">Profile</a>
+            <a href="{{url_for('minigames')}}">Earn Coins</a>
+            <a href="{{url_for('adopt')}}">Adopt Pets</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <a href="{{url_for('gifting')}}">Gift</a>
+            <a href="{{url_for('forums')}}">Chat</a>
         </div>
     </nav>
     <br>
@@ -58,6 +51,7 @@
         <a onclick="openWin()"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/feeding_time.png') }}"></a>
         <a onclick="openWinTwo()"><img src="{{ url_for('static', filename='assets/minigame_thumbnails/jump-jump-jackaloaf.png') }}"></a>
     </div>
+    <br>
     <div id="share-buttons">
         <!-- facebook -->
         <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>
@@ -95,6 +89,6 @@
         whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
         const telegram = document.querySelector('.telegram');
         telegram.href = `https://telegram.me/share/url?url=${link}&text=${msg}`;
-        </script>
+    </script>
 </body>
 </html>

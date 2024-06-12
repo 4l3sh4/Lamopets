@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'myFont';
+    src: url("/static/fonts/Sugar_Cream.otf") format("opentype");
+}
+
+h2 {
+    font-family: 'myFont';
+    font-size: 35px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 .photobooth-container {
     display: flex;
     justify-content: center;
@@ -148,4 +160,10 @@
 .center{
     margin-left: 40px;
     justify-content: center;
+}
+
+.scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 266px;
 }
