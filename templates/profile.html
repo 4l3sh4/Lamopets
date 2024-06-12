@@ -51,23 +51,23 @@
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
-            <a href="{{ url_for('home') }}" class="split">Home</a>
-            <a href="{{ url_for('forums') }}">Chat</a>
-            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
-            <a href="{{ url_for('minigames') }}">Earn Coins</a>
-            <a href="{{ url_for('store') }}">Buy Apparels</a>
+            <a href="{{url_for('home')}}" class="split">Home</a>
+            <a href="{{url_for('forums')}}">Chat</a>
             <a href="{{url_for('gifting')}}">Gifting</a>
-            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
+            <a href="{{url_for('adopt')}}">Adopt Pets</a>
+            <a href="{{url_for('minigames')}}">Earn Coins</a>
+            <a href="{{url_for('profile')}}">Profile</a>
         </div>
         <div id="sidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{{ url_for('home') }}" class="split">Home</a>
-            <a href="{{ url_for('forums') }}">Chat</a>
-            <a href="{{ url_for('adopt') }}">Adopt Pets</a>
-            <a href="{{ url_for('minigames') }}">Earn Coins</a>
-            <a href="{{ url_for('store') }}">Buy Apparels</a>
+            <a href="{{url_for('home')}}" class="split">Home</a>
+            <a href="{{url_for('profile')}}">Profile</a>
+            <a href="{{url_for('minigames')}}">Earn Coins</a>
+            <a href="{{url_for('adopt')}}">Adopt Pets</a>
+            <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gifting</a>
-            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{url_for('forums')}}">Chat</a>
         </div>
     </nav>
     <div id="content">
@@ -136,8 +136,6 @@
             </div>
         </div>
         <div id="share-buttons" style="margin-top: -115px; margin-left: 400px;">
-            <!-- facebook -->
-            <a class="facebook" target="blank"><i class="fab fa-facebook"></i></a>
             <!-- twitter -->
             <a class="twitter" target="blank"><i class="fab fa-twitter"></i></a>
             <!-- linkedin -->
@@ -229,8 +227,6 @@
         const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
         const title = encodeURIComponent('Lamopets');
 
-        const fb = document.querySelector('.facebook');
-        fb.href = `https://www.facebook.com/share.php?u=${link}`;
         const twitter = document.querySelector('.twitter');
         twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
         const linkedIn = document.querySelector('.linkedin');
