@@ -9,10 +9,12 @@ let gameFrame = 0;
 ctx.font = '50px Trebuchet MS';
 let gameSpeed = 1;
 let gameOver = false;
+let dateGet = new Date();
 
 // mouse interactivity
 // detects the mouse's movement and stuff
 // REMINDER TO SELF: change this to arrow keys movement in the future if possible
+// update, 10/6/2024: actually nvm i like the mouse click movement better
 let canvasPosition = canvas.getBoundingClientRect();
 
 const mouse = {
@@ -38,7 +40,8 @@ playerRight.src = '/static/assets/sprite-sheets/fish-player-sheet-flipped.png'
 
 class Player {
     constructor(){
-        this.x = canvas.width;
+        // change these values to change fishy's original position
+        this.x = canvas.width/2;
         this.y = canvas.height/2;
         this.radius = 50;
         this.angle = 0;
@@ -307,6 +310,17 @@ setInterval(function(){
 },1000)
 
 // animation loop
+document.body.onload = function before_start(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(backgroundImages[i], 0, 0, canvas.width, canvas.height);
+    player.draw();
+    ctx.font = '80px Trebuchet MS';
+    ctx.fillStyle = 'black';
+    ctx.fillText('Feeding Time!', 140, 150);
+    ctx.font = '30px Trebuchet MS';
+    ctx.fillText('Press any key to start!', 250, 350);
+}
+
 document.body.onkeyup = function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.drawImage(backgroundImages[i], 0, 0, canvas.width, canvas.height);
@@ -314,6 +328,7 @@ document.body.onkeyup = function animate(){
     handlePiranhas();
     player.update();
     player.draw();
+    ctx.font = '50px Trebuchet MS';
     ctx.fillStyle = 'black';
     ctx.fillText('Score: ' + score, 10, 50);
     document.body.onkeyup = null
@@ -321,4 +336,6 @@ document.body.onkeyup = function animate(){
     gameFrame++;
     if (!gameOver) requestAnimationFrame(animate);
 }
+
+before_start();
 animate();

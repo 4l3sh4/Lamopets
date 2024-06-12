@@ -72,6 +72,10 @@ class User(db.Model, UserMixin):
     avatar = db.Column(db.Text, nullable=True)
     profile_pic = db.Column(db.Text, nullable=True)
     last_gift_time = db.Column(db.DateTime)
+    last_played_time_ft = db.Column(db.DateTime)
+    last_played_time_jjj = db.Column(db.DateTime)
+    daily_chances_ft = db.Column(db.Integer, default=10)
+    daily_chances_jjj = db.Column(db.Integer, default=5)
 
     inventory = db.relationship('Inventory', back_populates='user_obj')
     adoptedpet = db.relationship('AdoptedPet', back_populates='user_obj')
@@ -760,9 +764,14 @@ def add_pets_data():
 @app.route('/gain_currency', methods=['POST'])
 @login_required
 def gain_currency():
-    score = request.get_json()
-    current_user.currency_balance += score
-    db.session.commit()
+    if current_user.daily_chances_ft > 0:
+        score = request.get_json()
+        current_user.currency_balance += score
+        db.session.commit()
+        current_user.daily_chances_ft -= 1
+        db.session.commit()
+        current_user.last_played_time_ft = datetime.utcnow().date()
+        db.session.commit()
 
 if __name__ == '__main__':
     with app.app_context():
