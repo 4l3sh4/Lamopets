@@ -1,6 +1,7 @@
 body {
     background-color: #99d1cb;
     text-align: center;
+    overflow-x: hidden;
 }
 
 .login {
@@ -723,6 +724,7 @@ padding-bottom: 10px;
 #profile-display {
     max-height: 80vh;
     overflow-y: scroll;
+    overflow-x: hidden;
     display: flex; 
     align-items: center;
     flex-direction: column; 

@@ -525,8 +525,8 @@ def gifting():
         if gifted_money <= 0:
             return jsonify({'status': 'error', 'message': 'Gift amount must be a positive number.'})
         
-        if gifted_money > 1000:
-            return jsonify({'status': 'error', 'message': 'You can\'t gift more than $100 at a time.'})
+        if gifted_money > 250:
+            return jsonify({'status': 'error', 'message': 'You can\'t gift more than $250 at a time.'})
         
         user = User.query.filter_by(username=form.username.data).first()
         
@@ -540,8 +540,8 @@ def gifting():
             return jsonify({'status': 'error', 'message': 'You do not have enough balance to gift that amount.'})
         
         last_gift_time = current_user.last_gift_time
-        if last_gift_time and datetime.utcnow() - last_gift_time < timedelta(hours=4):
-            return jsonify({'status': 'error', 'message': 'You can only gift once every 4 hours.'})
+        if last_gift_time and datetime.utcnow() - last_gift_time < timedelta(hours=6):
+            return jsonify({'status': 'error', 'message': 'You can only gift once every 6 hours.'})
 
         current_user.currency_balance -= gifted_money
         user.currency_balance += gifted_money
