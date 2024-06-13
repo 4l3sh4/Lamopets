@@ -813,7 +813,7 @@ padding-bottom: 10px;
 }
 
 .gender-label {
-    margin-left: 12%;
+    margin-left: 15%;
     position: absolute;
     border-radius: 200%;
     width: 20px;
@@ -830,3 +830,4 @@ padding-bottom: 10px;
     background-color: #e89097;
     color: #fff;
 }
+
