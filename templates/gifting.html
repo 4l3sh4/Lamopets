@@ -44,23 +44,26 @@
             <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('forums')}}">Chat</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
         </div>
     </nav>
     <br>
-    <div class="gifting-contents">
-        <h1>Feeling generous?</h1>
-        <h2>Well, feel free to gift some of your wares to your friends!</h2>
-        <img src="{{ url_for('static', filename='assets/gifted-trotter.png') }}">
-        <div class="row">
-            <form id="gifting-form" method="POST" action="" class="gifting">
-                {{ form.username }}
-                {{ form.currency }}
-                {{ form.submit }}
-                {{ form.csrf_token }}
-            </form>
+    <div class="content">
+        <div class="gifting-contents">
+            <h1>Feeling generous?</h1>
+            <h2>Well, feel free to gift some of your wares to your friends!</h2>
+            <img src="{{ url_for('static', filename='assets/gifted-trotter.png') }}">
+            <div class="row">
+                <form id="gifting-form" method="POST" action="" class="gifting">
+                    {{ form.username }}
+                    {{ form.currency }}
+                    {{ form.submit }}
+                    {{ form.csrf_token }}
+                </form>
+            </div>
         </div>
+        <div id="message-container"></div>
     </div>
-    <div id="message-container"></div>
     <br>
     <div id="share-buttons" style="margin-top: -15px;">
         <!-- facebook -->
@@ -76,12 +79,6 @@
     </div>
 
     <script>
-        let myWindow;
-        function openWin() {
-            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
-            myWindow.resizeTo(300, 300);
-        }
-
         const link = 'https://4l35h4.pythonanywhere.com/';
         const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
         const title = encodeURIComponent('Lamopets');

@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <title>Profile</title>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function confirmDeleteAccount() {
@@ -33,7 +34,7 @@
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
 
-    <div class="center" id="logout-button">
+    <div class="center" id="logout-button" style="display: block;">
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
     <div class="center" id="delete-account">
@@ -68,6 +69,7 @@
             <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('forums')}}">Chat</a>
+            <a href="{{url_for('logout')}}">Logout</a>
         </div>
     </nav>
     <div id="content">
@@ -89,8 +91,9 @@
             <div class="column-2" id="profile-display">
 
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
-                <button class="button-53" onclick="toggleSanctuary()">MY PETS</button>
-                <button class="button-53" onclick="toggleCloset()">MY CLOSET</button>
+                <a class="delete-button" style="display: none;" onclick="displayDelete()"><img src="{{ url_for('static', filename='assets/thumbnails/delete.png') }}" alt="delete button"></a>
+                <button class="button-53" id="petsButton" onclick="toggleSanctuary()">MY PETS</button>
+                <button class="button-53" id="closetButton" onclick="toggleCloset()">MY CLOSET</button>
 
                 <div id="sanctuary" style="display: none">
                     <h1>{{ current_user.username }}'s Sanctuary</h1>
@@ -102,8 +105,10 @@
                                     <p class="item_name">{{ adopted_pet.adopt_name }}</p>
                                     <div id="share-buttons">
                                         <!-- facebook -->
-                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/<a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
+                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/
+                                        <a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
                                     </div>
+                                    <center><button class="delete-item-button" onclick="releasePet('{{ adopted_pet.adopt_id }}')" style="display: none;">Release</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -126,8 +131,14 @@
                         {% for item_id, item_info in item_count_dict.items() %}
                             <div>
                                 <div class="item-box" id="{{ item_info.item.id }}">
+                                    {% if item_info.item.gender.startswith("M") %}
+                                        <span class="gender-label" id="label-male">M</span>
+                                    {% elif item_info.item.gender.startswith("F") %}
+                                        <span class="gender-label" id="label-female">F</span>
+                                    {% endif %}
                                     <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
-                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div> 
+                                    <center><button class="delete-item-button" onclick="deleteItem('{{ item_info.item.id }}')" style="display: none;">Recycle</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -163,8 +174,9 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var deleteButton = document.querySelector(".delete-button"); 
+            var petsButton = document.querySelector("#petsButton"); 
+            var closetButton = document.querySelector("#closetButton"); 
 
             sanctuary.style.display = "block";
             closet.style.display = "none";
@@ -174,6 +186,7 @@
             sanctuary.style.flexDirection = "column";
 
             backButton.style.display = "block";
+            deleteButton.style.display = "block";
             petsButton.style.display = "none";
             closetButton.style.display = "none";
         }
@@ -182,8 +195,9 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var deleteButton = document.querySelector(".delete-button"); 
+            var petsButton = document.querySelector("#petsButton"); 
+            var closetButton = document.querySelector("#closetButton"); 
 
             sanctuary.style.display = "none";
             closet.style.display = "block";
@@ -193,6 +207,7 @@
             closet.style.flexDirection = "column";
 
             backButton.style.display = "block";
+            deleteButton.style.display = "block";
             petsButton.style.display = "none";
             closetButton.style.display = "none";
         }
@@ -201,8 +216,9 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var deleteButton = document.querySelector(".delete-button"); 
+            var petsButton = document.querySelector("#petsButton"); 
+            var closetButton = document.querySelector("#closetButton"); 
 
             sanctuary.style.display = "none";
             closet.style.display = "none";
@@ -211,30 +227,59 @@
             profileDisplay.style.justifyContent = "center";
 
             backButton.style.display = "none";
+            deleteButton.style.display = "none";
             petsButton.style.display = "block";
             closetButton.style.display = "block";
         }
 
-    </script>
-    <script>
-        let myWindow;
-        function openWin() {
-            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
-            myWindow.resizeTo(300, 300);
+        function displayDelete() {
+            var deleteButtons = document.querySelectorAll(".delete-item-button");
+            if (deleteButtons.length > 0) {
+                var currentDisplay = deleteButtons[0].style.display;
+                var newDisplay = (currentDisplay === "none" || currentDisplay === "") ? "block" : "none";
+                deleteButtons.forEach(button => {
+                    button.style.display = newDisplay;
+                });
+            }
         }
-
-        const link = 'https://4l35h4.pythonanywhere.com/';
-        const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
-        const title = encodeURIComponent('Lamopets');
-
-        const twitter = document.querySelector('.twitter');
-        twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
-        const linkedIn = document.querySelector('.linkedin');
-        linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
-        const whatsapp = document.querySelector('.whatsapp');
-        whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
-        const telegram = document.querySelector('.telegram');
-        telegram.href = `https://telegram.me/share/url?url=${link}&text=${msg}`;
+        async function deleteItem(itemId) {
+            if (confirm("Would you like to recycle this item?")) {
+                try {
+                    const response = await fetch(`/delete_item/${itemId}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        alert("Item recycled successfully.");
+                        location.reload();
+                    } else {
+                        alert("Failed to recycle item.");
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert("An error occurred while deleting the item.");
+                }
+            }
+        }
+        async function releasePet(adopt_id) {
+            if (confirm("Are you sure you want to release this pet?")) {
+                if (confirm("Are you REALLY REALLY sure you want to release this pet?")) {
+                    try {
+                        const response = await fetch(`{{ url_for('release_pet', adopt_id='') }}${adopt_id}`, {
+                            method: 'DELETE'
+                        });
+                        if (response.ok) {
+                            alert("Pet released to the wild successfully.");
+                            location.reload();
+                        } else {
+                            alert("Failed to release pet.");
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert("An error occurred while releasing the pet.");
+                    }
+                }
+            }
+        }
     </script>
 </body>
 </html>
