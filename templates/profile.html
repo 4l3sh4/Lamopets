@@ -131,8 +131,13 @@
                         {% for item_id, item_info in item_count_dict.items() %}
                             <div>
                                 <div class="item-box" id="{{ item_info.item.id }}">
+                                    {% if item_info.item.gender.startswith("M") %}
+                                        <span class="gender-label" id="label-male">M</span>
+                                    {% elif item_info.item.gender.startswith("F") %}
+                                        <span class="gender-label" id="label-female">F</span>
+                                    {% endif %}
                                     <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
-                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div> 
                                     <center><button class="delete-item-button" onclick="deleteItem('{{ item_info.item.id }}')" style="display: none;">Recycle</button></center>
                                 </div>
                             </div>

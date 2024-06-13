@@ -811,3 +811,22 @@ padding-bottom: 10px;
 #share-buttons{
     margin-top: -23px;
 }
+
+.gender-label {
+    margin-left: 12%;
+    position: absolute;
+    border-radius: 200%;
+    width: 20px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#label-male{
+    background-color: #8b99b2;
+    color: #fff;
+}
+
+#label-female{
+    background-color: #e89097;
+    color: #fff;
+}
