@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <title>Profile</title>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function confirmDeleteAccount() {
@@ -33,7 +34,7 @@
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
 
-    <div class="center" id="logout-button">
+    <div class="center" id="logout-button" style="display: block;">
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
     <div class="center" id="delete-account">
@@ -68,6 +69,7 @@
             <a href="{{ url_for('store') }}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gifting</a>
             <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{url_for('logout')}}">Logout</a>
         </div>
     </nav>
     <div id="content">
@@ -103,9 +105,10 @@
                                     <p class="item_name">{{ adopted_pet.adopt_name }}</p>
                                     <div id="share-buttons">
                                         <!-- facebook -->
-                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/<a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
-                                        <center><button class="delete-item-button" onclick="releasePet('{{ adopted_pet.adopt_id }}')" style="display: none;">Release</button></center>
+                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/
+                                        <a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
                                     </div>
+                                    <center><button class="delete-item-button" onclick="releasePet('{{ adopted_pet.adopt_id }}')" style="display: none;">Release</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -237,15 +240,16 @@
             }
         }
         async function deleteItem(itemId) {
-            if (confirm("Are you sure you want to delete this item?")) {
+            if (confirm("Would you like to recycle this item?")) {
                 try {
                     const response = await fetch(`/delete_item/${itemId}`, {
                         method: 'DELETE'
                     });
                     if (response.ok) {
+                        alert("Item recycled successfully.");
                         location.reload();
                     } else {
-                        alert("Failed to delete item.");
+                        alert("Failed to recycle item.");
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -255,18 +259,21 @@
         }
         async function releasePet(adopt_id) {
             if (confirm("Are you sure you want to release this pet?")) {
-                try {
-                    const response = await fetch(`{{ url_for('release_pet', adopt_id='') }}${adopt_id}`, {
-                        method: 'DELETE'
-                    });
-                    if (response.ok) {
-                        location.reload();
-                    } else {
-                        alert("Failed to release pet.");
+                if (confirm("Are you REALLY REALLY sure you want to release this pet?")) {
+                    try {
+                        const response = await fetch(`{{ url_for('release_pet', adopt_id='') }}${adopt_id}`, {
+                            method: 'DELETE'
+                        });
+                        if (response.ok) {
+                            alert("Pet released to the wild successfully.");
+                            location.reload();
+                        } else {
+                            alert("Failed to release pet.");
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert("An error occurred while releasing the pet.");
                     }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert("An error occurred while releasing the pet.");
                 }
             }
         }

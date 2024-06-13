@@ -453,12 +453,8 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 900px) {
-    .navbar{
+    #mainnav {
         display: none;
-    }
-
-    #navicon{
-        display: block;
     }
 
     .currency-position {
@@ -470,12 +466,6 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 600px) {
-    .navbar{
-        display: none;
-    }
-    #navicon{
-        display: block;
-    }
     .currency-position {
         font-size: 15px;
         width: 40px;
@@ -484,12 +474,6 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (min-width: 601px) {
-    #navicon{
-        display: none;
-    }
-    .sidenav{
-        display: none;
-    }
     .content{
         transform: "translateX(0)"
     }
