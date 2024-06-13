@@ -80,9 +80,9 @@
                             <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
                         <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}">
-    <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
-    <span id="price-value">{{ group[0].price }}</span>
-</button>
+                            <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
+                            <span id="price-value">{{ group[0].price }}</span>
+                        </button>
                     </div>
                 </div>
                 {% endif %}
@@ -105,9 +105,9 @@
                             <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
                         <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}">
-    <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
-    <span id="price-value">{{ group[0].price }}</span>
-</button>
+                            <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
+                            <span id="price-value">{{ group[0].price }}</span>
+                        </button>
                     </div>
                 </div>
                 {% endif %}

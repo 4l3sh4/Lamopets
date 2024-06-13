@@ -154,7 +154,7 @@ class LoginForm(FlaskForm):
 
 class GiftingForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-    currency = DecimalField(validators=[InputRequired()], render_kw={"placeholder": "Currency"})
+    currency = DecimalField(validators=[InputRequired()], render_kw={"placeholder": "Lamocoins"})
     submit = SubmitField("Send My Gift!")
 
     def validate_username_gifting(self, username):
@@ -361,7 +361,12 @@ def adopt_pet(pet_species):
 def release_pet(adopt_id):
     adopted_pet = AdoptedPet.query.filter_by(adopt_id=adopt_id, user_id=current_user.id).first()
     if adopted_pet:
+        pet = adopted_pet.pet
+        deduct_amount = pet.price // 2
+
         db.session.delete(adopted_pet)
+
+        current_user.currency_balance -= deduct_amount
         db.session.commit()
         return jsonify({'message': 'Pet released successfully.'}), 200
     else:

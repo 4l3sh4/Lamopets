@@ -92,7 +92,7 @@ async function releasePet(adopt_id) {
     if (confirm("Are you sure you want to release this pet?")) {
         if (confirm("Are you REALLY REALLY sure you want to release this pet?")) {
             try {
-                const response = await fetch(`{{ url_for('release_pet', adopt_id='') }}${adopt_id}`, {
+                const response = await fetch(`/release_pet/${adopt_id}`, {
                     method: 'DELETE'
                 });
                 if (response.ok) {
