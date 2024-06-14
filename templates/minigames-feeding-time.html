@@ -17,29 +17,6 @@
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
     </h2>
-
-    <nav>
-        <span id="navicon" onclick="openNav()">&#9776</span>
-        <div id="mainnav" class="navbar">
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Gifting</a>
-            <a href="{{url_for('profile')}}">Profile</a>
-        </div>
-        <div id="sidenav" class="sidenav">    
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Gifting</a>
-            <a href="{{url_for('profile')}}">Profile</a>
-        </div>
-    </nav>
     <br>
     <div class="minigame-player">
         <h1 style="background-color: #e27e87; padding: 10px; border-radius: 40px; margin-left: 220px; margin-right: 220px; font-family:'Trebuchet MS';">Daily chances left: {{ current_user.daily_chances_ft }}</h1>
