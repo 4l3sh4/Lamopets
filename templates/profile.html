@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <title>Profile</title>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
@@ -93,6 +94,7 @@
 
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
                 <a class="delete-button" style="display: none;" onclick="displayDelete()"><img src="{{ url_for('static', filename='assets/thumbnails/delete.png') }}" alt="delete button"></a>
+                <a class="gift-button" style="display: none;" onclick="displayGift()"><img src="{{ url_for('static', filename='assets/thumbnails/gift.png') }}" class="gift-icon" alt="Gift Icon"></a>
                 <button class="button-53" id="petsButton" onclick="toggleSanctuary()">MY PETS</button>
                 <button class="button-53" id="closetButton" onclick="toggleCloset()">MY CLOSET</button>
 
@@ -109,7 +111,7 @@
                                         <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/
                                         <a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
                                     </div>
-                                    <center><button class="delete-item-button" onclick="releasePet('{{ adopted_pet.adopt_id }}')" style="display: none;">Release</button></center>
+                                    <center><button class="delete-item-button" onclick="showReleasePopup('{{ adopted_pet.adopt_name }}', '{{ pet.pet_image_url }}', '{{ adopted_pet.adopt_id }}', '{{ pet.price }}')" style="display: none;">Release</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -139,7 +141,7 @@
                                     {% endif %}
                                     <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
                                     <div class="quantity">Quantity: {{ item_info.quantity }}</div> 
-                                    <center><button class="delete-item-button" onclick="deleteItem('{{ item_info.item.id }}')" style="display: none;">Recycle</button></center>
+                                    <center><button class="delete-item-button" onclick="showDeletePopup('{{ item_info.item.thumbnail_url }}', '{{ item_info.item.filter_colour }}', '{{ item_info.item.id }}', '{{ item_info.item.price }}')" style="display: none;">Recycle</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -158,5 +160,26 @@
             <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
+
+    <div id="release-pet" class="popup">
+        <div class="release-confirm">
+            <p id="confirm-text-pet" class="font" style="font-size: 32px;"></p>
+            <img id="release-pet-img" src="" alt="Pet Image" style="width: auto; height: 150px;">
+            <br>
+            <button id="yesButton" class="yes-no">Yes</button>
+            <button id="noButton" class="yes-no" onclick="closeModalRelease()">No</button>
+        </div>
+    </div>
+
+    <div id="delete-item" class="popup">
+        <div class="delete-confirm">
+            <p id="confirm-text-item" class="font" style="font-size: 32px;"></p>
+            <img id="delete-item-img" src="" alt="Item Image" style="width: auto; height: 150px;">
+            <br>
+            <button id="yes-item" class="yes-no">Yes</button>
+            <button id="noButton" class="yes-no" onclick="closeModalDelete()">No</button>
+        </div>
+    </div>
+
 </body>
 </html>

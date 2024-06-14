@@ -70,44 +70,119 @@ function displayDelete() {
         });
     }
 }
-async function deleteItem(itemId) {
-    if (confirm("Would you like to recycle this item?")) {
+
+document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById("release-pet");
+    var confirmButton = document.getElementById("yesButton");
+    var closeButton = document.getElementById("noButton");
+    var clickCount = 0;
+    var adoptIdGlobal;
+    var deduct_price;
+
+    function showReleasePopup(adoptName, petImage, adoptId, price) {
+        document.getElementById("confirm-text-pet").innerText = `Would you like to release ${adoptName}?`;
+        document.getElementById("release-pet-img").src = petImage;
+        deduct_price = price / 2;
+        clickCount = 0; 
+        adoptIdGlobal = adoptId; 
+
+        confirmButton.innerText = 'Yes'; 
+        confirmButton.style.backgroundColor = ''; 
+        closeButton.style.display = 'inline'; 
+
+        confirmButton.onclick = function() {
+            if (clickCount === 0) {
+                document.getElementById("confirm-text-pet").innerText = `Are you sure?`;
+                clickCount++;
+            } else if (clickCount === 1) {
+                document.getElementById("confirm-text-pet").innerText = `How could you release ${adoptName}?! Your dearest pet has stolen ${deduct_price} Lamocoins before leaving for the wild...`;
+                closeButton.style.display = 'none';
+                confirmButton.innerText = 'Goodbye';
+                confirmButton.style.backgroundColor = '#e27e87';
+                clickCount++;
+
+                confirmButton.onclick = function() {
+                    releasePet(adoptIdGlobal);
+                };
+            }
+        };
+
+        modal.style.display = "block";
+    }
+
+    function closeModalRelease() {
+        modal.style.display = "none";
+    }
+
+    async function releasePet(adoptId) {
+        try {
+            const response = await fetch(`/release_pet/${adoptId}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                alert("Pet released successfully.");
+                location.reload();
+            } else {
+                alert("Failed to release pet.");
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred while releasing the pet.");
+        }
+        closeModalRelease();
+    }
+
+    window.showReleasePopup = showReleasePopup;
+    window.closeModalRelease = closeModalRelease;
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById("delete-item");
+    var confirmButton = document.getElementById("yes-item");
+    var refund_price;
+
+    function showDeletePopup(itemImage, itemFilter, itemId, price) {
+        refund_price = price / 2;
+        document.getElementById("confirm-text-item").innerText = `Would you like to recycle this item for ${refund_price} Lamocoins?`;
+        document.getElementById("delete-item-img").src = itemImage;
+        document.getElementById("delete-item-img").style.filter = itemFilter;
+
+        confirmButton.onclick = function() {
+            console.log("Attempting to delete item with ID:", itemId);
+            deleteItem(itemId);
+        };
+
+        modal.style.display = "block";
+    }
+
+    function closeModalDelete() {
+        modal.style.display = "none";
+    }
+
+    async function deleteItem(itemId) {
         try {
             const response = await fetch(`/delete_item/${itemId}`, {
                 method: 'DELETE'
             });
+            console.log("Server response status:", response.status);
             if (response.ok) {
                 alert("Item recycled successfully.");
                 location.reload();
             } else {
-                alert("Failed to recycle item.");
+                const errorText = await response.text();
+                console.error("Failed to recycle item. Response:", errorText);
+                alert("Failed to recycle item: " + errorText);
             }
         } catch (error) {
             console.error('Error:', error);
             alert("An error occurred while deleting the item.");
         }
+        closeModalDelete();
     }
-}
-async function releasePet(adopt_id) {
-    if (confirm("Are you sure you want to release this pet?")) {
-        if (confirm("Are you REALLY REALLY sure you want to release this pet?")) {
-            try {
-                const response = await fetch(`/release_pet/${adopt_id}`, {
-                    method: 'DELETE'
-                });
-                if (response.ok) {
-                    alert("Pet released to the wild successfully.");
-                    location.reload();
-                } else {
-                    alert("Failed to release pet.");
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert("An error occurred while releasing the pet.");
-            }
-        }
-    }
-}
+
+    window.showDeletePopup = showDeletePopup;
+    window.closeModalDelete = closeModalDelete;
+});
 
 async function downloadImage(imageSrc) {
     const image = await fetch(imageSrc)

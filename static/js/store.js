@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmText = document.getElementById('confirm-text-store');
     const yesButton = document.getElementById('yesButton');
     const purchaseItemImg = document.getElementById('purchase-item-img');
-    let activePriceButton;  // Declare a variable to store the active price button
+    let activePriceButton; 
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
@@ -92,14 +92,13 @@ document.addEventListener('DOMContentLoaded', () => {
             purchaseItemImg.src = itemImgUrl;
             purchaseItemImg.style.filter = filter;
             popup.style.display = 'block';
-            activePriceButton = button;  // Store the clicked button in the variable
+            activePriceButton = button; 
         });
     });
 
     yesButton.addEventListener('click', function() {
         if (!activePriceButton) return;
 
-        // Retrieve itemId from the stored activePriceButton
         const itemId = activePriceButton.getAttribute('data-item-id');
         console.log("Active Price Button:", activePriceButton);
         console.log("Item ID:", itemId);
@@ -137,6 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activePriceButton) {
             activePriceButton.closest('.item').classList.remove('active');
         }
-        activePriceButton = null;  // Reset the activePriceButton variable
+        activePriceButton = null; 
     }
 });
