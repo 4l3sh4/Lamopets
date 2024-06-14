@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <title>Profile</title>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/profile.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function confirmDeleteAccount() {
@@ -92,6 +94,7 @@
 
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
                 <a class="delete-button" style="display: none;" onclick="displayDelete()"><img src="{{ url_for('static', filename='assets/thumbnails/delete.png') }}" alt="delete button"></a>
+                <a class="gift-button" style="display: none;" onclick="displayGift()"><img src="{{ url_for('static', filename='assets/thumbnails/gift.png') }}" class="gift-icon" alt="Gift Icon"></a>
                 <button class="button-53" id="petsButton" onclick="toggleSanctuary()">MY PETS</button>
                 <button class="button-53" id="closetButton" onclick="toggleCloset()">MY CLOSET</button>
 
@@ -108,7 +111,7 @@
                                         <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/
                                         <a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
                                     </div>
-                                    <center><button class="delete-item-button" onclick="releasePet('{{ adopted_pet.adopt_id }}')" style="display: none;">Release</button></center>
+                                    <center><button class="delete-item-button" onclick="showReleasePopup('{{ adopted_pet.adopt_name }}', '{{ pet.pet_image_url }}', '{{ adopted_pet.adopt_id }}', '{{ pet.price }}')" style="display: none;">Release</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -138,7 +141,7 @@
                                     {% endif %}
                                     <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
                                     <div class="quantity">Quantity: {{ item_info.quantity }}</div> 
-                                    <center><button class="delete-item-button" onclick="deleteItem('{{ item_info.item.id }}')" style="display: none;">Recycle</button></center>
+                                    <center><button class="delete-item-button" onclick="showDeletePopup('{{ item_info.item.thumbnail_url }}', '{{ item_info.item.filter_colour }}', '{{ item_info.item.id }}', '{{ item_info.item.price }}')" style="display: none;">Recycle</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -157,129 +160,26 @@
             <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
-    <script>
-        async function downloadImage(imageSrc) {
-          const image = await fetch(imageSrc)
-          const imageBlog = await image.blob()
-          const imageURL = URL.createObjectURL(imageBlog)
 
-          const link = document.createElement('a')
-          link.href = imageURL
-          link.download = 'Congratulations on your very cool pet!'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-          }
-        function toggleSanctuary() {
-            var sanctuary = document.getElementById("sanctuary");
-            var closet = document.getElementById("closet");
-            var backButton = document.querySelector(".back-button"); 
-            var deleteButton = document.querySelector(".delete-button"); 
-            var petsButton = document.querySelector("#petsButton"); 
-            var closetButton = document.querySelector("#closetButton"); 
+    <div id="release-pet" class="popup">
+        <div class="release-confirm">
+            <p id="confirm-text-pet" class="font" style="font-size: 32px;"></p>
+            <img id="release-pet-img" src="" alt="Pet Image" style="width: auto; height: 150px;">
+            <br>
+            <button id="yesButton" class="yes-no">Yes</button>
+            <button id="noButton" class="yes-no" onclick="closeModalRelease()">No</button>
+        </div>
+    </div>
 
-            sanctuary.style.display = "block";
-            closet.style.display = "none";
-            
-            var profileDisplay = document.getElementById("profile-display");
-            profileDisplay.style.justifyContent = "flex-start";
-            sanctuary.style.flexDirection = "column";
+    <div id="delete-item" class="popup">
+        <div class="delete-confirm">
+            <p id="confirm-text-item" class="font" style="font-size: 32px;"></p>
+            <img id="delete-item-img" src="" alt="Item Image" style="width: auto; height: 150px;">
+            <br>
+            <button id="yes-item" class="yes-no">Yes</button>
+            <button id="noButton" class="yes-no" onclick="closeModalDelete()">No</button>
+        </div>
+    </div>
 
-            backButton.style.display = "block";
-            deleteButton.style.display = "block";
-            petsButton.style.display = "none";
-            closetButton.style.display = "none";
-        }
-
-        function toggleCloset() {
-            var sanctuary = document.getElementById("sanctuary");
-            var closet = document.getElementById("closet");
-            var backButton = document.querySelector(".back-button"); 
-            var deleteButton = document.querySelector(".delete-button"); 
-            var petsButton = document.querySelector("#petsButton"); 
-            var closetButton = document.querySelector("#closetButton"); 
-
-            sanctuary.style.display = "none";
-            closet.style.display = "block";
-
-            var profileDisplay = document.getElementById("profile-display");
-            profileDisplay.style.justifyContent = "flex-start";
-            closet.style.flexDirection = "column";
-
-            backButton.style.display = "block";
-            deleteButton.style.display = "block";
-            petsButton.style.display = "none";
-            closetButton.style.display = "none";
-        }
-
-        function goBack() {
-            var sanctuary = document.getElementById("sanctuary");
-            var closet = document.getElementById("closet");
-            var backButton = document.querySelector(".back-button"); 
-            var deleteButton = document.querySelector(".delete-button"); 
-            var petsButton = document.querySelector("#petsButton"); 
-            var closetButton = document.querySelector("#closetButton"); 
-
-            sanctuary.style.display = "none";
-            closet.style.display = "none";
-
-            var profileDisplay = document.getElementById("profile-display");
-            profileDisplay.style.justifyContent = "center";
-
-            backButton.style.display = "none";
-            deleteButton.style.display = "none";
-            petsButton.style.display = "block";
-            closetButton.style.display = "block";
-        }
-
-        function displayDelete() {
-            var deleteButtons = document.querySelectorAll(".delete-item-button");
-            if (deleteButtons.length > 0) {
-                var currentDisplay = deleteButtons[0].style.display;
-                var newDisplay = (currentDisplay === "none" || currentDisplay === "") ? "block" : "none";
-                deleteButtons.forEach(button => {
-                    button.style.display = newDisplay;
-                });
-            }
-        }
-        async function deleteItem(itemId) {
-            if (confirm("Would you like to recycle this item?")) {
-                try {
-                    const response = await fetch(`/delete_item/${itemId}`, {
-                        method: 'DELETE'
-                    });
-                    if (response.ok) {
-                        alert("Item recycled successfully.");
-                        location.reload();
-                    } else {
-                        alert("Failed to recycle item.");
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert("An error occurred while deleting the item.");
-                }
-            }
-        }
-        async function releasePet(adopt_id) {
-            if (confirm("Are you sure you want to release this pet?")) {
-                if (confirm("Are you REALLY REALLY sure you want to release this pet?")) {
-                    try {
-                        const response = await fetch(`{{ url_for('release_pet', adopt_id='') }}${adopt_id}`, {
-                            method: 'DELETE'
-                        });
-                        if (response.ok) {
-                            alert("Pet released to the wild successfully.");
-                            location.reload();
-                        } else {
-                            alert("Failed to release pet.");
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert("An error occurred while releasing the pet.");
-                    }
-                }
-            }
-        }
-    </script>
 </body>
 </html>

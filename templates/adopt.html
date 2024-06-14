@@ -64,7 +64,7 @@
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
-                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}"><img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">{{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("J") %}
@@ -72,7 +72,7 @@
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
-                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}"><img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">{{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("T") %}
@@ -80,7 +80,7 @@
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
-                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}"><img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">{{ pet.price }}</button>
                         </div>
                     </div>
                 {% endif %}

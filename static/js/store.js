@@ -48,21 +48,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     colorButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const filter = button.getAttribute('data-filter') || 'none';  
+            const filter = button.getAttribute('data-filter') || 'none';
             const price = button.getAttribute('data-price');
             const itemId = button.getAttribute('data-item-id');
+            const itemFilter = button.getAttribute('data-filter');
             const img = button.closest('.item').querySelector('img');
             const activePriceButton = button.closest('.item').querySelector('#active-price');
+            const priceValueSpan = activePriceButton.querySelector('#price-value');
 
             console.log(`Applying filter: ${filter}`);
             console.log(`Updating price: ${price}`);
             console.log(`Updating item ID: ${itemId}`);
+            console.log(`Updating filter data: ${itemFilter}`);
 
             img.style.filter = filter;
 
             activePriceButton.setAttribute('data-price', price);
             activePriceButton.setAttribute('data-item-id', itemId);
-            activePriceButton.textContent = `$${price}`;
+            activePriceButton.setAttribute('data-filter', itemFilter);
+            priceValueSpan.textContent = price;
         });
     });
 });
@@ -72,21 +76,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const popup = document.getElementById('purchase-store');
     const confirmText = document.getElementById('confirm-text-store');
     const yesButton = document.getElementById('yesButton');
-    let activePriceButton;  // Declare a variable to store the active price button
+    const purchaseItemImg = document.getElementById('purchase-item-img');
+    let activePriceButton; 
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const itemPrice = button.getAttribute('data-price');
+            const filter = button.getAttribute('data-filter');
+            const itemElement = button.closest('.item');
+            const itemImgUrl = itemElement.querySelector('img').src;
+
+            console.log(`Applying filter: ${filter}`);
+
             confirmText.textContent = `Would you like to buy this item for $${itemPrice}?`;
+            purchaseItemImg.src = itemImgUrl;
+            purchaseItemImg.style.filter = filter;
             popup.style.display = 'block';
-            activePriceButton = button;  // Store the clicked button in the variable
+            activePriceButton = button; 
         });
     });
 
     yesButton.addEventListener('click', function() {
         if (!activePriceButton) return;
 
-        // Retrieve itemId from the stored activePriceButton
         const itemId = activePriceButton.getAttribute('data-item-id');
         console.log("Active Price Button:", activePriceButton);
         console.log("Item ID:", itemId);
@@ -124,6 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activePriceButton) {
             activePriceButton.closest('.item').classList.remove('active');
         }
-        activePriceButton = null;  // Reset the activePriceButton variable
+        activePriceButton = null; 
     }
 });
