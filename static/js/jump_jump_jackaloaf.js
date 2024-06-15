@@ -1,8 +1,11 @@
 // canvas setup
-let canvas;
+let canvas = document.getElementById("canvas2");
 let canvasWidth = 700;
 let canvasHeight = 500;
-let context;
+let context = canvas.getContext("2d");
+
+canvas.height = canvasHeight;
+canvas.width = canvasWidth;
 
 // jackaloaf
 let jackaloafWidth = 90;
@@ -38,11 +41,6 @@ let maxScore = 0;
 let gameOver = false;
 
 document.body.onload = function before_start() {
-    canvas = document.getElementById("canvas2");
-    canvas.height = canvasHeight;
-    canvas.width = canvasWidth;
-    context = canvas.getContext("2d");
-
     jackaloafRight = new Image();
     jackaloafRight.src = '/static/assets/sprite-sheets/jackaloaf-right.png';
     jackaloaf.img = jackaloafRight;
@@ -56,11 +54,6 @@ document.body.onload = function before_start() {
 }
 
 document.body.onkeyup = function animate() {
-    canvas = document.getElementById("canvas2");
-    canvas.height = canvasHeight;
-    canvas.width = canvasWidth;
-    context = canvas.getContext("2d"); // we can draw on the canvas this way~!
-
     // draw jackaloaf
     // context.fillStyle = "green";
     // context.fillRect(jackaloaf.x, jackaloaf.y, jackaloaf.width, jackaloaf.height);

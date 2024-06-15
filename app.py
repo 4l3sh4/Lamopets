@@ -813,7 +813,6 @@ def reset_chances_jjj():
         db.session.commit()
         current_user.last_played_time_jjj = datetime.now().strftime("%m/%d/%Y")
         db.session.commit()
-    return redirect(url_for('minigamesjumpjumpjackaloaf'))
 
 if __name__ == '__main__':
     with app.app_context():

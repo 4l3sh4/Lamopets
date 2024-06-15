@@ -591,6 +591,15 @@ form input[type="submit"]:hover {
     border-radius: 20px;
 }
 
+/*columns for profile */
+.column-profile {
+    padding: 5px;
+}
+
+.column-profile img:hover {
+    filter: drop-shadow(5px 5px 5px #9f4850);
+}
+
 .avatar {
     width: 280px;
     height: 400px;
@@ -630,6 +639,40 @@ form input[type="submit"]:hover {
     grid-row-end: 3;
     grid-column-start: 1;
     grid-column-end: 3;
+}
+
+/* for instructions */
+.content-minigames {
+    background: #fbefcb;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top:20px;
+    font-family: 'Trebuchet MS';
+    width:750px;
+}
+
+.content-minigames h1 {
+    font-family: 'Sugar Cream';
+    font-size:40px;
+    padding:0;
+    margin:5px;
+}
+
+.content-minigames ul {
+    font-size:18px;
+    text-align:left;
+}
+
+.content-minigames div {
+    background-color: white;
+    margin:10px;
+    padding:10px; 
+    border-radius:10px;
+}
+
+.content-minigames p {
+    margin-bottom:0;
+    font-weight: bold;
 }
 
 ul.no-bullets {
@@ -733,19 +776,13 @@ padding-bottom: 10px;
 }
 
 #profile-display {
-    max-height: 80vh;
+    max-height: 90vh;
     overflow-y: scroll;
     display: flex; 
     align-items: center;
-    flex-direction: column; 
-    justify-content: center; 
+    flex-direction: row;
+    justify-content: center;
     position: relative;
-}
-
-#profile-display button {
-    margin: 10px; 
-    height: 80px;
-    width: 200px; 
 }
 
 .back-button {
@@ -801,40 +838,40 @@ padding-bottom: 10px;
 
 /* pop-up for settings :) */
 .popup-overlay {
-    z-index:1001;
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    }
+z-index:1001;
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+}
 
-    .popup-settings {
-    font-family: Arial, sans-serif;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding-top: 200px;
-    padding-bottom: 100px;
-    padding-left: 100px;
-    padding-right: 100px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
+.popup-settings {
+font-family: Arial, sans-serif;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: #fff;
+padding-top: 200px;
+padding-bottom: 100px;
+padding-left: 100px;
+padding-right: 100px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
-    .popup-content {
-    text-align: center;
-    }
+.popup-content {
+text-align: center;
+}
 
-    .popup-settings .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #333;
-    }
+.popup-settings .close {
+position: absolute;
+top: 10px;
+right: 10px;
+font-size: 20px;
+cursor: pointer;
+color: #333;
+}

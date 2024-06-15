@@ -31,34 +31,51 @@
         <canvas id="canvas1"></canvas>
         <script src="{{url_for('static', filename='js/feeding_time.js')}}"></script>
         <center>
-        {% if current_user.daily_chances_ft == 0 %}
-            <a class="button-53" style="margin-top: 30px; font-family:'Trebuchet MS'; font-size:25px;" onclick="myFunction()">Gimme back<br>my daily chances!</a>
-        {% endif %}
+            <div class="content-minigames">
+                <h1>Instructions</h1>
+                <div>
+                <h2>You're a lil' gorgeous fish trying to eat the helpless goldfish for lunch, but these ugly, green piranhas keep getting in the way. Yikes!</h2>
+                <ul>
+                <p>Controls:</p>
+                <li>Move the purple fish by <b>left-clicking</b> the area to where you want it to go.</li>
+                <p>Objectives:</p>
+                <li>Eat as many of the yellow fish as you can.</li>
+                <li><b>Avoid the green piranhas</b>, or you'll become their tasty meal!</li>
+                <p>Scoring system:</p>
+                <li>A <b>score of 1</b> will grant you <b>2 Lamocoins</b>!</li>
+                </ul>
+                <p style="padding-bottom:10px;"><i>Tip: Resizing the window for this minigame is not recommended!</i></p>
+                </div>
+            </div>
         </center>
     </div>
 <script>
+    // displays the amount of time until daily chances are resetto spaghetto //
     var actualTime = new Date(Date.now());
     var endOfDay = new Date(actualTime.getFullYear(), actualTime.getMonth(), actualTime.getDate() + 1, 0, 0, 0);
     var timeRemaining = endOfDay.getTime() - actualTime.getTime();
     document.getElementById('timeRemaining').appendChild(document.createTextNode(Math.trunc(timeRemaining / 1000 / 60 / 60) + " hours left until the next reset!"));
     document.getElementById('dayProgression').value = 1 - (timeRemaining / 1000 / 60 / 60 / 24);
 
-    function myFunction() {
-        fetch('/reset_chances_ft', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        })
-        .then(response => {
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
-        })
-        .catch(error => {
-            alert('Uh oh! Oops!')
-        });
+    // this is such a lame way to automatically reset a player's daily chances but this is the only method that i've seen online that my dummy brain could comprehend //
+    // note to future self: learn how to do a better way to achieve this without annoyingly refreshing the page ;^; //
+    function reload_Once() {
+        if (! sessionStorage.justOnce) {
+            fetch('/reset_chances_ft', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            })
+            .then(response => {location.reload()})
+            .catch(error => {
+                console.error(error);
+            });
+            sessionStorage.setItem("justOnce", "true");
+        }
     }
+
+reload_Once();
 
 </script>
 </body>

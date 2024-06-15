@@ -93,10 +93,15 @@
                 <br><br>
             </div>
             <div class="column-2" id="profile-display">
-
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
-                <button class="button-53" onclick="toggleSanctuary()">MY PETS</button>
-                <button class="button-53" onclick="toggleCloset()">MY CLOSET</button>
+                <div class="column-profile" id="pets-button">
+                <img src="{{ url_for('static', filename='assets/thumbnails/profile/pet_sandwich.png') }}" onclick="toggleSanctuary()" style="width: 80%; padding:0; margin:0;">
+                <h2 style="padding:0; margin:0; font-family:Sugar Cream; font-size: 40px;">Sanctuary</h2>
+                </div>
+                <div class="column-profile" id="wardrobe-button">
+                <img src="{{ url_for('static', filename='assets/thumbnails/profile/wardrobe.gif') }}" onclick="toggleCloset()" style="width: 80%; padding:0; margin:0;">
+                <h2 style="padding:0; margin:0; font-family:Sugar Cream; font-size: 40px;">Wardrobe</h2>
+                </div>
 
                 <div id="sanctuary" style="display: none">
                     <h1>{{ current_user.username }}'s Sanctuary</h1>
@@ -169,13 +174,14 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var petsButton = document.querySelector("#pets-button"); 
+            var closetButton = document.querySelector("#wardrobe-button"); 
 
             sanctuary.style.display = "block";
             closet.style.display = "none";
             
             var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.flexDirection = "column";
             profileDisplay.style.justifyContent = "flex-start";
             sanctuary.style.flexDirection = "column";
 
@@ -188,13 +194,14 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var petsButton = document.querySelector("#pets-button"); 
+            var closetButton = document.querySelector("#wardrobe-button"); 
 
             sanctuary.style.display = "none";
             closet.style.display = "block";
 
             var profileDisplay = document.getElementById("profile-display");
+            profileDisplay.style.flexDirection = "column";
             profileDisplay.style.justifyContent = "flex-start";
             closet.style.flexDirection = "column";
 
@@ -207,28 +214,23 @@
             var sanctuary = document.getElementById("sanctuary");
             var closet = document.getElementById("closet");
             var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+            var petsButton = document.querySelector("#pets-button"); 
+            var closetButton = document.querySelector("#wardrobe-button"); 
 
             sanctuary.style.display = "none";
             closet.style.display = "none";
 
             var profileDisplay = document.getElementById("profile-display");
             profileDisplay.style.justifyContent = "center";
+            profileDisplay.style.flexDirection = "row";
 
             backButton.style.display = "none";
-            petsButton.style.display = "block";
-            closetButton.style.display = "block";
+            petsButton.style.display = "inline";
+            closetButton.style.display = "inline";
         }
 
     </script>
     <script>
-        let myWindow;
-        function openWin() {
-            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
-            myWindow.resizeTo(300, 300);
-        }
-
         const link = 'https://4l35h4.pythonanywhere.com/';
         const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
         const title = encodeURIComponent('Lamopets');
