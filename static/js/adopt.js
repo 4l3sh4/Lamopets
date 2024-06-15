@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     yayButton.addEventListener('click', () => {
         successPopup.style.display = 'none';
-        location.reload(); // Reload the page or redirect as needed
+        location.reload(); 
     });
 
     function closeModalAdopt() {
