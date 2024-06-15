@@ -265,6 +265,20 @@ def store():
     grouped_items = Item.get_items_grouped_by_base_id()
     return render_template('store.html', grouped_items=grouped_items)
 
+@app.route('/check_inventory/<string:item_id>', methods=['POST'])
+def check_inventory(item_id):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'User not authenticated.'}), 401
+
+    if not item_id:
+        return jsonify({'error': 'itemId must be provided.'}), 400
+
+    user_inventory = Inventory.query.filter_by(user_id=current_user.id).all()
+
+    owned = any(entry.item_id == str(item_id) for entry in user_inventory)
+
+    return jsonify({'owned': owned}), 200
+
 @app.route('/purchase_item/<string:item_id>', methods=['POST'])
 @login_required
 def purchase_item(item_id):
