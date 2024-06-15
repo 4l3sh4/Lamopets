@@ -1,6 +1,7 @@
 body {
     background-color: #99d1cb;
     text-align: center;
+    overflow-x: hidden;
 }
 
 .login {
@@ -266,6 +267,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.5s ease;
 }
 
 #coin {
@@ -463,14 +465,10 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 900px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-    .navbar{
+    #mainnav {
         display: none;
     }
-    #navicon{
-        display: block;
-    }
+
     .currency-position {
         font-size: 20px;
         width: 60px;
@@ -489,14 +487,6 @@ form input[type="submit"]:hover {
 
 /* smallest screen size */
 @media screen and (max-width: 600px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-    .navbar{
-        display: none;
-    }
-    #navicon{
-        display: block;
-    }
     .currency-position {
         font-size: 15px;
         width: 40px;
@@ -519,13 +509,6 @@ form input[type="submit"]:hover {
 
 /* when fullcreen */
 @media screen and (min-width: 601px) {
-    #navicon{
-        display: none;
-    }
-    .sidenav{
-        display: none;
-    }
-
     .content{
         transform: "translateX(0)"
     }
@@ -812,117 +795,4 @@ bottom: 20px;
 100%{
     background-position-x: -1000px; 
 }
-}
-
-.quantity{
-padding-top: -10px;
-}
-
-.item-box{
-background-color: #eee5c8;  
-box-shadow: 0 0 10px 12px #eee5c8;
-border-radius: 10px;
-margin: 15px 15px;
-padding-bottom: 10px;
-}
-
-#profile-display {
-    max-height: 90vh;
-    overflow-y: scroll;
-    display: flex; 
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    position: relative;
-}
-
-.back-button {
-    position: absolute; 
-    top: 2px; 
-    left: -108px; 
-    z-index: 999; 
-    cursor: pointer; 
-    width: 300px !important;
-}
-
-#photobooth-btn {
-    width: 20px !important;
-    height: auto;
-    padding: 0px 30px !important;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center; 
-}
-
-#custom-btn {
-    font-size: 28px; 
-    width: 110px;
-    height: 30px;
-}
-
-#pfp-btn {
-    font-size: 28px; 
-    width: 139px;
-    height: 30px;
-}
-
-#photobooth-btn img {
-    width: 40px;
-    padding-left: 5px;
-}
-
-#photobooth-btn {
-    width: 10px;
-    height: 53px;
-    margin-top: 5px;
-}
-
-.item-box p{
-    margin-top: -20px;
-}
-
-#share-buttons{
-    margin-top: -20px;
-}
-
-/* pop-up for settings :) */
-.popup-overlay {
-z-index:1001;
-display: none;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-}
-
-.popup-settings {
-font-family: Arial, sans-serif;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-background: #fff;
-padding-top: 200px;
-padding-bottom: 100px;
-padding-left: 100px;
-padding-right: 100px;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.popup-content {
-text-align: center;
-}
-
-.popup-settings .close {
-position: absolute;
-top: 10px;
-right: 10px;
-font-size: 20px;
-cursor: pointer;
-color: #333;
 }

@@ -119,19 +119,30 @@
 }
 
 .price-adopt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 5px 0; 
-    padding: 8px 12px;
     background-color: #e27e87;
     color: #fffffe;
     border-radius: 5px;
     border: 0;
     font-size: 15px;
+    height: 40px;
+    width: 80px;
 }
 
 .price-adopt:hover{
     cursor: pointer;
     font-size: 110%;
     font-weight: bold !important;
+}
+
+#price-coin{
+    width: 25px;
+    height: auto;
+    display: inline-block;
+    padding: -10px;
 }
 
 .item:hover{
@@ -193,6 +204,21 @@
     margin-top: -25px;
 }
 
+.success-content {
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 50px;
+    border: 5px solid #c8980a;
+    border-radius: 60px;
+    width: 30%; 
+    font-size: 35px;
+    font-family: 'myFont';
+}
+
+.success-content img{
+    margin-top: -25px;
+}
+
 button {
     font-size: 20px;
     cursor: pointer;
@@ -213,11 +239,11 @@ button p{
     border: none;
 }
 
-#yesButton {
+#yesButton, #yayButton {
     background-color: #7ee27e;
 }
 
-#yesButton:hover {
+#yesButton:hover, #yayButton:hover {
     background-color: #336b33;
 }
 

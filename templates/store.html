@@ -91,7 +91,10 @@
                         {% for item_in_group in group %}
                             <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
-                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}" data-filter="{{ group[0].filter_colour }}">
+                            <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
+                            <span id="price-value">{{ group[0].price }}</span>
+                        </button>
                     </div>
                 </div>
                 {% endif %}
@@ -113,7 +116,10 @@
                         {% for item_in_group in group %}
                             <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
-                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}" data-filter="{{ group[0].filter_colour }}">
+                            <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
+                            <span id="price-value">{{ group[0].price }}</span>
+                        </button>
                     </div>
                 </div>
                 {% endif %}
@@ -135,7 +141,10 @@
                         {% for item_in_group in group %}
                             <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
-                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}" data-filter="{{ group[0].filter_colour }}">
+                            <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
+                            <span id="price-value">{{ group[0].price }}</span>
+                        </button>
                     </div>
                 </div>
                 {% endif %}
@@ -157,7 +166,10 @@
                         {% for item_in_group in group %}
                             <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
-                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}" data-filter="{{ group[0].filter_colour }}">
+                            <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
+                            <span id="price-value">{{ group[0].price }}</span>
+                        </button>
                     </div>
                 </div>
                 {% endif %}
@@ -179,7 +191,10 @@
                         {% for item_in_group in group %}
                             <button class="price" id="{{ item_in_group.id }}" data-thumbnail="{{ item_in_group.thumbnail_url }}" data-price="{{ item_in_group.price }}" style="display: none;">${{ item_in_group.price }}</button>
                         {% endfor %}
-                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}"> ${{ group[0].price }} </button>
+                        <button class="price" id="active-price" data-price="{{ group[0].price }}" data-item-id="{{ group[0].id }}" data-filter="{{ group[0].filter_colour }}">
+                            <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">
+                            <span id="price-value">{{ group[0].price }}</span>
+                        </button>
                     </div>
                 </div>
                 {% endif %}
@@ -203,17 +218,13 @@
     <div id="purchase-store" class="popup">
         <div class="purchase-confirm">
             <p id="confirm-text-store" class="font" style="font-size: 32px;">Would you like to buy this item?</p>
+            <img id="purchase-item-img" src="" alt="Item Image" style="width: auto; height: 150px;">
+            <br>
             <button id="yesButton" class="yes-no">Yes</button>
             <button id="noButton" class="yes-no" onclick="closeModalStore()">No</button>
         </div>
     </div>
     <script>
-        let myWindow;
-        function openWin() {
-            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
-            myWindow.resizeTo(300, 300);
-        }
-
         const link = 'https://4l35h4.pythonanywhere.com/';
         const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
         const title = encodeURIComponent('Lamopets');

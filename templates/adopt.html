@@ -77,7 +77,7 @@
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
-                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}" data-pet-img="{{ pet.pet_image_url }}"><img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">{{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("J") %}
@@ -85,7 +85,7 @@
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
-                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}" data-pet-img="{{ pet.pet_image_url }}"><img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">{{ pet.price }}</button>
                         </div>
                     </div>
                 {% elif pet.species.startswith("T") %}
@@ -93,7 +93,7 @@
                         <div class="item" id="{{ pet.species }}">
                             <img src="{{pet.egg_image_url}}">
                             <p class="item_name" style="font-size: 27px;">{{ pet.name }}</p>
-                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}">${{ pet.price }}</button>
+                            <button class="price-adopt" data-name="{{ pet.name }}" data-price="{{ pet.price }}" data-pet-img="{{ pet.pet_image_url }}"><img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="price-coin">{{ pet.price }}</button>
                         </div>
                     </div>
                 {% endif %}
@@ -130,9 +130,20 @@
             <img id="name-egg-img" src="" alt="Pet Egg Image" style="width: auto; height: 150px;">
             <br>
             <input type="text" id="pet-name-input" class="font" style="font-size: 24px;" minlength="4" maxlength="20" required>
+            <br>
             <button id="confirmNameButton" class="yes-no">Confirm</button>
         </div>
     </div>
+
+    <div id="success-adopt" class="popup">
+        <div class="success-content">
+            <p id="success-message-adopt"></p>
+            <img id="success-pet-img" src="" alt="Adopted Pet Image" style="width: auto; height: 200px;">
+            <br>
+            <button id="yayButton" class="yes-no">Yay!</button>
+        </div>
+    </div>
+
     <script>
         const link = 'https://4l35h4.pythonanywhere.com/';
         const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
