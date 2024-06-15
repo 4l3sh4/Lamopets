@@ -20,13 +20,11 @@ window.addEventListener('resize', function() {
     if (window.innerWidth > 900) {
         closeNav(); 
         document.getElementById("navicon").style.display = "none"; 
-        document.getElementById("logout-button").style.display = "block"; 
     }
 });
 
 window.addEventListener('resize', function() {
     if (window.innerWidth < 900) {
         document.getElementById("navicon").style.display = "block"; 
-        document.getElementById("logout-button").style.display = "none"; 
     }
 });
