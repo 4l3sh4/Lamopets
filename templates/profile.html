@@ -9,6 +9,7 @@
     <title>Profile</title>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script src="{{url_for('static', filename='js/profile.js')}}"></script>
+    <script src="{{url_for('static', filename='js/settings.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function confirmDeleteAccount() {
@@ -97,6 +98,7 @@
             </div>
             <div class="column-2" id="profile-display">
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
+                <a class="delete-button" style="display: none;" onclick="displayDelete()"><img src="{{ url_for('static', filename='assets/thumbnails/delete.png') }}" alt="delete button"></a>
                 <div class="column-profile" id="pets-button">
                 <img src="{{ url_for('static', filename='assets/thumbnails/profile/pet_sandwich.png') }}" onclick="toggleSanctuary()" style="width: 80%; padding:0; margin:0;">
                 <h2 style="padding:0; margin:0; font-family:Sugar Cream; font-size: 40px;">Sanctuary</h2>

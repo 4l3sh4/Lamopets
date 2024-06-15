@@ -1,15 +1,16 @@
 function toggleSanctuary() {
     var sanctuary = document.getElementById("sanctuary");
     var closet = document.getElementById("closet");
-    var backButton = document.querySelector(".back-button"); 
-    var deleteButton = document.querySelector(".delete-button"); 
-    var petsButton = document.querySelector("#petsButton"); 
-    var closetButton = document.querySelector("#closetButton"); 
+    var backButton = document.querySelector(".back-button");
+    var deleteButton = document.querySelector(".delete-button");
+    var petsButton = document.querySelector("#pets-button"); 
+    var closetButton = document.querySelector("#wardrobe-button"); 
 
     sanctuary.style.display = "block";
     closet.style.display = "none";
     
     var profileDisplay = document.getElementById("profile-display");
+    profileDisplay.style.flexDirection = "column";
     profileDisplay.style.justifyContent = "flex-start";
     sanctuary.style.flexDirection = "column";
 
@@ -24,13 +25,14 @@ function toggleCloset() {
     var closet = document.getElementById("closet");
     var backButton = document.querySelector(".back-button"); 
     var deleteButton = document.querySelector(".delete-button"); 
-    var petsButton = document.querySelector("#petsButton"); 
-    var closetButton = document.querySelector("#closetButton"); 
+    var petsButton = document.querySelector("#pets-button"); 
+    var closetButton = document.querySelector("#wardrobe-button"); 
 
     sanctuary.style.display = "none";
     closet.style.display = "block";
 
     var profileDisplay = document.getElementById("profile-display");
+    profileDisplay.style.flexDirection = "column";
     profileDisplay.style.justifyContent = "flex-start";
     closet.style.flexDirection = "column";
 
@@ -43,21 +45,22 @@ function toggleCloset() {
 function goBack() {
     var sanctuary = document.getElementById("sanctuary");
     var closet = document.getElementById("closet");
-    var backButton = document.querySelector(".back-button"); 
+    var backButton = document.querySelector(".back-button");
     var deleteButton = document.querySelector(".delete-button"); 
-    var petsButton = document.querySelector("#petsButton"); 
-    var closetButton = document.querySelector("#closetButton"); 
+    var petsButton = document.querySelector("#pets-button"); 
+    var closetButton = document.querySelector("#wardrobe-button"); 
 
     sanctuary.style.display = "none";
     closet.style.display = "none";
 
     var profileDisplay = document.getElementById("profile-display");
     profileDisplay.style.justifyContent = "center";
+    profileDisplay.style.flexDirection = "row";
 
     backButton.style.display = "none";
     deleteButton.style.display = "none";
-    petsButton.style.display = "block";
-    closetButton.style.display = "block";
+    petsButton.style.display = "inline";
+    closetButton.style.display = "inline";
 }
 
 function displayDelete() {

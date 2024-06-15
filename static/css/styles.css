@@ -737,48 +737,46 @@ ul.no-bullets {
 
 section {
     position: relative;
-    width: 100%;
-    height: 100vh;
     background-image: linear-gradient(#c1eae6, #76a7a2);
     overflow: hidden;
-    padding-bottom: 50px;
+    padding-bottom: 200px;
 }
 section .air{
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 100px;
-background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
-background-size: 1000px 100px
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
+    background-size: 1000px 100px
 }
 section .air.air1{
-animation: wave 30s linear infinite;
-z-index: 1000;
-opacity: 1;
-animation-delay: 0s;
-bottom: 0;
+    animation: wave 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
 }
 section .air.air2{
-animation: wave2 15s linear infinite;
-z-index: 999;
-opacity: 0.5;
-animation-delay: -5s;
-bottom: 10px;
+    animation: wave2 15s linear infinite;
+    z-index: 999;
+    opacity: 0.5;
+    animation-delay: -5s;
+    bottom: 10px;
 }
 section .air.air3{
-animation: wave 30s linear infinite;
-z-index: 998;
-opacity: 0.2;
-animation-delay: -2s;
-bottom: 15px;
+    animation: wave 30s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15px;
 }
 section .air.air4{
-animation: wave2 5s linear infinite;
-z-index: 997;
-opacity: 0.7;
-animation-delay: -5s;
-bottom: 20px;
+    animation: wave2 5s linear infinite;
+    z-index: 997;
+    opacity: 0.7;
+    animation-delay: -5s;
+    bottom: 20px;
 }
 @keyframes wave{
 0%{
@@ -795,4 +793,44 @@ bottom: 20px;
 100%{
     background-position-x: -1000px; 
 }
+}
+
+/* pop-up for settings :) */
+.popup-overlay {
+z-index:1001;
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-settings {
+font-family: Arial, sans-serif;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: #fff;
+padding-top: 200px;
+padding-bottom: 100px;
+padding-left: 100px;
+padding-right: 100px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+text-align: center;
+}
+
+.popup-settings .close {
+position: absolute;
+top: 10px;
+right: 10px;
+font-size: 20px;
+cursor: pointer;
+color: #333;
 }
