@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <title>Profile</title>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/profile.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function confirmDeleteAccount() {
@@ -33,7 +36,7 @@
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
 
-    <div class="center" id="logout-button">
+    <div class="center" id="logout-button" style="display: block;">
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
     <div class="center" id="delete-account">
@@ -68,6 +71,7 @@
             <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('forums')}}">Chat</a>
+            <a href="{{url_for('logout')}}">Logout</a>
         </div>
     </nav>
     <div id="content">
@@ -89,8 +93,10 @@
             <div class="column-2" id="profile-display">
 
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
-                <button class="button-53" onclick="toggleSanctuary()">MY PETS</button>
-                <button class="button-53" onclick="toggleCloset()">MY CLOSET</button>
+                <a class="delete-button" style="display: none;" onclick="displayDelete()"><img src="{{ url_for('static', filename='assets/thumbnails/delete.png') }}" alt="delete button"></a>
+                <a class="gift-button" style="display: none;" onclick="displayGift()"><img src="{{ url_for('static', filename='assets/thumbnails/gift.png') }}" class="gift-icon" alt="Gift Icon"></a>
+                <button class="button-53" id="petsButton" onclick="toggleSanctuary()">MY PETS</button>
+                <button class="button-53" id="closetButton" onclick="toggleCloset()">MY CLOSET</button>
 
                 <div id="sanctuary" style="display: none">
                     <h1>{{ current_user.username }}'s Sanctuary</h1>
@@ -102,8 +108,10 @@
                                     <p class="item_name">{{ adopted_pet.adopt_name }}</p>
                                     <div id="share-buttons">
                                         <!-- facebook -->
-                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/<a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
+                                        <a href="{{ pet.pet_image_url }}" download><img src="{{ url_for('static', filename='assets/download-icon.png') }}" style="width:20px; margin-top:5px;"></a>/
+                                        <a class="facebook" target="blank" href="https://www.facebook.com/share.php?u=https://4l35h4.pythonanywhere.com/{{ pet.pet_image_url }}"><i class="fab fa-facebook"></i></a>
                                     </div>
+                                    <center><button class="delete-item-button" onclick="showReleasePopup('{{ adopted_pet.adopt_name }}', '{{ pet.pet_image_url }}', '{{ adopted_pet.adopt_id }}', '{{ pet.price }}')" style="display: none;">Release</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -126,8 +134,14 @@
                         {% for item_id, item_info in item_count_dict.items() %}
                             <div>
                                 <div class="item-box" id="{{ item_info.item.id }}">
+                                    {% if item_info.item.gender.startswith("M") %}
+                                        <span class="gender-label" id="label-male">M</span>
+                                    {% elif item_info.item.gender.startswith("F") %}
+                                        <span class="gender-label" id="label-female">F</span>
+                                    {% endif %}
                                     <img src="{{ item_info.item.thumbnail_url }}" alt="{{ item_info.item.id }}" class="item_img" style="width:50%; filter:{{ item_info.item.filter_colour }}">
-                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div>
+                                    <div class="quantity">Quantity: {{ item_info.quantity }}</div> 
+                                    <center><button class="delete-item-button" onclick="showDeletePopup('{{ item_info.item.thumbnail_url }}', '{{ item_info.item.filter_colour }}', '{{ item_info.item.id }}', '{{ item_info.item.price }}')" style="display: none;">Recycle</button></center>
                                 </div>
                             </div>
                         {% endfor %}
@@ -146,95 +160,26 @@
             <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
-    <script>
-        async function downloadImage(imageSrc) {
-          const image = await fetch(imageSrc)
-          const imageBlog = await image.blob()
-          const imageURL = URL.createObjectURL(imageBlog)
 
-          const link = document.createElement('a')
-          link.href = imageURL
-          link.download = 'Congratulations on your very cool pet!'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-          }
-        function toggleSanctuary() {
-            var sanctuary = document.getElementById("sanctuary");
-            var closet = document.getElementById("closet");
-            var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
+    <div id="release-pet" class="popup">
+        <div class="release-confirm">
+            <p id="confirm-text-pet" class="font" style="font-size: 32px;"></p>
+            <img id="release-pet-img" src="" alt="Pet Image" style="width: auto; height: 150px;">
+            <br>
+            <button id="yesButton" class="yes-no">Yes</button>
+            <button id="noButton" class="yes-no" onclick="closeModalRelease()">No</button>
+        </div>
+    </div>
 
-            sanctuary.style.display = "block";
-            closet.style.display = "none";
-            
-            var profileDisplay = document.getElementById("profile-display");
-            profileDisplay.style.justifyContent = "flex-start";
-            sanctuary.style.flexDirection = "column";
+    <div id="delete-item" class="popup">
+        <div class="delete-confirm">
+            <p id="confirm-text-item" class="font" style="font-size: 32px;"></p>
+            <img id="delete-item-img" src="" alt="Item Image" style="width: auto; height: 150px;">
+            <br>
+            <button id="yes-item" class="yes-no">Yes</button>
+            <button id="noButton" class="yes-no" onclick="closeModalDelete()">No</button>
+        </div>
+    </div>
 
-            backButton.style.display = "block";
-            petsButton.style.display = "none";
-            closetButton.style.display = "none";
-        }
-
-        function toggleCloset() {
-            var sanctuary = document.getElementById("sanctuary");
-            var closet = document.getElementById("closet");
-            var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
-
-            sanctuary.style.display = "none";
-            closet.style.display = "block";
-
-            var profileDisplay = document.getElementById("profile-display");
-            profileDisplay.style.justifyContent = "flex-start";
-            closet.style.flexDirection = "column";
-
-            backButton.style.display = "block";
-            petsButton.style.display = "none";
-            closetButton.style.display = "none";
-        }
-
-        function goBack() {
-            var sanctuary = document.getElementById("sanctuary");
-            var closet = document.getElementById("closet");
-            var backButton = document.querySelector(".back-button"); 
-            var petsButton = document.querySelector("#profile-display button:nth-child(2)"); 
-            var closetButton = document.querySelector("#profile-display button:nth-child(3)"); 
-
-            sanctuary.style.display = "none";
-            closet.style.display = "none";
-
-            var profileDisplay = document.getElementById("profile-display");
-            profileDisplay.style.justifyContent = "center";
-
-            backButton.style.display = "none";
-            petsButton.style.display = "block";
-            closetButton.style.display = "block";
-        }
-
-    </script>
-    <script>
-        let myWindow;
-        function openWin() {
-            myWindow = window.open("{{url_for('minigamesfeedingtime')}}", "width=900, height=800", "popup");
-            myWindow.resizeTo(300, 300);
-        }
-
-        const link = 'https://4l35h4.pythonanywhere.com/';
-        const msg = encodeURIComponent('Hey, I found this cool website you should try out!');
-        const title = encodeURIComponent('Lamopets');
-
-        const twitter = document.querySelector('.twitter');
-        twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
-        const linkedIn = document.querySelector('.linkedin');
-        linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
-        const whatsapp = document.querySelector('.whatsapp');
-        whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
-        const telegram = document.querySelector('.telegram');
-        telegram.href = `https://telegram.me/share/url?url=${link}&text=${msg}`;
-    </script>
 </body>
 </html>

@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request, abort, jso
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, DecimalField, SubmitField, SelectField
+from wtforms import StringField, PasswordField, DecimalField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError, DataRequired, EqualTo
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
@@ -36,19 +36,13 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 class Inventory(db.Model):
     __tablename__ = 'inventory'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
-    username = db.Column(db.String(20), nullable=False) 
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
     user_obj = db.relationship('User', back_populates='inventory')
     item = db.relationship('Item', back_populates='inventory')
-
-    @property
-    def user(self):
-        return User.query.filter_by(username=self.username).first()
 
 class AdoptedPet(db.Model):
     __tablename__ = 'adopted_pet'
@@ -56,13 +50,8 @@ class AdoptedPet(db.Model):
     species = db.Column(db.String(2), db.ForeignKey('pet.species'), nullable=False)
     user_id = db.Column(db.String(20), db.ForeignKey('user.id'))
     adopt_name = db.Column(db.String(20), nullable=False)
-    username = db.Column(db.String(20), nullable=False) 
     pet = db.relationship('Pet', backref='adopted_by')
     user_obj = db.relationship('User', back_populates='adoptedpet')
-
-    @property
-    def user(self):
-        return User.query.filter_by(username=self.username).first()
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +75,13 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
+    
+    def __setattr__(self, name, value):
+        if name == 'currency_balance' and value > 10000:
+            value = 10000
+        if name == 'currency_balance' and value < 0:
+            value = 0
+        super().__setattr__(name, value)
 
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -158,7 +154,7 @@ class LoginForm(FlaskForm):
 
 class GiftingForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-    currency = DecimalField(validators=[InputRequired()], render_kw={"placeholder": "Currency"})
+    currency = DecimalField(validators=[InputRequired()], render_kw={"placeholder": "Lamocoins"})
     submit = SubmitField("Send My Gift!")
 
     def validate_username_gifting(self, username):
@@ -219,8 +215,8 @@ def profile():
     else:
         avatar_url = None
 
-    adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.username == current_user.username).all()
-    inventory_items = db.session.query(Inventory, Item).join(Item, Inventory.item_id == Item.id).filter(Inventory.username == current_user.username).all()
+    adopted_pets = db.session.query(AdoptedPet, Pet).join(Pet, AdoptedPet.species == Pet.species).filter(AdoptedPet.user_id == current_user.id).all()
+    inventory_items = db.session.query(Inventory, Item).join(Item, Inventory.item_id == Item.id).filter(Inventory.user_id == current_user.id).all()
 
     return render_template('profile.html', avatar_url=avatar_url, inventory_items=inventory_items, adopted_pets=adopted_pets)
 
@@ -269,6 +265,20 @@ def store():
     grouped_items = Item.get_items_grouped_by_base_id()
     return render_template('store.html', grouped_items=grouped_items)
 
+@app.route('/check_inventory/<string:item_id>', methods=['POST'])
+def check_inventory(item_id):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'User not authenticated.'}), 401
+
+    if not item_id:
+        return jsonify({'error': 'itemId must be provided.'}), 400
+
+    user_inventory = Inventory.query.filter_by(user_id=current_user.id).all()
+
+    owned = any(entry.item_id == str(item_id) for entry in user_inventory)
+
+    return jsonify({'owned': owned}), 200
+
 @app.route('/purchase_item/<string:item_id>', methods=['POST'])
 @login_required
 def purchase_item(item_id):
@@ -283,7 +293,7 @@ def purchase_item(item_id):
         current_user.currency_balance -= item.price
         db.session.commit()
 
-        inventory = Inventory(user_id=current_user.id, username=current_user.username, item_id=item.id)
+        inventory = Inventory(user_id=current_user.id, item_id=item.id)
         db.session.add(inventory)
         db.session.commit()
 
@@ -292,6 +302,30 @@ def purchase_item(item_id):
         # Log the exception details
         print(f'Error purchasing item: {e}')
         return jsonify({'error': 'Internal Server Error'}), 500
+
+@app.route('/delete_item/<item_id>', methods=['DELETE'])
+def delete_item(item_id):
+    if not current_user.is_authenticated:
+        return jsonify({'message': 'Unauthorized'}), 401
+    
+    try:
+        inventory_item = Inventory.query.filter_by(user_id=current_user.id, item_id=item_id).first()
+        if inventory_item:
+            item = inventory_item.item
+            refund_amount = item.price // 2
+
+            db.session.delete(inventory_item)
+
+            current_user.currency_balance += refund_amount
+            db.session.commit()
+            
+            return jsonify({'message': 'Item deleted successfully.', 'refund': refund_amount}), 200
+        else:
+            return jsonify({'message': 'Item not found in user inventory.'}), 404
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        return jsonify({'message': 'Failed to delete item.'}), 500
 
 @app.route('/minigames')
 @login_required
@@ -330,12 +364,27 @@ def adopt_pet(pet_species):
             current_user.currency_balance -= pet.price
             db.session.commit()
             
-            adopted_pet = AdoptedPet(species=pet_species, username=current_user.username, user_id=current_user.id, adopt_name=pet_name)
+            adopted_pet = AdoptedPet(species=pet_species, user_id=current_user.id, adopt_name=pet_name)
             db.session.add(adopted_pet)
             db.session.commit()
             return jsonify({'success': True})
     else:
         abort(404) 
+
+@app.route('/release_pet/<adopt_id>', methods=['DELETE'])
+def release_pet(adopt_id):
+    adopted_pet = AdoptedPet.query.filter_by(adopt_id=adopt_id, user_id=current_user.id).first()
+    if adopted_pet:
+        pet = adopted_pet.pet
+        deduct_amount = pet.price // 2
+
+        db.session.delete(adopted_pet)
+
+        current_user.currency_balance -= deduct_amount
+        db.session.commit()
+        return jsonify({'message': 'Pet released successfully.'}), 200
+    else:
+        return jsonify({'message': 'Pet not found.'}), 404
 
 @app.route('/forums', methods=['GET', 'POST'])
 @login_required
@@ -471,7 +520,7 @@ def register():
             for item_id in default_items:
                 item = Item.query.filter_by(id=item_id).first()
                 if item:
-                    inventory = Inventory(user_id=new_user.id, username=new_user.username, item_id=item.id)
+                    inventory = Inventory(user_id=new_user.id, item_id=item.id)
                     db.session.add(inventory)
             
             commit_with_retry(db.session)
@@ -495,8 +544,8 @@ def gifting():
         if gifted_money <= 0:
             return jsonify({'status': 'error', 'message': 'Gift amount must be a positive number.'})
         
-        if gifted_money > 100:
-            return jsonify({'status': 'error', 'message': 'You can\'t gift more than $100 at a time.'})
+        if gifted_money > 250:
+            return jsonify({'status': 'error', 'message': 'You can\'t gift more than $250 at a time.'})
         
         user = User.query.filter_by(username=form.username.data).first()
         
@@ -510,8 +559,8 @@ def gifting():
             return jsonify({'status': 'error', 'message': 'You do not have enough balance to gift that amount.'})
         
         last_gift_time = current_user.last_gift_time
-        if last_gift_time and datetime.utcnow() - last_gift_time < timedelta(hours=4):
-            return jsonify({'status': 'error', 'message': 'You can only gift once every 4 hours.'})
+        if last_gift_time and datetime.utcnow() - last_gift_time < timedelta(hours=6):
+            return jsonify({'status': 'error', 'message': 'You can only gift once every 6 hours.'})
 
         current_user.currency_balance -= gifted_money
         user.currency_balance += gifted_money
@@ -565,7 +614,7 @@ def add_items_data():
         {"id": "H03BROWN-F", "base_id": "H03-F", "gender": "Female", "price": 160, "colour": "#7F654A", "filter_colour": "sepia(95%) hue-rotate(350deg) brightness(0.7) contrast(140%)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair3.png", "image_url": 'assets/customization_assets/hair/f-hair3.png'},
         {"id": "H03BLONDE-F", "base_id": "H03-F", "gender": "Female", "price": 180, "colour": "#E8CEA1", "filter_colour": "sepia(100%) brightness(1.3)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair3.png", "image_url": 'assets/customization_assets/hair/f-hair3.png'},
 
-        {"id": "H04PGREY-F", "base_id": "H04-F", "gender": "Female", "price": 50, "colour": "#848484", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
+        {"id": "H04GREY-F", "base_id": "H04-F", "gender": "Female", "price": 50, "colour": "#848484", "filter_colour": "", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
         {"id": "H04GREEN-F", "base_id": "H04-F", "gender": "Female", "price": 100, "colour": "#8aab7f", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(60deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
         {"id": "H04BLUE-F", "base_id": "H04-F", "gender": "Female", "price": 150, "colour": "#79c7d9", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(150deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},
         {"id": "H04PURPLE-F", "base_id": "H04-F", "gender": "Female", "price": 200, "colour": "#b796c2", "filter_colour": "saturate(100%) sepia(100%) hue-rotate(240deg)", "thumbnail_url": "/static/assets/thumbnails/hair/f-hair6.png", "image_url": 'assets/customization_assets/hair/f-hair6.png'},

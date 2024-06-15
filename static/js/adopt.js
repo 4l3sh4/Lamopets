@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const petElement = button.closest('.item');
             const eggImgUrl = petElement.querySelector('img').src;
 
-            confirmText.textContent = `Would you like to buy ${petName} for $${petPrice}?`;
+            confirmText.textContent = `Would you like to buy ${petName} for ${petPrice} Lamocoins?`;
             purchaseEggImg.src = eggImgUrl;
             purchasePopup.style.display = 'block';
 

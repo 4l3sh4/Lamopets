@@ -1,6 +1,7 @@
 body {
     background-color: #99d1cb;
     text-align: center;
+    overflow-x: hidden;
 }
 
 .login {
@@ -453,12 +454,8 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 900px) {
-    .navbar{
+    #mainnav {
         display: none;
-    }
-
-    #navicon{
-        display: block;
     }
 
     .currency-position {
@@ -470,12 +467,6 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 600px) {
-    .navbar{
-        display: none;
-    }
-    #navicon{
-        display: block;
-    }
     .currency-position {
         font-size: 15px;
         width: 40px;
@@ -484,12 +475,6 @@ form input[type="submit"]:hover {
 }
 
 @media screen and (min-width: 601px) {
-    #navicon{
-        display: none;
-    }
-    .sidenav{
-        display: none;
-    }
     .content{
         transform: "translateX(0)"
     }
@@ -722,83 +707,4 @@ bottom: 20px;
 100%{
     background-position-x: -1000px; 
 }
-}
-
-.quantity{
-padding-top: -10px;
-}
-
-.item-box{
-background-color: #eee5c8;  
-box-shadow: 0 0 10px 12px #eee5c8;
-border-radius: 10px;
-margin: 15px 15px;
-padding-bottom: 10px;
-}
-
-#profile-display {
-    max-height: 80vh;
-    overflow-y: scroll;
-    display: flex; 
-    align-items: center;
-    flex-direction: column; 
-    justify-content: center; 
-    position: relative;
-}
-
-#profile-display button {
-    margin: 10px; 
-    height: 80px;
-    width: 200px; 
-}
-
-.back-button {
-    position: absolute; 
-    top: 2px; 
-    left: -108px; 
-    z-index: 999; 
-    cursor: pointer; 
-    width: 300px !important;
-}
-
-#photobooth-btn {
-    width: 20px !important;
-    height: auto;
-    padding: 0px 30px !important;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center; 
-}
-
-#custom-btn {
-    font-size: 28px; 
-    width: 110px;
-    height: 30px;
-}
-
-#pfp-btn {
-    font-size: 28px; 
-    width: 139px;
-    height: 30px;
-}
-
-#photobooth-btn img {
-    width: 40px;
-    padding-left: 5px;
-}
-
-#photobooth-btn {
-    width: 10px;
-    height: 53px;
-    margin-top: 5px;
-}
-
-.item-box p{
-    margin-top: -20px;
-}
-
-#share-buttons{
-    margin-top: -20px;
 }

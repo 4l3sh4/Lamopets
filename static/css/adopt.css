@@ -119,19 +119,30 @@
 }
 
 .price-adopt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 5px 0; 
-    padding: 8px 12px;
     background-color: #e27e87;
     color: #fffffe;
     border-radius: 5px;
     border: 0;
     font-size: 15px;
+    height: 40px;
+    width: 80px;
 }
 
 .price-adopt:hover{
     cursor: pointer;
     font-size: 110%;
     font-weight: bold !important;
+}
+
+#price-coin{
+    width: 25px;
+    height: auto;
+    display: inline-block;
+    padding: -10px;
 }
 
 .item:hover{
