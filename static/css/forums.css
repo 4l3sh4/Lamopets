@@ -405,50 +405,85 @@ color: #333;
 }
 
 /* delete button account */
+#logout-button {
+    position: relative;
+    bottom: 100px;
+}
+
+#logout-button a {
+    text-decoration: none;
+}
+
+#logout-button div {
+    background-color: #e27e87;
+    overflow: hidden;
+    border: 4px solid #eddba5;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Sugar Cream";
+    font-weight: bold;
+}
+
+#logout-button div:hover {
+    background-color: #eddba5;
+    color: #e27e87;
+}
+
 #delete-account {
-position: relative;
-bottom: 50px;
+    position: relative;
+    bottom: 50px;
 }
 
 #delete-account a {
-background-color: #e27e87;
-overflow: hidden;
-border: 4px solid #eddba5;
-color: #eddba5;
-text-align: center;
-padding: 11px 13px;
-text-decoration: none;
-text-transform: uppercase;
-font-size: 18px;
-font-family: "Sugar Cream";
-font-weight: bold;
+    text-decoration: none;
 }
 
-#delete-account a:hover {
-background-color: #eddba5;
-color: #e27e87;
+#delete-account div {
+    background-color: #e27e87;
+    overflow: hidden;
+    border: 4px solid #eddba5;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Sugar Cream";
+    font-weight: bold;
 }
 
-/* change password button */
+#delete-account div:hover {
+    background-color: #eddba5;
+    color: #e27e87;
+}
+
 #change-password {
-position: relative;
+    position: relative;
 }
 
 #change-password a {
-background-color: #e27e87;
-overflow: hidden;
-border: 4px solid #eddba5;
-color: #eddba5;
-text-align: center;
-padding: 11px 13px;
-text-decoration: none;
-text-transform: uppercase;
-font-size: 18px;
-font-family: "Sugar Cream";
-font-weight: bold;
+    text-decoration: none;
 }
 
-#change-password a:hover {
-background-color: #eddba5;
-color: #e27e87;
+#change-password div {
+    background-color: #e27e87;
+    overflow: hidden;
+    border: 4px solid #eddba5;
+    color: #eddba5;
+    text-align: center;
+    padding: 11px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Sugar Cream";
+    font-weight: bold;
+}
+
+#change-password div:hover {
+    background-color: #eddba5;
+    color: #e27e87;
 }
