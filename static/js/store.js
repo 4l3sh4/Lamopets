@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(`Applying filter: ${filter}`);
 
-            confirmText.textContent = `Would you like to buy this item for $${itemPrice}?`;
+            confirmText.textContent = `Would you like to buy this item for ${itemPrice} Lamocoins?`;
             purchaseItemImg.src = itemImgUrl;
             purchaseItemImg.style.filter = filter;
             popup.style.display = 'block';
