@@ -44,7 +44,7 @@
             <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+            <a id="setting-tab2" onclick="openPopup()">Settings</a>
         </div>
     </div>
     <div class="popup-overlay" id="popupOverlay">
@@ -52,7 +52,7 @@
             <span class="close" id="closePopup">&times;</span>
             <div class="popup-content">
                 <div class="center" id="logout-button">
-                    <a href="{{ url_for('logout') }}"><div>Logout</div></a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
                 </div>
                 <div class="center" id="delete-account">
                     <a href="javascript:void(0);" onclick="confirmDeleteAccount()"><div>Delete Account</div></a>
