@@ -62,6 +62,10 @@ class User(db.Model, UserMixin):
     profile_pic = db.Column(db.Text, nullable=True)
     last_gift_time = db.Column(db.DateTime)
     moderator = db.Column(db.String(3), nullable=False, default='no')
+    last_played_time_ft = db.Column(db.String)
+    last_played_time_jjj = db.Column(db.String)
+    daily_chances_ft = db.Column(db.Integer, default=20)
+    daily_chances_jjj = db.Column(db.Integer, default=20)
 
     inventory = db.relationship('Inventory', back_populates='user_obj')
     adoptedpet = db.relationship('AdoptedPet', back_populates='user_obj')
@@ -808,12 +812,56 @@ def add_pets_data():
             db.session.add(new_pet)
     db.session.commit()
 
-@app.route('/gain_currency', methods=['POST'])
+@app.route('/gain_currency_ft', methods=['POST'])
 @login_required
-def gain_currency():
-    score = request.get_json()
-    current_user.currency_balance += score
-    db.session.commit()
+def gain_currency_ft():
+    if current_user.daily_chances_ft > 0:
+        score = request.get_json()
+        current_user.currency_balance += score
+        db.session.commit()
+        current_user.daily_chances_ft -= 1
+        db.session.commit()
+        current_user.last_played_time_ft = datetime.now().strftime("%m/%d/%Y")
+        db.session.commit()
+    elif current_user.daily_chances_ft == 0:
+        current_user.daily_chances_ft = 0
+        db.session.commit()
+
+@app.route('/gain_currency_jjj', methods=['POST'])
+@login_required
+def gain_currency_jjj():
+    if current_user.daily_chances_jjj > 0:
+        score = request.get_json()
+        current_user.currency_balance += score
+        db.session.commit()
+        current_user.daily_chances_jjj -= 1
+        db.session.commit()
+        current_user.last_played_time_jjj = datetime.now().strftime("%m/%d/%Y")
+        db.session.commit()
+    elif current_user.daily_chances_jjj == 0:
+        current_user.daily_chances_jjj = 0
+        db.session.commit()
+
+@app.route('/reset_chances_ft', methods=['POST'])
+@login_required
+def reset_chances_ft():
+    temp_date = datetime.now().strftime("%m/%d/%Y")
+    if current_user.last_played_time_ft != temp_date:
+        current_user.daily_chances_ft = 20
+        db.session.commit()
+        current_user.last_played_time_ft = datetime.now().strftime("%m/%d/%Y")
+        db.session.commit()
+    return redirect(url_for('minigamesfeedingtime'))
+
+@app.route('/reset_chances_jjj', methods=['POST'])
+@login_required
+def reset_chances_jjj():
+    temp_date = datetime.now().strftime("%m/%d/%Y")
+    if current_user.last_played_time_jjj != temp_date:
+        current_user.daily_chances_jjj = 20
+        db.session.commit()
+        current_user.last_played_time_jjj = datetime.now().strftime("%m/%d/%Y")
+        db.session.commit()
 
 if __name__ == '__main__':
     with app.app_context():

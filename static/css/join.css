@@ -22,15 +22,6 @@ form {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-form.gifting {
-    flex:50%;
-    margin-left: 300px;
-    margin-right: 300px;
-    margin-bottom: 30px;
-    background-color: #e27e87;
-    border-radius: 20px;
-}
-
 form input[type="text"],
 form input[type="password"],
 form input[type="number"] {

@@ -24,12 +24,15 @@ img {
 }
 
 #logout-button {
-    position: absolute;
-    top: 35px;
-    left: 20px;
+    position: relative;
+    bottom: 100px;
 }
 
 #logout-button a {
+    text-decoration: none;
+}
+
+#logout-button div {
     background-color: #e27e87;
     overflow: hidden;
     border: 4px solid #eddba5;
@@ -43,18 +46,21 @@ img {
     font-weight: bold;
 }
 
-#logout-button a:hover {
+#logout-button div:hover {
     background-color: #eddba5;
     color: #e27e87;
 }
 
 #delete-account {
-    position: absolute;
-    top: 35px;
-    left: 120px;
+    position: relative;
+    bottom: 50px;
 }
 
 #delete-account a {
+    text-decoration: none;
+}
+
+#delete-account div {
     background-color: #e27e87;
     overflow: hidden;
     border: 4px solid #eddba5;
@@ -68,18 +74,20 @@ img {
     font-weight: bold;
 }
 
-#delete-account a:hover {
+#delete-account div:hover {
     background-color: #eddba5;
     color: #e27e87;
 }
 
 #change-password {
-    position: absolute;
-    top: 35px;
-    left: 286px;
+    position: relative;
 }
 
 #change-password a {
+    text-decoration: none;
+}
+
+#change-password div {
     background-color: #e27e87;
     overflow: hidden;
     border: 4px solid #eddba5;
@@ -93,7 +101,7 @@ img {
     font-weight: bold;
 }
 
-#change-password a:hover {
+#change-password div:hover {
     background-color: #eddba5;
     color: #e27e87;
 }
@@ -180,7 +188,7 @@ img {
   
 
 /* buttons */
-.button-53 {
+.fancy-button {
   background-color: #e27e87;
   border: 0 solid #E5E7EB;
   width: 215px;
@@ -211,11 +219,11 @@ img {
   height: 35px;
 }
 
-.button-53:focus {
+.fancy-button:focus {
   outline: 0;
 }
 
-.button-53:after {
+.fancy-button:after {
   content: '';
   position: absolute;
   border: 2px solid #8E4F55;
@@ -225,19 +233,19 @@ img {
   height: calc(100% - 1px);
 }
 
-.button-53:hover:after {
+.fancy-button:hover:after {
   bottom: 2px;
   left: 2px;
 }
 
 @media (min-width: 768px) {
-  .button-53 {
+  .fancy-button {
     padding: .75rem 3rem;
     font-size: 2rem;
   }
 }
 
-.button-53 a:link, a:visited {
+.fancy-button a:link, a:visited {
     color:#000000;
     text-decoration: none;
 }
@@ -296,9 +304,10 @@ form.gifting {
     flex:50%;
     height: 220px;
     padding-top: 15px;
-    margin-left: 300px;
-    margin-right: 300px;
+    margin-left:200px;
+    margin-right:200px;
     margin-bottom: 30px;
+    padding-bottom:10px;
     background-color: #edd58f;
     border-radius: 20px;
 }
@@ -335,6 +344,7 @@ form input[type="submit"] {
     background-color: #e27e87;
     color: #fff;
     cursor: pointer;
+    width:50%;
 }
 
 form input[type="submit"]:hover {
@@ -465,18 +475,49 @@ form input[type="submit"]:hover {
         height: 20px;
         border-width: 6px;
     }
+    #content div {
+        grid-template-columns: none;
+    }
+
+    form.gifting {
+        margin-left:100px;
+        margin-right:100px;
+    }
 }
 
+/* smallest screen size */
 @media screen and (max-width: 600px) {
     .currency-position {
         font-size: 15px;
         width: 40px;
         height: 15px;
     }
+    #content div {
+        grid-template-columns: none;
+    }
+
+    .fancy-button {
+        width: 100px;
+        height: 55px;
+    }
+
+    form.gifting {
+        margin-left:50px;
+        margin-right:50px;
+    }
 }
 
+/* when fullcreen */
 @media screen and (min-width: 601px) {
     .content{
+        transform: "translateX(0)"
+    }
+
+    #content-1 {
+        transform: "translateX(0)"
+    }
+
+    form.gifting {
         transform: "translateX(0)"
     }
 }
@@ -484,6 +525,9 @@ form input[type="submit"]:hover {
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+    #content div {
+        grid-template-columns: none;
+    }
 }
 
 
@@ -581,6 +625,15 @@ form input[type="submit"]:hover {
     border-radius: 20px;
 }
 
+/*columns for profile */
+.column-profile {
+    padding: 5px;
+}
+
+.column-profile img:hover {
+    filter: drop-shadow(5px 5px 5px #9f4850);
+}
+
 .avatar {
     width: 280px;
     height: 400px;
@@ -622,6 +675,40 @@ form input[type="submit"]:hover {
     grid-column-end: 3;
 }
 
+/* for instructions */
+.content-minigames {
+    background: #fbefcb;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top:20px;
+    font-family: 'Trebuchet MS';
+    width:750px;
+}
+
+.content-minigames h1 {
+    font-family: 'Sugar Cream';
+    font-size:40px;
+    padding:0;
+    margin:5px;
+}
+
+.content-minigames ul {
+    font-size:18px;
+    text-align:left;
+}
+
+.content-minigames div {
+    background-color: white;
+    margin:10px;
+    padding:10px; 
+    border-radius:10px;
+}
+
+.content-minigames p {
+    margin-bottom:0;
+    font-weight: bold;
+}
+
 ul.no-bullets {
     list-style-type: none;
     margin-bottom: -30px;
@@ -650,48 +737,46 @@ ul.no-bullets {
 
 section {
     position: relative;
-    width: 100%;
-    height: 100vh;
     background-image: linear-gradient(#c1eae6, #76a7a2);
     overflow: hidden;
-    padding-bottom: 50px;
+    padding-bottom: 200px;
 }
 section .air{
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 100px;
-background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
-background-size: 1000px 100px
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
+    background-size: 1000px 100px
 }
 section .air.air1{
-animation: wave 30s linear infinite;
-z-index: 1000;
-opacity: 1;
-animation-delay: 0s;
-bottom: 0;
+    animation: wave 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
 }
 section .air.air2{
-animation: wave2 15s linear infinite;
-z-index: 999;
-opacity: 0.5;
-animation-delay: -5s;
-bottom: 10px;
+    animation: wave2 15s linear infinite;
+    z-index: 999;
+    opacity: 0.5;
+    animation-delay: -5s;
+    bottom: 10px;
 }
 section .air.air3{
-animation: wave 30s linear infinite;
-z-index: 998;
-opacity: 0.2;
-animation-delay: -2s;
-bottom: 15px;
+    animation: wave 30s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15px;
 }
 section .air.air4{
-animation: wave2 5s linear infinite;
-z-index: 997;
-opacity: 0.7;
-animation-delay: -5s;
-bottom: 20px;
+    animation: wave2 5s linear infinite;
+    z-index: 997;
+    opacity: 0.7;
+    animation-delay: -5s;
+    bottom: 20px;
 }
 @keyframes wave{
 0%{
@@ -712,4 +797,48 @@ bottom: 20px;
 
 #share-buttons{
     transition: transform 0.5s ease;
+}
+
+#share-buttons{
+    transition: transform 0.5s ease;
+}
+
+/* pop-up for settings :) */
+.popup-overlay {
+z-index:1001;
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-settings {
+font-family: Arial, sans-serif;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: #fff;
+padding-top: 200px;
+padding-bottom: 100px;
+padding-left: 100px;
+padding-right: 100px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+text-align: center;
+}
+
+.popup-settings .close {
+position: absolute;
+top: 10px;
+right: 10px;
+font-size: 20px;
+cursor: pointer;
+color: #333;
 }

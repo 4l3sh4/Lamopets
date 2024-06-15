@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/adopt.css') }}"> 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/settings.js')}}"></script>
     <script src="{{url_for('static', filename='js/adopt.js')}}"></script>
     <title>Adopt</title>
 </head>
@@ -17,11 +18,6 @@
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-
-    <div class="center" id="logout-button">
-        <a href="{{url_for('logout')}}">Logout</a>
-    </div>
-
     <h2 class="currency-position" data-currency="{{ current_user.currency_balance }}">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
@@ -30,6 +26,7 @@
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
             <a href="{{url_for('home')}}" class="split">Home</a>
+            <a id="setting-tab" onclick="openPopup()" style="padding:5px; padding-left: 10px; padding-right: 10px;"><img src="{{ url_for('static', filename='assets/thumbnails/settings-icon.png') }}" style="width:34px; height:34px; margin:0;"></a>
             <a href="{{url_for('forums')}}">Chat</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
@@ -46,12 +43,28 @@
             <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+            <a id="setting-tab2" onclick="openPopup()">Settings</a>
         </div>
     </nav>
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-settings" id="popup-settings">
+            <span class="close" id="closePopup">&times;</span>
+            <div class="popup-content">
+                <div class="center" id="logout-button">
+                    <a href="{{ url_for('logout') }}"><div>Logout</div></a>
+                </div>
+                <div class="center" id="delete-account">
+                    <a href="javascript:void(0);" onclick="confirmDeleteAccount()"><div>Delete Account</div></a>
+                </div>
+                <div class="center" id="change-password">
+                    <a href="{{ url_for('change_password') }}"><div>Change Password</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="content">
         <div class="container-adopt" style="height:550px; border-radius: 10px;">
-            <center><a class="button-53 button-a" style="margin:30px;">ADOPT PETS!</a></center>
+            <center><a class="fancy-button button-a" style="margin:30px;">ADOPT PETS!</a></center>
             <div class="nav-adopt">
                 <a href="#adopt-aquana">Aquana</a>
                 <a href="#adopt-trotter">Trotter</a>
