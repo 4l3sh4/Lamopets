@@ -89,10 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
         clickCount = 0; 
         adoptIdGlobal = adoptId; 
 
-        confirmButton.innerText = 'Yes'; 
-        confirmButton.style.backgroundColor = ''; 
-        closeButton.style.display = 'inline'; 
-
         confirmButton.onclick = function() {
             if (clickCount === 0) {
                 document.getElementById("confirm-text-pet").innerText = `Are you sure?`;
@@ -100,10 +96,9 @@ document.addEventListener("DOMContentLoaded", function() {
             } else if (clickCount === 1) {
                 releasePet(adoptIdGlobal);
                 document.getElementById("confirm-text-pet").innerText = `How could you release ${adoptName}?! Your dearest pet has stolen ${deduct_price} Lamocoins before leaving for the wild...`;
-                closeButton.style.display = 'none';
-                confirmButton.innerText = 'Goodbye';
-                confirmButton.style.backgroundColor = '#e27e87';
-                confirmButton.onclick = function() {
+                confirmButton.style.display = 'none';
+                closeButton.innerText = 'Goodbye';
+                closeButton.onclick = function() {
                     closeModalRelease();
                     location.reload();
                 };
@@ -140,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function() {
     var modal = document.getElementById("delete-item");
     var confirmButton = document.getElementById("yes-item");
+    var closeButton = document.getElementById("no-item");
     var refund_price;
 
     function showDeletePopup(itemImage, itemFilter, itemId, price) {
@@ -151,6 +147,13 @@ document.addEventListener("DOMContentLoaded", function() {
         confirmButton.onclick = function() {
             console.log("Attempting to delete item with ID:", itemId);
             deleteItem(itemId);
+            document.getElementById("confirm-text-item").innerText = `Your item has been successfully recycled for ${refund_price} Lamocoins!`;
+            closeButton.style.display = 'none';
+            confirmButton.innerText = 'Nice!';
+            confirmButton.onclick = function() {
+                closeModalDelete();
+                location.reload();
+            };
         };
 
         modal.style.display = "block";
@@ -167,18 +170,16 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             console.log("Server response status:", response.status);
             if (response.ok) {
-                alert("Item recycled successfully.");
-                location.reload();
+                console.log("Item recycled successfully.");
             } else {
                 const errorText = await response.text();
                 console.error("Failed to recycle item. Response:", errorText);
-                alert("Failed to recycle item: " + errorText);
+                console.log("Failed to recycle item: " + errorText);
             }
         } catch (error) {
             console.error('Error:', error);
-            alert("An error occurred while deleting the item.");
+            alert("An error occurred while recycling the item.");
         }
-        closeModalDelete();
     }
 
     window.showDeletePopup = showDeletePopup;

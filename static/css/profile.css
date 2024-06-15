@@ -211,3 +211,11 @@ button p{
 #yes-item:hover {
     background-color: #336b33;
 }
+
+#no-item {
+    background-color: #e27e87;
+}
+
+#no-item:hover {
+    background-color: #a14c53;
+}
