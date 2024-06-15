@@ -36,7 +36,6 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 class Inventory(db.Model):
     __tablename__ = 'inventory'
     id = db.Column(db.Integer, primary_key=True)
@@ -44,7 +43,6 @@ class Inventory(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
     user_obj = db.relationship('User', back_populates='inventory')
     item = db.relationship('Item', back_populates='inventory')
-
 
 class AdoptedPet(db.Model):
     __tablename__ = 'adopted_pet'
@@ -81,6 +79,8 @@ class User(db.Model, UserMixin):
     def __setattr__(self, name, value):
         if name == 'currency_balance' and value > 10000:
             value = 10000
+        if name == 'currency_balance' and value < 0:
+            value = 0
         super().__setattr__(name, value)
 
 class Topic(db.Model):
