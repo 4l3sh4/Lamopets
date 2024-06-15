@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 releasePet(adoptIdGlobal);
                 document.getElementById("confirm-text-pet").innerText = `How could you release ${adoptName}?! Your dearest pet has stolen ${deduct_price} Lamocoins before leaving for the wild...`;
                 confirmButton.style.display = 'none';
+                closeButton.style.width = '140px';
                 closeButton.innerText = 'Goodbye';
                 closeButton.onclick = function() {
                     closeModalRelease();
