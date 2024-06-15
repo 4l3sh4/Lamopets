@@ -204,6 +204,21 @@
     margin-top: -25px;
 }
 
+.success-content {
+    background-color: #fefefe;
+    margin: 10% auto; 
+    padding: 50px;
+    border: 5px solid #c8980a;
+    border-radius: 60px;
+    width: 30%; 
+    font-size: 35px;
+    font-family: 'myFont';
+}
+
+.success-content img{
+    margin-top: -25px;
+}
+
 button {
     font-size: 20px;
     cursor: pointer;
@@ -224,11 +239,11 @@ button p{
     border: none;
 }
 
-#yesButton {
+#yesButton, #yayButton {
     background-color: #7ee27e;
 }
 
-#yesButton:hover {
+#yesButton:hover, #yayButton:hover {
     background-color: #336b33;
 }
 
