@@ -75,7 +75,7 @@ class User(db.Model, UserMixin):
     moderator = db.Column(db.String(3), nullable=False, default='no')
     last_played_time_ft = db.Column(db.String)
     last_played_time_jjj = db.Column(db.String)
-    daily_chances_ft = db.Column(db.Integer, default=40)
+    daily_chances_ft = db.Column(db.Integer, default=20)
     daily_chances_jjj = db.Column(db.Integer, default=20)
 
     inventory = db.relationship('Inventory', back_populates='user_obj')
@@ -798,7 +798,7 @@ def gain_currency_jjj():
 def reset_chances_ft():
     temp_date = datetime.now().strftime("%m/%d/%Y")
     if current_user.last_played_time_ft != temp_date:
-        current_user.daily_chances_ft = 40
+        current_user.daily_chances_ft = 20
         db.session.commit()
         current_user.last_played_time_ft = datetime.now().strftime("%m/%d/%Y")
         db.session.commit()

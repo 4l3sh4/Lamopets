@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     var tab = document.getElementById("setting-tab");
+    var tab2 = document.getElementById("setting-tab2");
     tab.addEventListener("click", openPopup);
+    tab2.addEventListener("click", openPopup);
 
     const popupOverlay = document.getElementById('popupOverlay');
 
