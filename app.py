@@ -549,7 +549,7 @@ def gifting():
             return jsonify({'status': 'error', 'message': 'Gift amount must be a positive number.'})
         
         if gifted_money > 250:
-            return jsonify({'status': 'error', 'message': 'You can\'t gift more than $250 at a time.'})
+            return jsonify({'status': 'error', 'message': 'You can\'t gift more than 250 Lamocoins at a time.'})
         
         user = User.query.filter_by(username=form.username.data).first()
         
@@ -571,7 +571,7 @@ def gifting():
         current_user.last_gift_time = datetime.utcnow()
         db.session.commit()
         
-        return jsonify({'status': 'success', 'message': f'You have successfully gifted {gifted_money} coins to {user.username}.'})
+        return jsonify({'status': 'success', 'message': f'You have successfully gifted {gifted_money} Lamocoins to {user.username}.'})
     
     return render_template('gifting.html', form=form)
 
