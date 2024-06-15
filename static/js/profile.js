@@ -95,14 +95,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById("confirm-text-pet").innerText = `Are you sure?`;
                 clickCount++;
             } else if (clickCount === 1) {
+                releasePet(adoptIdGlobal);
                 document.getElementById("confirm-text-pet").innerText = `How could you release ${adoptName}?! Your dearest pet has stolen ${deduct_price} Lamocoins before leaving for the wild...`;
                 closeButton.style.display = 'none';
                 confirmButton.innerText = 'Goodbye';
                 confirmButton.style.backgroundColor = '#e27e87';
-                clickCount++;
-
                 confirmButton.onclick = function() {
-                    releasePet(adoptIdGlobal);
+                    closeModalRelease();
+                    location.reload();
                 };
             }
         };
@@ -120,16 +120,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 method: 'DELETE'
             });
             if (response.ok) {
-                alert("Pet released successfully.");
-                location.reload();
+                console.log ("Pet released successfully.");
             } else {
-                alert("Failed to release pet.");
+                console.log ("Failed to release pet.");
             }
         } catch (error) {
             console.error('Error:', error);
-            alert("An error occurred while releasing the pet.");
+            console.log ("An error occurred while releasing the pet.");
         }
-        closeModalRelease();
     }
 
     window.showReleasePopup = showReleasePopup;
