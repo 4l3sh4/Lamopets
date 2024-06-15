@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/Lamocoins.png') }}">
         <script src="{{url_for('static', filename='js/main.js')}}"></script>
+        <script src="{{url_for('static', filename='js/settings.js')}}"></script>
         <meta property="og:title" content="Check this out!">
         <meta property="og:type" content="website">
         <meta property="og:image" content="https://4l35h4.pythonanywhere.com/static/assets/logo/Lamopets_Logo_Still.png">
@@ -33,6 +34,7 @@
             <span id="navicon" onclick="openNav()">&#9776</span>
             <div id="mainnav" class="navbar">
                 <a href="{{url_for('home')}}" class="split">Home</a>
+                <a id="setting-tab" onclick="openPopup()" style="padding:5px; padding-left: 10px; padding-right: 10px;"><img src="{{ url_for('static', filename='assets/thumbnails/settings-icon.png') }}" style="width:34px; height:34px; margin:0;"></a>
                 <a href="{{url_for('forums')}}">Chat</a>
                 <a href="{{url_for('gifting')}}">Gift</a>
                 <a href="{{url_for('store')}}">Buy Apparels</a>
@@ -49,9 +51,25 @@
                 <a href="{{url_for('store')}}">Buy Apparels</a>
                 <a href="{{url_for('gifting')}}">Gift</a>
                 <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+                <a id="setting-tab2" onclick="openPopup()">Settings</a>
             </div>
         </nav>
+        <div class="popup-overlay" id="popupOverlay">
+            <div class="popup-settings" id="popup-settings">
+                <span class="close" id="closePopup">&times;</span>
+                <div class="popup-content">
+                    <div class="center" id="logout-button">
+                        <a href="{{ url_for('logout') }}"><div>Logout</div></a>
+                    </div>
+                    <div class="center" id="delete-account">
+                        <a href="javascript:void(0);" onclick="confirmDeleteAccount()"><div>Delete Account</div></a>
+                    </div>
+                    <div class="center" id="change-password">
+                        <a href="{{ url_for('change_password') }}"><div>Change Password</div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="content">
             <div class="container" style="height: auto;">
                 <div class="content-large" id="content-1">
@@ -97,11 +115,11 @@
                 <div class="content-small" id="content-2">
                     <center>
                         <br>
-                        <a href="{{url_for('login')}}"><button class="button-53" style="margin-bottom: -15px;">Login</button></a>
+                        <a href="{{url_for('login')}}"><button class="fancy-button" style="margin-bottom: -15px;">Login</button></a>
                         <br>
-                        <a href="{{url_for('register')}}"><button class="button-53" style="margin-bottom: -15px;">Register</button></a>
+                        <a href="{{url_for('register')}}"><button class="fancy-button" style="margin-bottom: -15px;">Register</button></a>
                         <br>
-                        <a href="{{url_for('logout')}}"><button class="button-53" style="margin-bottom: -15px;">Logout</button></a>
+                        <a href="{{url_for('logout')}}"><button class="fancy-button" style="margin-bottom: -15px;">Logout</button></a>
                         <br>
                     </center>
                 </div>

@@ -8,47 +8,75 @@
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <title>Mini Games</title>
 </head>
-<body onkeydown="getKeyAndMove(event)">
+<body onkeydown="getKeyAndMove(event)" oncontextmenu="return false;">
     <div class="logo">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-
     <h2 class="currency-position">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
     </h2>
-
-    <nav>
-        <span id="navicon" onclick="openNav()">&#9776</span>
-        <div id="mainnav" class="navbar">
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Gifting</a>
-            <a href="{{url_for('profile')}}">Profile</a>
-        <div id="sidenav" class="sidenav">    
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{{url_for('home')}}" class="split">Home</a>
-            <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('adopt')}}">Adopt Pets</a>
-            <a href="{{url_for('minigames')}}">Earn Coins</a>
-            <a href="{{url_for('store')}}">Buy Apparels</a>
-            <a href="{{url_for('gifting')}}">Gifting</a>
-            <a href="{{url_for('profile')}}">Profile</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-        </div>
-    </nav>
     <br>
     <div class="minigame-player">
-        <p>Press any key to start playing!</p>
+        <h1 style="background-color: #e27e87; padding: 10px; border-radius: 40px; margin-left: 220px; margin-right: 220px; font-family:'Trebuchet MS';">Daily chances left: {{ current_user.daily_chances_ft }}</h1>
+        {% if current_user.daily_chances_ft == 0 %}
+            <div style="background-color: #eddba5; padding: 10px; border-radius: 20px; margin-left: 50px; margin-right: 50px; margin-bottom:30px; color:#ac672f; font-family:'Trebuchet MS'; border: #ac672f 4px inset">
+            <h3>Oops, looks like you've used up all your daily chances!<br>You can't earn anymore Lamocoins, but you can still continue playing<br>to achieve a higher score.</h3>
+            <b><span id="timeRemaining"></span></b>
+            <br>
+            <progress id="dayProgression" value="0"></progress>
+            </div>
+        {% endif %}
         <canvas id="canvas1"></canvas>
         <script src="{{url_for('static', filename='js/feeding_time.js')}}"></script>
+        <center>
+            <div class="content-minigames">
+                <h1>Instructions</h1>
+                <div>
+                <h2>You're a lil' gorgeous fish trying to eat the helpless goldfish for lunch, but these ugly, green piranhas keep getting in the way. Yikes!</h2>
+                <ul>
+                <p>Controls:</p>
+                <li>Move the purple fish by <b>left-clicking</b> the area to where you want it to go.</li>
+                <p>Objectives:</p>
+                <li>Eat as many of the yellow fish as you can.</li>
+                <li><b>Avoid the green piranhas</b>, or you'll become their tasty meal!</li>
+                <p>Scoring system:</p>
+                <li>A <b>score of 1</b> will grant you <b>2 Lamocoins</b>!</li>
+                </ul>
+                <p style="padding-bottom:10px;"><i>Tip: Resizing the window for this minigame is not recommended!</i></p>
+                </div>
+            </div>
+        </center>
     </div>
 <script>
-    window.resizeTo(900, 700);
+    // displays the amount of time until daily chances are resetto spaghetto //
+    var actualTime = new Date(Date.now());
+    var endOfDay = new Date(actualTime.getFullYear(), actualTime.getMonth(), actualTime.getDate() + 1, 0, 0, 0);
+    var timeRemaining = endOfDay.getTime() - actualTime.getTime();
+    document.getElementById('timeRemaining').appendChild(document.createTextNode(Math.trunc(timeRemaining / 1000 / 60 / 60) + " hours left until the next reset!"));
+    document.getElementById('dayProgression').value = 1 - (timeRemaining / 1000 / 60 / 60 / 24);
+
+    // this is such a lame way to automatically reset a player's daily chances but this is the only method that i've seen online that my dummy brain could comprehend //
+    // note to future self: learn how to do a better way to achieve this without annoyingly refreshing the page ;^; //
+    function reload_Once() {
+        if (! sessionStorage.justOnce) {
+            fetch('/reset_chances_ft', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            })
+            .then(response => {location.reload()})
+            .catch(error => {
+                console.error(error);
+            });
+            sessionStorage.setItem("justOnce", "true");
+        }
+    }
+
+reload_Once();
+
 </script>
 </body>
 </html>

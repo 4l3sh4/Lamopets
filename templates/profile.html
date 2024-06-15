@@ -9,6 +9,7 @@
     <title>Profile</title>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script src="{{url_for('static', filename='js/profile.js')}}"></script>
+    <script src="{{url_for('static', filename='js/settings.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function confirmDeleteAccount() {
@@ -35,26 +36,15 @@
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Still.png') }}" id="img-still" width="60%">
         <img src="{{ url_for('static', filename='assets/logo/Lamopets_Logo_Hover.png') }}" id="img-hover" width="60%">
     </div>
-
-    <div class="center" id="logout-button" style="display: block;">
-        <a href="{{ url_for('logout') }}">Logout</a>
-    </div>
-    <div class="center" id="delete-account">
-        <a href="javascript:void(0);" onclick="confirmDeleteAccount()">Delete Account</a>
-    </div>
-    <div class="center" id="change-password">
-        <a href="{{ url_for('change_password') }}">Change Password</a>
-    </div>
-
     <h2 class="currency-position">
         <img src="{{ url_for('static', filename='assets/Lamocoins.png') }}" id="coin">
         {{ current_user.currency_balance }}
     </h2>
-
     <nav>
         <span id="navicon" onclick="openNav()">&#9776</span>
         <div id="mainnav" class="navbar">
             <a href="{{url_for('home')}}" class="split">Home</a>
+            <a id="setting-tab" onclick="openPopup()" style="padding:5px; padding-left: 10px; padding-right: 10px;"><img src="{{ url_for('static', filename='assets/thumbnails/settings-icon.png') }}" style="width:34px; height:34px; margin:0;"></a>
             <a href="{{url_for('forums')}}">Chat</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('store')}}">Buy Apparels</a>
@@ -71,9 +61,25 @@
             <a href="{{url_for('store')}}">Buy Apparels</a>
             <a href="{{url_for('gifting')}}">Gift</a>
             <a href="{{url_for('forums')}}">Chat</a>
-            <a href="{{url_for('logout')}}">Logout</a>
+            <a id="setting-tab2" onclick="openPopup()">Settings</a>
         </div>
     </nav>
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-settings" id="popup-settings">
+            <span class="close" id="closePopup">&times;</span>
+            <div class="popup-content">
+                <div class="center" id="logout-button">
+                    <a href="{{ url_for('logout') }}"><div>Logout</div></a>
+                </div>
+                <div class="center" id="delete-account">
+                    <a href="javascript:void(0);" onclick="confirmDeleteAccount()"><div>Delete Account</div></a>
+                </div>
+                <div class="center" id="change-password">
+                    <a href="{{ url_for('change_password') }}"><div>Change Password</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="content">
         <div class="row">
             <div class="column-1">
@@ -84,18 +90,23 @@
                 {% endif %}
                 <br><br>
                 <div class="button-container">
-                    <a class="button-53 button-a" id="custom-btn" href="{{url_for('custom')}}">CUSTOMIZE</a>
-                    <a class="button-53 button-a" id="photobooth-btn" href="{{url_for('photobooth')}}"><img src="{{ url_for('static', filename='assets/thumbnails/photo-camera.png') }}" alt="photobooth"></a>
+                    <a class="fancy-button button-a" id="custom-btn" href="{{url_for('custom')}}">CUSTOMIZE</a>
+                    <a class="fancy-button button-a" id="photobooth-btn" href="{{url_for('photobooth')}}"><img src="{{ url_for('static', filename='assets/thumbnails/photo-camera.png') }}" alt="photobooth"></a>
                 </div>
-                <center><a class="button-53 button-a" id="pfp-btn" href="{{url_for('crop_avatar')}}">PROFILE PIC</a><br></center>
+                <center><a class="fancy-button button-a" id="pfp-btn" href="{{url_for('crop_avatar')}}">PROFILE PIC</a><br></center>
                 <br><br>
             </div>
             <div class="column-2" id="profile-display">
-
                 <a class="back-button" style="display: none;" onclick="goBack()"><img src="{{ url_for('static', filename='assets/thumbnails/back-button.png') }}" alt="back button"></a>
                 <a class="delete-button" style="display: none;" onclick="displayDelete()"><img src="{{ url_for('static', filename='assets/thumbnails/delete.png') }}" alt="delete button"></a>
-                <button class="button-53" id="petsButton" onclick="toggleSanctuary()">MY PETS</button>
-                <button class="button-53" id="closetButton" onclick="toggleCloset()">MY CLOSET</button>
+                <div class="column-profile" id="pets-button">
+                <img src="{{ url_for('static', filename='assets/thumbnails/profile/pet_sandwich.png') }}" onclick="toggleSanctuary()" style="width: 80%; padding:0; margin:0;">
+                <h2 style="padding:0; margin:0; font-family:Sugar Cream; font-size: 40px;">Sanctuary</h2>
+                </div>
+                <div class="column-profile" id="wardrobe-button">
+                <img src="{{ url_for('static', filename='assets/thumbnails/profile/wardrobe.gif') }}" onclick="toggleCloset()" style="width: 80%; padding:0; margin:0;">
+                <h2 style="padding:0; margin:0; font-family:Sugar Cream; font-size: 40px;">Wardrobe</h2>
+                </div>
 
                 <div id="sanctuary" style="display: none">
                     <h1>{{ current_user.username }}'s Sanctuary</h1>
@@ -147,16 +158,6 @@
                     </div>  
                 </div>
             </div>
-        </div>
-        <div id="share-buttons" style="margin-top: -115px; margin-left: 400px;">
-            <!-- twitter -->
-            <a class="twitter" target="blank"><i class="fab fa-twitter"></i></a>
-            <!-- linkedin -->
-            <a class="linkedin" target="blank"><i class="fab fa-linkedin"></i></a>
-            <!-- whatsapp-->
-            <a class="whatsapp" target="blank"><i class="fab fa-whatsapp"></i></a>
-            <!-- telegram-->
-            <a class="telegram" target="blank"><i class="fab fa-telegram"></i></a>
         </div>
     </div>
 
