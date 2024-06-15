@@ -709,3 +709,7 @@ bottom: 20px;
     background-position-x: -1000px; 
 }
 }
+
+#share-buttons{
+    transition: transform 0.5s ease;
+}
