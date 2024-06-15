@@ -30,6 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmNameButton = document.getElementById('confirmNameButton');
     const petNameInput = document.getElementById('pet-name-input');
     const nameEggImg = document.getElementById('name-egg-img');
+
+    const successPopup = document.getElementById('success-adopt');
+    const successMessage = document.getElementById('success-message-adopt');
+    const successPetImg = document.getElementById('success-pet-img');
+    const yayButton = document.getElementById('yayButton');
     
     let selectedPetSpecies;
 
@@ -37,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const petName = button.getAttribute('data-name');
             const petPrice = button.getAttribute('data-price');
+            const petImage = button.getAttribute('data-pet-img');
             const petElement = button.closest('.item');
             const eggImgUrl = petElement.querySelector('img').src;
 
@@ -48,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             petElement.classList.add('active');
 
             selectedPetSpecies = petElement.id;
+            selectedPetImage = petImage; 
         });
     });
 
@@ -60,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nameEggImg.src = eggImgUrl;
     });
 
-    confirmNameButton.addEventListener('click', function() {
+    confirmNameButton.addEventListener('click', async () => {
         const petName = petNameInput.value.trim();
 
         if (petName.length < 4 || petName.length > 20) {
@@ -68,30 +75,38 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch('/adopt_pet/' + selectedPetSpecies, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ pet_name: petName })
-        })
-        .then(response => {
+        try {
+            const response = await fetch(`/adopt_pet/${selectedPetSpecies}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pet_name: petName })
+            });
+
             if (response.ok) {
                 closeModalAdopt();
-                alert('Adoption Successful!');
-                setTimeout(() => {
-                    location.reload();
-                }, 500);
-
+                successMessage.textContent = `You have successfully adopted ${petName}!`;
+                successPetImg.src = selectedPetImage;
+                successPopup.style.display = 'block';
             } else {
                 alert('Adoption Unsuccessful');
             }
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
     });
 
+    yayButton.addEventListener('click', () => {
+        successPopup.style.display = 'none';
+        location.reload(); // Reload the page or redirect as needed
+    });
+
+    function closeModalAdopt() {
+        purchasePopup.style.display = 'none';
+        namePopup.style.display = 'none';
+        document.querySelectorAll('.item.active').forEach(item => item.classList.remove('active'));
+    }
 });
 
 function closeModalAdopt() {
