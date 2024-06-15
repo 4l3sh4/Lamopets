@@ -83,12 +83,33 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const itemPrice = button.getAttribute('data-price');
             const filter = button.getAttribute('data-filter');
+            const itemId = button.getAttribute('data-item-id');
             const itemElement = button.closest('.item');
             const itemImgUrl = itemElement.querySelector('img').src;
 
             console.log(`Applying filter: ${filter}`);
 
-            confirmText.textContent = `Would you like to buy this item for $${itemPrice}?`;
+            fetch(`/check_inventory/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ itemId: itemId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.owned) {
+                    confirmText.textContent = `You already own this item. Would you still like to buy it for ${itemPrice} Lamocoins?`;
+                } else {
+                    confirmText.textContent = `Would you like to buy this item for ${itemPrice} Lamocoins?`;
+                }
+            })
+
             purchaseItemImg.src = itemImgUrl;
             purchaseItemImg.style.filter = filter;
             popup.style.display = 'block';

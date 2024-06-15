@@ -36,7 +36,6 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 class Inventory(db.Model):
     __tablename__ = 'inventory'
     id = db.Column(db.Integer, primary_key=True)
@@ -44,7 +43,6 @@ class Inventory(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
     user_obj = db.relationship('User', back_populates='inventory')
     item = db.relationship('Item', back_populates='inventory')
-
 
 class AdoptedPet(db.Model):
     __tablename__ = 'adopted_pet'
@@ -81,6 +79,8 @@ class User(db.Model, UserMixin):
     def __setattr__(self, name, value):
         if name == 'currency_balance' and value > 10000:
             value = 10000
+        if name == 'currency_balance' and value < 0:
+            value = 0
         super().__setattr__(name, value)
 
 class Topic(db.Model):
@@ -264,6 +264,20 @@ def save_avatar_cropped():
 def store():
     grouped_items = Item.get_items_grouped_by_base_id()
     return render_template('store.html', grouped_items=grouped_items)
+
+@app.route('/check_inventory/<string:item_id>', methods=['POST'])
+def check_inventory(item_id):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'User not authenticated.'}), 401
+
+    if not item_id:
+        return jsonify({'error': 'itemId must be provided.'}), 400
+
+    user_inventory = Inventory.query.filter_by(user_id=current_user.id).all()
+
+    owned = any(entry.item_id == str(item_id) for entry in user_inventory)
+
+    return jsonify({'owned': owned}), 200
 
 @app.route('/purchase_item/<string:item_id>', methods=['POST'])
 @login_required
