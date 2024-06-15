@@ -187,7 +187,7 @@ img {
   
 
 /* buttons */
-.button-53 {
+.fancy-button {
   background-color: #e27e87;
   border: 0 solid #E5E7EB;
   width: 215px;
@@ -218,11 +218,11 @@ img {
   height: 35px;
 }
 
-.button-53:focus {
+.fancy-button:focus {
   outline: 0;
 }
 
-.button-53:after {
+.fancy-button:after {
   content: '';
   position: absolute;
   border: 2px solid #8E4F55;
@@ -232,19 +232,19 @@ img {
   height: calc(100% - 1px);
 }
 
-.button-53:hover:after {
+.fancy-button:hover:after {
   bottom: 2px;
   left: 2px;
 }
 
 @media (min-width: 768px) {
-  .button-53 {
+  .fancy-button {
     padding: .75rem 3rem;
     font-size: 2rem;
   }
 }
 
-.button-53 a:link, a:visited {
+.fancy-button a:link, a:visited {
     color:#000000;
     text-decoration: none;
 }
@@ -506,7 +506,7 @@ form input[type="submit"]:hover {
         grid-template-columns: none;
     }
 
-    .button-53 {
+    .fancy-button {
         width: 100px;
         height: 55px;
     }
